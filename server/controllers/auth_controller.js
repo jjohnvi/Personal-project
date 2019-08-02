@@ -14,11 +14,13 @@ const registerUser = async (req, res, next) => {
       lastname,
       hashedPassword
     ]);
-
+    console.log(user[0].user_id);
     req.session.user = {
+      id: user[0].user_id,
       username,
       firstname,
       lastname
+      // user_id
     };
     res.json(user);
   } else {
@@ -43,16 +45,17 @@ const loginUser = async (req, res, next) => {
   if (checkedUser.length === 0) {
     res.status(401).json({ error: "Wrong username and password." });
   }
-  console.log(checkedUser);
+  // console.log(checkedUser);
 
   const isMatching = await bcrypt.compare(password, checkedUser[0].password);
-
   if (isMatching) {
     req.session.user = {
-      username,
-      firstname,
-      lastname
+      id: checkedUser[0].user_id,
+      username: checkedUser[0].username,
+      firstname: checkedUser[0].first_name,
+      lastname: checkedUser[0].last_name
     };
+    console.log(req.session.user);
     return res.json(req.session.user);
   } else {
     return res.status(403).json({ error: "Wrong username and password." });

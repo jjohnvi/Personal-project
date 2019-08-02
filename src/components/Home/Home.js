@@ -5,7 +5,7 @@ import { updateState } from "../../redux/UserReducer/UserReducer";
 
 class Home extends Component {
   handleLogout = () => {
-    axios.get("/auth/logout").then(res => this.props.history.push("/"));
+    axios.get("/auth/logout").then(() => this.props.history.push("/"));
   };
   render() {
     return (
