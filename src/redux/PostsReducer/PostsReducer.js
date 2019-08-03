@@ -33,7 +33,8 @@ export function postsReducer(state = initialState, action) {
     case `${ADD_POST}_PENDING`:
       return { ...state, loading: true };
     case `${ADD_POST}_FULFILLED`:
-      return { ...state, loading: false, posts: payload };
+      console.log(payload);
+      return { ...state, loading: false, posts: payload.data };
     default:
       return state;
   }

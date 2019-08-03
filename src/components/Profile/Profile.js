@@ -16,7 +16,7 @@ class Profile extends Component {
         ) : (
           posts.map(post => {
             return (
-              <div className="post" key={post.id}>
+              <div className="post" key={post.post_id}>
                 <img src={post.image_url} alt={post.title} />
                 <h2>{post.title}</h2>
                 <p>{post.content}</p>

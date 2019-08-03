@@ -18,19 +18,18 @@ class Home extends Component {
     axios.get("/auth/logout").then(() => this.props.history.push("/"));
   };
 
-  handleState = e => {
-    this.props.handleState({ [e.target.name]: e.target.value });
+  updateState = e => {
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   addPost = () => {
-    this.props.addPost(
-      this.state.image_url,
-      this.state.content,
-      this.state.title
-    );
+    this.props
+      .addPost(this.state.image_url, this.state.content, this.state.title)
+      .then(() => this.props.history.push("/profile"));
   };
 
   render() {
+    console.log(this.state);
     return (
       <>
         <div>Welcome {this.props.username}</div>
