@@ -27,7 +27,7 @@ export const addPost = (image_url, content, title) => {
 export const removePost = id => {
   return {
     type: REMOVE_POST,
-    payload: axios.delete(`/api/posts/:${id}`)
+    payload: axios.delete(`/api/posts/${id}`)
   };
 };
 

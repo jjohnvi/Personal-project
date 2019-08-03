@@ -17,18 +17,25 @@ class Post extends Component {
     this.props.getPost(id);
   };
 
+  goToHome = () => {
+    this.props.history.push("/home");
+  };
+
   render() {
     const { posts, loading } = this.props;
     return (
       <div>
-        {loading && <h3>Loading...</h3>}
-        {posts[0] && (
-          <>
-            <img src={posts[0].image_url} />
-            <h2>{posts[0].title}</h2>
-            <p>{posts[0].content}</p>
-          </>
-        )}
+        <button onClick={this.goToHome}>Home</button>
+        <div>
+          {loading && <h3>Loading...</h3>}
+          {posts[0] && (
+            <>
+              <img src={posts[0].image_url} />
+              <h2>{posts[0].title}</h2>
+              <p>{posts[0].content}</p>
+            </>
+          )}
+        </div>
       </div>
     );
   }

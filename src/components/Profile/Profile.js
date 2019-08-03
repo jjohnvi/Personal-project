@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import {
   addPost,
   getPosts,
-  getPost
+  getPost,
+  removePost
 } from "../../redux/PostsReducer/PostsReducer";
 
 class Profile extends Component {
@@ -15,22 +16,36 @@ class Profile extends Component {
   goToPost = id => {
     this.props.history.push(`/posts/${id}`);
   };
+
+  removePost = id => {
+    this.props.removePost(id).then(() => this.props.getPosts());
+  };
+
+  goToHome = () => {
+    this.props.history.push("/home");
+  };
   render() {
     const { loading, posts } = this.props;
     return (
       <>
+        <button onClick={this.goToHome}>Home</button>
         {loading ? (
           <h3>Loading...</h3>
         ) : (
           posts.map(post => {
             return (
-              <div onClick={() => this.goToPost(post.post_id)}>
-                <div className="post" key={post.post_id}>
-                  <img src={post.image_url} alt={post.title} />
-                  <h2>{post.title}</h2>
-                  <p>{post.content}</p>
+              <>
+                <div onClick={() => this.goToPost(post.post_id)}>
+                  <div className="post" key={post.post_id}>
+                    <img src={post.image_url} alt={post.title} />
+                    <h2>{post.title}</h2>
+                    <p>{post.content}</p>
+                  </div>
                 </div>
-              </div>
+                <button onClick={() => this.removePost(post.post_id)}>
+                  Delete
+                </button>
+              </>
             );
           })
         )}
@@ -48,5 +63,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getPosts, getPost }
+  { getPosts, getPost, removePost }
 )(Profile);
