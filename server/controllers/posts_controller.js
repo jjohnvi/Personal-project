@@ -18,10 +18,23 @@ const createPost = async (req, res, next) => {
 };
 
 const getPost = async (req, res, next) => {
+  console.log("hit");
   const db = req.app.get("db");
   const { id } = req.params;
   const results = await db.get_post([id]);
   res.status(200).json(results);
 };
 
-module.exports = { getPostsByUserId, createPost, getPost };
+const deletePost = async (req, res, next) => {
+  const db = req.app.get("db");
+  const { id } = req.params;
+
+  db.delete_post(id)
+    .then(posts => res.status(200).json(posts))
+    .catch(err => {
+      res.status(500).send({ errorMessage: "Can't delete post." });
+      console.log(err);
+    });
+};
+
+module.exports = { getPostsByUserId, createPost, getPost, deletePost };

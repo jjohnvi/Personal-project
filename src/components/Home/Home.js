@@ -3,7 +3,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { updateState } from "../../redux/UserReducer/UserReducer";
 import { Link } from "react-router-dom";
-import { addPost } from "../../redux/PostsReducer/PostsReducer";
+import { addPost, getPost } from "../../redux/PostsReducer/PostsReducer";
 
 class Home extends Component {
   constructor() {
@@ -26,6 +26,10 @@ class Home extends Component {
     this.props
       .addPost(this.state.image_url, this.state.content, this.state.title)
       .then(() => this.props.history.push("/profile"));
+  };
+
+  getPost = id => {
+    this.props.goToPost(id).then(() => this.props.history.push("/"));
   };
 
   render() {
@@ -72,5 +76,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { updateState, addPost }
+  { updateState, addPost, getPost }
 )(Home);

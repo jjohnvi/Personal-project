@@ -1,2 +1,2 @@
 SELECT * FROM posts
-WHERE user_id = $1
+WHERE post_id = $1
