@@ -35,7 +35,7 @@ app.get("/auth/logout", AC.logoutUser);
 
 //posts
 app.post("/api/posts", PC.createPost);
-app.get("/api/posts", PC.getPosts);
+app.get("/api/posts", PC.getPostsByUserId);
 
 app.listen(SERVER_PORT, () => {
   console.log(`Listening on Port ${SERVER_PORT}`);
