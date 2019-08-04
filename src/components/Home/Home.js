@@ -2,8 +2,15 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { updateState } from "../../redux/UserReducer/UserReducer";
+import Posts from "../Posts/Posts";
+import "./Home.scss";
+import Navbar from "../Navbar/Navbar";
 import { Link } from "react-router-dom";
-import { addPost, getPost } from "../../redux/PostsReducer/PostsReducer";
+import {
+  addPost,
+  getPost,
+  getAllPosts
+} from "../../redux/PostsReducer/PostsReducer";
 
 class Home extends Component {
   constructor() {
@@ -14,6 +21,7 @@ class Home extends Component {
       title: ""
     };
   }
+
   handleLogout = () => {
     axios.get("/auth/logout").then(() => this.props.history.push("/"));
   };
@@ -22,45 +30,13 @@ class Home extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  addPost = () => {
-    this.props
-      .addPost(this.state.image_url, this.state.content, this.state.title)
-      .then(() => this.props.history.push("/profile"));
-  };
-
-  getPost = id => {
-    this.props.goToPost(id).then(() => this.props.history.push("/"));
-  };
-
   render() {
-    console.log(this.state);
+    console.log(this.props);
     return (
       <>
-        <div>Welcome {this.props.username}</div>
-        <button onClick={this.handleLogout}>Logout</button>
-        <Link to={"/profile"}>
-          <button>Go to your profile</button>
-        </Link>
-        <div>
-          <input
-            type="text"
-            onChange={this.updateState}
-            name="image_url"
-            placeholder="Image URL"
-          />
-          <input
-            type="text"
-            onChange={this.updateState}
-            name="content"
-            placeholder="Content"
-          />
-          <input
-            type="text"
-            onChange={this.updateState}
-            name="title"
-            placeholder="Title"
-          />
-          <button onClick={this.addPost}>+</button>
+        <div className="home">
+          <button onClick={this.handleLogout}>Logout</button>
+          <Posts />
         </div>
       </>
     );
@@ -76,5 +52,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { updateState, addPost, getPost }
+  { updateState, addPost, getPost, getAllPosts }
 )(Home);

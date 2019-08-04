@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { updateState } from "../../redux/UserReducer/UserReducer";
+import { updateState, loginUser } from "../../redux/UserReducer/UserReducer";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "./../Login/Login.scss";
 
 class Login extends Component {
   state = {
@@ -15,12 +16,9 @@ class Login extends Component {
 
   clickLogin = e => {
     e.preventDefault();
-    axios
-      .post("/auth/login", {
-        username: this.props.username,
-        password: this.props.password
-      })
-      .then(res => {
+    this.props
+      .loginUser(this.props.username, this.props.password)
+      .then(() => {
         this.props.history.push("/home");
       })
       .catch(err => {
@@ -31,7 +29,7 @@ class Login extends Component {
 
   render() {
     return (
-      <form className="loginForm" type="submit" onSubmit={this.clickLogin}>
+      <form className="login__form" type="submit" onSubmit={this.clickLogin}>
         <input
           type="text"
           onChange={this.handleChange}
@@ -65,5 +63,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { updateState }
+  { updateState, loginUser }
 )(Login);

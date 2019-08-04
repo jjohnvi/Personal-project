@@ -5,13 +5,17 @@ import Register from "./components/Register/Register";
 import Home from "./components/Home/Home";
 import Profile from "./components/Profile/Profile";
 import Post from "./components/Post/Post";
+import Navbar from "./components/Navbar/Navbar";
 
 export default (
-  <Switch>
-    <Route exact path="/" component={Login} />
-    <Route path="/register" component={Register} />
-    <Route path="/home" component={Home} />
-    <Route path="/profile" component={Profile} />
-    <Route path="/posts/:id" component={Post} />
-  </Switch>
+  <>
+    <Navbar />
+    <Switch>
+      <Route exact path="/" component={Login} />
+      <Route path="/register" component={Register} />
+      <Route path="/home" component={Home} />
+      <Route path="/profile" component={Profile} />
+      <Route path="/posts/:id" component={Post} />
+    </Switch>
+  </>
 );

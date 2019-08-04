@@ -1,0 +1,46 @@
+@import "../../App.scss";
+
+.login__form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  height: 10rem;
+  border: none;
+  input {
+    height: 2rem;
+    width: 8rem;
+    border-radius: 5px;
+    border: none;
+    display: flex;
+    text-align: center;
+    margin: 0.5rem;
+    background-color: $blue-3;
+    font-family: $title-font;
+    color: $white;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+  input::placeholder {
+    font-family: $title-font;
+    font-weight: bold;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    font-style: italic;
+    color: $white;
+  }
+  button {
+    height: 1.5rem;
+    width: 4.5rem;
+    border-radius: 3px;
+    text-align: center;
+    margin: 0.1em;
+    font-family: $title-font;
+    letter-spacing: 2px;
+    color: $blue-3;
+    background-color: $white;
+    font-size: 0.6rem;
+    font-weight: bold;
+    justify-content: center;
+  }
+}

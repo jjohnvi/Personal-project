@@ -38,6 +38,7 @@ app.post("/api/posts", PC.createPost);
 app.get("/api/posts", PC.getPostsByUserId);
 app.delete("/api/posts/:id", PC.deletePost);
 app.get("/api/posts/:id", PC.getPost);
+app.get("/api/allposts", PC.getAllPosts);
 
 app.listen(SERVER_PORT, () => {
   console.log(`Listening on Port ${SERVER_PORT}`);

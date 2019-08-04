@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { removePost, getPost } from "../../redux/PostsReducer/PostsReducer";
+import "./Post.scss";
 
 class Post extends Component {
   componentDidMount() {
@@ -30,9 +31,11 @@ class Post extends Component {
           {loading && <h3>Loading...</h3>}
           {posts[0] && (
             <>
-              <img src={posts[0].image_url} />
-              <h2>{posts[0].title}</h2>
-              <p>{posts[0].content}</p>
+              <div className="post__cont">
+                <img src={posts[0].image_url} />
+                <h2>{posts[0].title}</h2>
+                <p>{posts[0].content}</p>
+              </div>
             </>
           )}
         </div>

@@ -8,6 +8,16 @@ const getPostsByUserId = async (req, res, next) => {
     .catch(err => console.log(err));
 };
 
+const getAllPosts = async (req, res, next) => {
+  const db = req.app.get("db");
+  // const { id } = req.session.user;
+  db.get_all_posts()
+    .then(posts => {
+      res.json(posts);
+    })
+    .catch(err => console.log(err));
+};
+
 const createPost = async (req, res, next) => {
   const db = req.app.get("db");
   const { image_url, content, title } = req.body;
@@ -37,4 +47,10 @@ const deletePost = async (req, res, next) => {
     });
 };
 
-module.exports = { getPostsByUserId, createPost, getPost, deletePost };
+module.exports = {
+  getPostsByUserId,
+  createPost,
+  getPost,
+  deletePost,
+  getAllPosts
+};

@@ -9,6 +9,7 @@ const GET_POSTS = "GET_POSTS";
 const ADD_POST = "ADD_POST";
 const REMOVE_POST = "REMOVE_POST";
 const GET_POST = "GET_POST";
+const GET_ALL_POSTS = "GET_ALL_POSTS";
 
 export const getPosts = () => {
   return {
@@ -38,12 +39,24 @@ export const getPost = id => {
   };
 };
 
+export const getAllPosts = () => {
+  return {
+    type: GET_ALL_POSTS,
+    payload: axios.get("/api/allposts")
+  };
+};
+
 export function postsReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case `${GET_POSTS}_PENDING`:
       return { ...state, loading: true };
     case `${GET_POSTS}_FULFILLED`:
+      return { ...state, loading: false, posts: payload.data };
+
+    case `${GET_ALL_POSTS}_PENDING`:
+      return { ...state, loading: true };
+    case `${GET_ALL_POSTS}_FULFILLED`:
       return { ...state, loading: false, posts: payload.data };
 
     case `${ADD_POST}_PENDING`:
