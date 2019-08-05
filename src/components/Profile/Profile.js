@@ -1,19 +1,13 @@
-import axios from "axios";
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { checkUserLoggedIn } from "../../redux/UserReducer/UserReducer";
 import Posts from "../Posts/Posts";
 import "./Profile.scss";
-import {
-  addPost,
-  getPosts,
-  getPost,
-  removePost
-} from "../../redux/PostsReducer/PostsReducer";
 
 class Profile extends Component {
-  // componentDidMount() {
-  //   this.props.getPosts();
-  // }
+  componentDidMount() {
+    this.props.checkUserLoggedIn().catch(() => this.props.history.push("/"));
+  }
 
   goToHome = () => {
     this.props.history.push("/home");
@@ -30,15 +24,7 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    posts: state.postsReducer.posts,
-    loading: state.postsReducer.loading,
-    loggedInUserId: state.userReducer.id
-  };
-};
-
 export default connect(
-  mapStateToProps,
-  { getPosts, getPost, removePost }
+  null,
+  { checkUserLoggedIn }
 )(Profile);

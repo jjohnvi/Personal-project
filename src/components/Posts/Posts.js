@@ -1,16 +1,16 @@
-import React, { Component } from "react";
 import axios from "axios";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { updateState } from "../../redux/UserReducer/UserReducer";
-import "./Posts.scss";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import {
   addPost,
-  getPost,
   getAllPosts,
-  removePost,
-  getPosts
+  getPost,
+  getPosts,
+  removePost
 } from "../../redux/PostsReducer/PostsReducer";
+import { updateState } from "../../redux/UserReducer/UserReducer";
+import "./Posts.scss";
 
 class Posts extends Component {
   constructor() {
@@ -64,20 +64,13 @@ class Posts extends Component {
     });
   };
 
-  goToProfile = () => {
-    this.props.getPosts().then(() => this.props.history.push("/profile"));
-  };
-
   render() {
     const { loading, posts } = this.props;
-    console.log(posts);
     return (
       <>
         <div className="newPost__cont">
           <div className="newPost__user">Welcome {this.props.username}</div>
-
-          <button onClick={this.goToProfile}>{this.props.username}</button>
-          <div>
+          <div className="posts__inputs">
             <input
               type="text"
               onChange={this.updateState}
@@ -96,7 +89,9 @@ class Posts extends Component {
               name="image_url"
               placeholder="Image URL"
             />
-            <button onClick={this.addPost}>+</button>
+            <button className="add__button" onClick={this.addPost}>
+              +
+            </button>
           </div>
         </div>
         {loading ? (
@@ -128,7 +123,7 @@ class Posts extends Component {
 
 const mapStateToProps = state => {
   return {
-    username: state.userReducer.username,
+    username: state.userReducer.user.username,
     posts: state.postsReducer.posts
   };
 };

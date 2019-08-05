@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { updateState, resetFields } from "../../redux/UserReducer/UserReducer";
+import { Link } from "react-router-dom";
+import { resetFields, updateState } from "../../redux/UserReducer/UserReducer";
+import "./Register.scss";
 
 class Register extends Component {
   clickGoBack = () => {
@@ -22,10 +23,10 @@ class Register extends Component {
         firstname: this.props.firstname,
         lastname: this.props.lastname
       })
-      .then(res => {
+      .then(() => {
         this.props.history.push("/home");
       })
-      .catch(err => {
+      .catch(() => {
         console.log("Not working");
       });
   };
@@ -33,34 +34,40 @@ class Register extends Component {
   render() {
     return (
       <>
-        <input
-          type="text"
-          onChange={this.updateState}
-          name="username"
-          placeholder="Username"
-        />
-        <input
-          type="password"
-          onChange={this.updateState}
-          name="password"
-          placeholder="Password"
-        />
-        <input
-          type="text"
-          onChange={this.updateState}
-          name="firstname"
-          placeholder="First Name"
-        />
-        <input
-          type="text"
-          onChange={this.updateState}
-          name="lastname"
-          placeholder="Last Name"
-        />
-        <Link to="/">
-          <button onClick={this.clickGoBack}>Go back</button>
-        </Link>
-        <button onClick={this.handleRegister}>Register!</button>
+        <div className="register__page">
+          <div className="register__cont">
+            <input
+              type="text"
+              onChange={this.updateState}
+              name="username"
+              placeholder="Username"
+            />
+            <input
+              type="password"
+              onChange={this.updateState}
+              name="password"
+              placeholder="Password"
+            />
+            <input
+              type="text"
+              onChange={this.updateState}
+              name="firstname"
+              placeholder="First Name"
+            />
+            <input
+              type="text"
+              onChange={this.updateState}
+              name="lastname"
+              placeholder="Last Name"
+            />
+            <div className="register__button">
+              <Link to="/">
+                <button onClick={this.clickGoBack}>Go back</button>
+              </Link>
+              <button onClick={this.handleRegister}>Register!</button>
+            </div>
+          </div>
+        </div>
       </>
     );
   }

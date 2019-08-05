@@ -5,6 +5,8 @@ const session = require("express-session");
 const app = express();
 const AC = require("./controllers/auth_controller");
 const PC = require("./controllers/posts_controller");
+const AM = require("./middlewares/auth_middleware");
+const FC = require("./controllers/follows_controller");
 const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 
 app.use(express.json());
@@ -30,7 +32,7 @@ app.use(
 //auth
 app.post("/auth/register", AC.registerUser);
 app.post("/auth/login", AC.loginUser);
-app.get("/auth/users", AC.getUsers);
+app.get("/auth/user", AC.getUser);
 app.get("/auth/logout", AC.logoutUser);
 
 //posts
@@ -39,6 +41,10 @@ app.get("/api/posts", PC.getPostsByUserId);
 app.delete("/api/posts/:id", PC.deletePost);
 app.get("/api/posts/:id", PC.getPost);
 app.get("/api/allposts", PC.getAllPosts);
+app.get("/api/follows/posts", FC.getFollowersPost);
+
+//Auth Endpoints
+app.use(AM.checkForUser);
 
 app.listen(SERVER_PORT, () => {
   console.log(`Listening on Port ${SERVER_PORT}`);

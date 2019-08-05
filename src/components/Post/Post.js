@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { connect } from "react-redux";
-import { removePost, getPost } from "../../redux/PostsReducer/PostsReducer";
+import { getPost, removePost } from "../../redux/PostsReducer/PostsReducer";
+import { checkUserLoggedIn } from "../../redux/UserReducer/UserReducer";
 import "./Post.scss";
 
 class Post extends Component {
   componentDidMount() {
-    console.log(this.props.match.params.id);
     this.getPost(this.props.match.params.id);
+    this.props.checkUserLoggedIn().catch(err => this.props.history.push("/"));
   }
 
   removePost = id => {
@@ -53,5 +53,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { removePost, getPost }
+  { removePost, getPost, checkUserLoggedIn }
 )(Post);

@@ -12,11 +12,19 @@ const initialState = {
 const UPDATE_STATE = "UPDATE_STATE";
 const RESET_FIELDS = "RESET_FIELDS";
 const LOGIN_USER = "LOGIN_USER";
+const CHECK_USER_LOGGED_IN = "CHECK_USER_LOGGED_IN";
 
 export const updateState = e => {
   return {
     type: UPDATE_STATE,
     payload: e
+  };
+};
+
+export const checkUserLoggedIn = () => {
+  return {
+    type: CHECK_USER_LOGGED_IN,
+    payload: axios.get("/auth/user")
   };
 };
 
@@ -44,7 +52,10 @@ export function userReducer(state = initialState, action) {
     case `${LOGIN_USER}_PENDING`:
       return { ...state, loading: true };
     case `${LOGIN_USER}_FULFILLED`:
-      console.log(payload.data);
+      return { ...state, loading: false, user: payload.data };
+    case `${CHECK_USER_LOGGED_IN}_PENDING`:
+      return { ...state, loading: true };
+    case `${CHECK_USER_LOGGED_IN}_FULFILLED`:
       return { ...state, loading: false, user: payload.data };
     default:
       return state;

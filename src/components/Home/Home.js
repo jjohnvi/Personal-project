@@ -1,16 +1,17 @@
-import React, { Component } from "react";
 import axios from "axios";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { updateState } from "../../redux/UserReducer/UserReducer";
-import Posts from "../Posts/Posts";
-import "./Home.scss";
-import Navbar from "../Navbar/Navbar";
-import { Link } from "react-router-dom";
 import {
   addPost,
-  getPost,
-  getAllPosts
+  getAllPosts,
+  getPost
 } from "../../redux/PostsReducer/PostsReducer";
+import {
+  checkUserLoggedIn,
+  updateState
+} from "../../redux/UserReducer/UserReducer";
+import Posts from "../Posts/Posts";
+import "./Home.scss";
 
 class Home extends Component {
   constructor() {
@@ -22,6 +23,10 @@ class Home extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.checkUserLoggedIn().catch(() => this.props.history.push("/"));
+  }
+
   handleLogout = () => {
     axios.get("/auth/logout").then(() => this.props.history.push("/"));
   };
@@ -31,7 +36,6 @@ class Home extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <>
         <div className="home">
@@ -45,12 +49,11 @@ class Home extends Component {
 
 const mapStateToProps = state => {
   return {
-    username: state.userReducer.username,
     posts: state.postsReducer.posts
   };
 };
 
 export default connect(
   mapStateToProps,
-  { updateState, addPost, getPost, getAllPosts }
+  { updateState, addPost, getPost, getAllPosts, checkUserLoggedIn }
 )(Home);

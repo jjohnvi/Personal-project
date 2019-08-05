@@ -1,18 +1,21 @@
 import React, { Component } from "react";
-import "../Navbar/Navbar.scss";
 import { connect } from "react-redux";
-import { Link, withRouter } from "react-router-dom";
-
-import "../../redux/UserReducer/UserReducer";
-import "../../redux/PostsReducer/PostsReducer";
+import { withRouter } from "react-router-dom";
+import { getPosts } from "../../redux/PostsReducer/PostsReducer";
+import "../Navbar/Navbar.scss";
 
 class Navbar extends Component {
   goToHome = () => {
-    this.props.history.push("/home");
+    if (this.props.username) {
+      this.props.history.push("/home");
+    }
+  };
+
+  goToProfile = () => {
+    this.props.getPosts().then(() => this.props.history.push("/profile"));
   };
   render() {
-    const { username, location } = this.props;
-    console.log(this.props);
+    const { username } = this.props;
 
     return (
       <div>
@@ -21,12 +24,11 @@ class Navbar extends Component {
             Mello
           </div>
           <ul className="navbar__list">
-            {!location.pathname === "/login" ? (
-              <li className="navbar__item">{username}</li>
-            ) : null}
-            <li className="navbar__item">Two</li>
-            <li className="navbar__item">Three</li>
-            <li className="navbar__item">Four</li>
+            <li className="navbar__item" onClick={this.goToProfile}>
+              {username}
+            </li>
+            <li className="navbar__item">post</li>
+            <li className="navbar__item">Menu</li>
           </ul>
         </nav>
       </div>
@@ -36,8 +38,13 @@ class Navbar extends Component {
 
 const mapStateToProps = state => {
   return {
-    username: state.userReducer.username
+    username: state.userReducer.user.username
   };
 };
 
-export default withRouter(connect(mapStateToProps)(Navbar));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { getPosts }
+  )(Navbar)
+);

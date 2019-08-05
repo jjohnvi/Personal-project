@@ -21,7 +21,7 @@ class Login extends Component {
       .then(() => {
         this.props.history.push("/home");
       })
-      .catch(err => {
+      .catch(() => {
         console.log("Error");
         this.setState({ error: true });
       });
@@ -29,27 +29,29 @@ class Login extends Component {
 
   render() {
     return (
-      <form className="login__form" type="submit" onSubmit={this.clickLogin}>
-        <input
-          type="text"
-          onChange={this.handleChange}
-          name="username"
-          placeholder="Username"
-        />
-        <input
-          type="password"
-          onChange={this.handleChange}
-          name="password"
-          placeholder="Password"
-        />
-        <div>
-          <button type="submit">Login</button>
-          <Link to="/register">
-            <button>Register</button>
-          </Link>
-        </div>
-        {this.state.error ? <h3>Wrong username & password</h3> : null}
-      </form>
+      <div className="login__cont">
+        <form className="login__form" type="submit" onSubmit={this.clickLogin}>
+          <input
+            type="text"
+            onChange={this.handleChange}
+            name="username"
+            placeholder="Username"
+          />
+          <input
+            type="password"
+            onChange={this.handleChange}
+            name="password"
+            placeholder="Password"
+          />
+          <div>
+            <button type="submit">Login</button>
+            <Link to="/register">
+              <button>Register</button>
+            </Link>
+          </div>
+          {this.state.error ? <h3>Wrong username & password</h3> : null}
+        </form>
+      </div>
     );
   }
 }

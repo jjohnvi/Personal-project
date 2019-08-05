@@ -28,7 +28,6 @@ const createPost = async (req, res, next) => {
 };
 
 const getPost = async (req, res, next) => {
-  console.log("hit");
   const db = req.app.get("db");
   const { id } = req.params;
   const results = await db.get_post([id]);

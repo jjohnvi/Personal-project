@@ -28,13 +28,12 @@ const registerUser = async (req, res, next) => {
   }
 };
 
-const getUsers = async (req, res, next) => {
-  const db = req.app.get("db");
-  db.get_users()
-    .then(users => {
-      res.json(users);
-    })
-    .catch(err => console.log(err));
+const getUser = async (req, res, next) => {
+  if (req.session.user && req.session.user.username) {
+    res.json(req.session.user);
+  } else {
+    res.status(401).json({ error: "You need to be logged in." });
+  }
 };
 
 const loginUser = async (req, res, next) => {
@@ -45,7 +44,6 @@ const loginUser = async (req, res, next) => {
   if (checkedUser.length === 0) {
     res.status(401).json({ error: "Wrong username and password." });
   }
-  // console.log(checkedUser);
 
   const isMatching = await bcrypt.compare(password, checkedUser[0].password);
   if (isMatching) {
@@ -70,7 +68,7 @@ const logoutUser = async (req, res) => {
 
 module.exports = {
   registerUser,
-  getUsers,
+  getUser,
   loginUser,
   logoutUser
 };
