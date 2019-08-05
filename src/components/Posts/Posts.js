@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import {
   addPost,
   getAllPosts,
@@ -25,6 +25,7 @@ class Posts extends Component {
   componentDidMount() {
     if (this.props.location.pathname === "/home") {
       this.props.getAllPosts();
+      console.log("hit");
     }
   }
 
@@ -43,6 +44,10 @@ class Posts extends Component {
   goToPost = id => {
     this.props.history.push(`/posts/${id}`);
   };
+
+  // goToUserProfile = id => {
+  //   this.props.history.push(`/${id}/posts`);
+  // };
 
   addPost = () => {
     this.props
@@ -67,6 +72,7 @@ class Posts extends Component {
   render() {
     const { loading, posts } = this.props;
     console.log(this.props);
+
     return (
       <>
         <div className="newPost__cont">
@@ -100,23 +106,23 @@ class Posts extends Component {
         ) : (
           posts.map(post => {
             return (
-              <>
-                <div className="content__cont">
+              <div className="content__cont" key={post.post_id}>
+                <div className="post" key={post.post_id}>
+                  <Link to={`/${post.user_id}/posts`}>
+                    <h2>{post.username}</h2>
+                  </Link>
                   <div onClick={() => this.goToPost(post.post_id)}>
-                    <div className="post" key={post.post_id}>
-                      <h2>{post.username}</h2>
-                      <img src={post.image_url} alt={post.title} />
-                      <h2>{post.title}</h2>
-                      <p>{post.content}</p>
-                    </div>
+                    <img src={post.image_url} alt={post.title} />
+                    <h2>{post.title}</h2>
+                    <p>{post.content}</p>
                   </div>
-                  {this.props.username === post.username ? (
-                    <button onClick={() => this.removePost(post.post_id)}>
-                      Delete
-                    </button>
-                  ) : null}
                 </div>
-              </>
+                {this.props.username === post.username ? (
+                  <button onClick={() => this.removePost(post.post_id)}>
+                    Delete
+                  </button>
+                ) : null}
+              </div>
             );
           })
         )}

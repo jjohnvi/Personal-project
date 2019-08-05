@@ -10,21 +10,30 @@ class UserProfile extends Component {
     this.props.checkUserLoggedIn().catch(() => this.props.history.push("/"));
   }
 
+  getPostsByProfile = id => {
+    this.props.getPostsByProfile(id);
+  };
+
   goToHome = () => {
     this.props.history.push("/home");
   };
   render() {
     return (
       <>
-        <div className="profile__post">
-          <Posts />
-        </div>
+        <div className="profile__post">Hello</div>
       </>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    username: state.userReducer.user.username,
+    posts: state.postsReducer.posts
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { checkUserLoggedIn, getPostsByProfile }
 )(UserProfile);

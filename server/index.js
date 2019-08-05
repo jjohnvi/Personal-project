@@ -30,10 +30,10 @@ app.use(
 );
 
 //auth
-app.post("/auth/register", AC.registerUser);
-app.post("/auth/login", AC.loginUser);
-app.get("/auth/user", AC.getUser);
-app.get("/auth/logout", AC.logoutUser);
+app.post("/auth/register", AM.checkForUser, AC.registerUser);
+app.post("/auth/login", AM.checkForUser, AC.loginUser);
+app.get("/auth/user", AM.checkForUser, AC.getUser);
+app.get("/auth/logout", AM.checkForUser, AC.logoutUser);
 
 //posts
 app.post("/api/posts", PC.createPost);
@@ -41,11 +41,8 @@ app.get("/api/posts", PC.getPostsByUserId);
 app.delete("/api/posts/:id", PC.deletePost);
 app.get("/api/posts/:id", PC.getPost);
 app.get("/api/allposts", PC.getAllPosts);
-app.get("api/:id/posts", PC.getPostsByProfile);
+app.get("/api/:id/posts", PC.getPostsByProfile);
 app.get("/api/follows/posts", FC.getFollowersPost);
-
-//Auth Endpoints
-app.use(AM.checkForUser);
 
 app.listen(SERVER_PORT, () => {
   console.log(`Listening on Port ${SERVER_PORT}`);

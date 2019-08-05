@@ -6,6 +6,7 @@ import Home from "./components/Home/Home";
 import Profile from "./components/Profile/Profile";
 import Post from "./components/Post/Post";
 import Navbar from "./components/Navbar/Navbar";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 export default (
   <>
@@ -16,7 +17,7 @@ export default (
       <Route path="/home" component={Home} />
       <Route path="/profile" component={Profile} />
       <Route path="/posts/:id" component={Post} />
-      {/* <Route path="/:userid/posts" component={User} /> */}
+      <Route path="/:id/posts" component={UserProfile} />
     </Switch>
   </>
 );

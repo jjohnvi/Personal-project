@@ -51,7 +51,10 @@ export const getPost = id => {
 export const getAllPosts = () => {
   return {
     type: GET_ALL_POSTS,
-    payload: axios.get("/api/allposts")
+    payload: axios.get("/api/allposts").then(res => {
+      console.log(res);
+      return res.data;
+    })
   };
 };
 
@@ -66,7 +69,8 @@ export function postsReducer(state = initialState, action) {
     case `${GET_ALL_POSTS}_PENDING`:
       return { ...state, loading: true };
     case `${GET_ALL_POSTS}_FULFILLED`:
-      return { ...state, loading: false, posts: payload.data };
+      console.log(payload);
+      return { ...state, loading: false, posts: payload };
 
     case `${ADD_POST}_PENDING`:
       return { ...state, loading: true };

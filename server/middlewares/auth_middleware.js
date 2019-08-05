@@ -3,9 +3,9 @@ const checkForUser = async (req, res, next) => {
     req.session.user = {
       loggedIn: false
     };
-    res.json(req.session.user);
+    // res.json(req.session.user);
   }
-  res.json(req.session.user);
+  // res.json(req.session.user);
   next();
 };
 
