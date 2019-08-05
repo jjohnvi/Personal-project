@@ -66,6 +66,7 @@ class Posts extends Component {
 
   render() {
     const { loading, posts } = this.props;
+    console.log(this.props);
     return (
       <>
         <div className="newPost__cont">
@@ -103,14 +104,17 @@ class Posts extends Component {
                 <div className="content__cont">
                   <div onClick={() => this.goToPost(post.post_id)}>
                     <div className="post" key={post.post_id}>
+                      <h2>{post.username}</h2>
                       <img src={post.image_url} alt={post.title} />
                       <h2>{post.title}</h2>
                       <p>{post.content}</p>
                     </div>
                   </div>
-                  <button onClick={() => this.removePost(post.post_id)}>
-                    Delete
-                  </button>
+                  {this.props.username === post.username ? (
+                    <button onClick={() => this.removePost(post.post_id)}>
+                      Delete
+                    </button>
+                  ) : null}
                 </div>
               </>
             );

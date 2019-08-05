@@ -8,6 +8,16 @@ const getPostsByUserId = async (req, res, next) => {
     .catch(err => console.log(err));
 };
 
+const getPostsByProfile = async (req, res, next) => {
+  const db = req.app.get("db");
+  const { id } = req.params;
+  db.get_posts([id])
+    .then(posts => {
+      res.json(posts);
+    })
+    .catch(err => console.log(err));
+};
+
 const getAllPosts = async (req, res, next) => {
   const db = req.app.get("db");
   // const { id } = req.session.user;
@@ -51,5 +61,6 @@ module.exports = {
   createPost,
   getPost,
   deletePost,
-  getAllPosts
+  getAllPosts,
+  getPostsByProfile
 };

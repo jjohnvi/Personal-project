@@ -7,7 +7,7 @@ import "./Post.scss";
 class Post extends Component {
   componentDidMount() {
     this.getPost(this.props.match.params.id);
-    this.props.checkUserLoggedIn().catch(err => this.props.history.push("/"));
+    this.props.checkUserLoggedIn().catch(() => this.props.history.push("/"));
   }
 
   removePost = id => {
@@ -24,6 +24,7 @@ class Post extends Component {
 
   render() {
     const { posts, loading } = this.props;
+    console.log(this.props);
     return (
       <div>
         <button onClick={this.goToHome}>Home</button>
@@ -32,6 +33,7 @@ class Post extends Component {
           {posts[0] && (
             <>
               <div className="post__cont">
+                <h2>{posts[0].username}</h2>
                 <img src={posts[0].image_url} />
                 <h2>{posts[0].title}</h2>
                 <p>{posts[0].content}</p>

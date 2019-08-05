@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
@@ -8,7 +7,8 @@ import {
 } from "../../redux/PostsReducer/PostsReducer";
 import {
   checkUserLoggedIn,
-  updateState
+  updateState,
+  logoutUser
 } from "../../redux/UserReducer/UserReducer";
 import Posts from "../Posts/Posts";
 import "./Home.scss";
@@ -28,7 +28,7 @@ class Home extends Component {
   }
 
   handleLogout = () => {
-    axios.get("/auth/logout").then(() => this.props.history.push("/"));
+    this.props.logoutUser().then(() => this.props.history.push("/"));
   };
 
   updateState = e => {
@@ -55,5 +55,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { updateState, addPost, getPost, getAllPosts, checkUserLoggedIn }
+  { updateState, addPost, getPost, getAllPosts, checkUserLoggedIn, logoutUser }
 )(Home);

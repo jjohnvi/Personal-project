@@ -10,11 +10,20 @@ const ADD_POST = "ADD_POST";
 const REMOVE_POST = "REMOVE_POST";
 const GET_POST = "GET_POST";
 const GET_ALL_POSTS = "GET_ALL_POSTS";
+const GET_POSTS_BY_PROFILE = "GET_POSTS_BY_PROFILE";
 
 export const getPosts = () => {
+  // getPostsByUserId
   return {
     type: GET_POSTS,
     payload: axios.get("/api/posts")
+  };
+};
+
+export const getPostsByProfile = id => {
+  return {
+    type: GET_POSTS_BY_PROFILE,
+    payload: axios.get(`/api/${id}/posts`)
   };
 };
 
@@ -72,6 +81,11 @@ export function postsReducer(state = initialState, action) {
     case `${GET_POST}_PENDING`:
       return { ...state, loading: true, posts: [] };
     case `${GET_POST}_FULFILLED`:
+      return { ...state, loading: false, posts: payload.data };
+
+    case `${GET_POSTS_BY_PROFILE}_PENDING`:
+      return { ...state, loading: true };
+    case `${GET_POSTS_BY_PROFILE}_FULFILLED`:
       return { ...state, loading: false, posts: payload.data };
     default:
       return state;

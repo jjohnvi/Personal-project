@@ -16,6 +16,7 @@ export default (
       <Route path="/home" component={Home} />
       <Route path="/profile" component={Profile} />
       <Route path="/posts/:id" component={Post} />
+      {/* <Route path="/:userid/posts" component={User} /> */}
     </Switch>
   </>
 );

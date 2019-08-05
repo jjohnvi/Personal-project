@@ -41,6 +41,7 @@ app.get("/api/posts", PC.getPostsByUserId);
 app.delete("/api/posts/:id", PC.deletePost);
 app.get("/api/posts/:id", PC.getPost);
 app.get("/api/allposts", PC.getAllPosts);
+app.get("api/:id/posts", PC.getPostsByProfile);
 app.get("/api/follows/posts", FC.getFollowersPost);
 
 //Auth Endpoints
