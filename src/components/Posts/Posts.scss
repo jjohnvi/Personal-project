@@ -5,7 +5,7 @@
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
-  width: 40rem;
+  width: 100vw;
   height: 18rem;
 }
 
@@ -54,12 +54,14 @@
   width: 400px;
   border: 2px $white solid;
   border-radius: 5px;
+  box-shadow: $box-shadow;
   margin: 1rem;
   padding: 1rem;
   background-color: $white;
   img {
     width: 250px;
     border: 2px $blue-3 solid;
+    box-shadow: $box-shadow;
     border-radius: 5px;
   }
 
@@ -76,4 +78,8 @@
     align-items: center;
     font-size: 0.8rem;
   }
+}
+
+.content__username {
+  cursor: pointer;
 }

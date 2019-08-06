@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getPost, removePost } from "../../redux/PostsReducer/PostsReducer";
+import {
+  getPost,
+  removePost,
+  getPostsByProfile
+} from "../../redux/PostsReducer/PostsReducer";
 import { checkUserLoggedIn } from "../../redux/UserReducer/UserReducer";
 import "./Post.scss";
 
@@ -18,6 +22,12 @@ class Post extends Component {
     this.props.getPost(id);
   };
 
+  goToUserProfile = username => {
+    this.props
+      .getPostsByProfile(username)
+      .then(() => this.props.history.push(`/posts/${username}`));
+  };
+
   goToHome = () => {
     this.props.history.push("/home");
   };
@@ -33,7 +43,9 @@ class Post extends Component {
           {posts[0] && (
             <>
               <div className="post__cont">
-                <h2>{posts[0].username}</h2>
+                <h2 onClick={() => this.goToUserProfile(posts[0].username)}>
+                  {posts[0].username}
+                </h2>
                 <img src={posts[0].image_url} />
                 <h2>{posts[0].title}</h2>
                 <p>{posts[0].content}</p>
@@ -55,5 +67,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { removePost, getPost, checkUserLoggedIn }
+  { removePost, getPost, checkUserLoggedIn, getPostsByProfile }
 )(Post);

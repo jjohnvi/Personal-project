@@ -6,4 +6,16 @@
   align-items: center;
   flex-direction: column;
   margin-top: 5rem;
+  .follow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 7rem;
+    height: 3rem;
+    font-size: 2rem;
+    background-color: $white;
+    border: solid 2px $blue-2;
+    border-radius: 4px;
+    box-shadow: $box-shadow;
+  }
 }

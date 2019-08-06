@@ -57,6 +57,8 @@ export function userReducer(state = initialState, action) {
   switch (type) {
     case UPDATE_STATE:
       return { ...state, ...payload };
+    case RESET_FIELDS:
+      return { ...state, ...payload };
     case `${LOGIN_USER}_PENDING`:
       return { ...state, loading: true };
     case `${LOGIN_USER}_FULFILLED`:

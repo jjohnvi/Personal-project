@@ -42,7 +42,11 @@ app.delete("/api/posts/:id", PC.deletePost);
 app.get("/api/posts/:id", PC.getPost);
 app.get("/api/allposts", PC.getAllPosts);
 app.get("/api/:username/posts", PC.getPostsByProfile);
-app.get("/api/follows/posts", FC.getFollowersPost);
+
+//follows
+app.post("/api/follow/:following_id", FC.follow);
+app.get("/api/follow/", FC.getFollowPosts);
+app.delete("/api/follow/:following_id", FC.unfollow);
 
 app.listen(SERVER_PORT, () => {
   console.log(`Listening on Port ${SERVER_PORT}`);

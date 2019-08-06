@@ -51,7 +51,7 @@ export const getPost = id => {
 export const getAllPosts = () => {
   return {
     type: GET_ALL_POSTS,
-    payload: axios.get("/api/allposts")
+    payload: axios.get("/api/follow/")
   };
 };
 

@@ -10,7 +10,11 @@ import {
   removePost,
   getPostsByProfile
 } from "../../redux/PostsReducer/PostsReducer";
-import { updateState } from "../../redux/UserReducer/UserReducer";
+import {
+  updateState,
+  checkUserLoggedIn,
+  resetFields
+} from "../../redux/UserReducer/UserReducer";
 import "./Posts.scss";
 
 class Posts extends Component {
@@ -25,6 +29,7 @@ class Posts extends Component {
 
   componentDidMount() {
     if (this.props.location.pathname === "/home") {
+      console.log("mounted");
       this.props.getAllPosts();
     }
   }
@@ -39,6 +44,10 @@ class Posts extends Component {
 
   updateState = e => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  resetFields = () => {
+    this.setState({ image_url: "", content: "", title: "" });
   };
 
   goToPost = id => {
@@ -58,6 +67,7 @@ class Posts extends Component {
         this.props.getAllPosts().then(() => {
           this.props.history.push("/home");
         });
+        this.resetFields();
       });
   };
 
@@ -75,10 +85,10 @@ class Posts extends Component {
 
   render() {
     const { loading, posts } = this.props;
-    console.log(this.props);
-
+    console.log(posts);
     return (
       <>
+        {/* {this.props.username !== posts.} */}
         <div className="newPost__cont">
           <div className="newPost__user">Welcome {this.props.username}</div>
           <div className="posts__inputs">
@@ -87,18 +97,21 @@ class Posts extends Component {
               onChange={this.updateState}
               name="title"
               placeholder="Title"
+              value={this.state.title}
             />
             <input
               type="text"
               onChange={this.updateState}
               name="content"
               placeholder="Content"
+              value={this.state.content}
             />
             <input
               type="text"
               onChange={this.updateState}
               name="image_url"
               placeholder="Image URL"
+              value={this.state.image_url}
             />
             <button className="add__button" onClick={this.addPost}>
               +
@@ -111,9 +124,11 @@ class Posts extends Component {
           posts.map(post => {
             return (
               <div className="content__cont" key={post.post_id}>
-                {console.log(post)}
-                <div className="post" key={post.post_id}>
-                  <h2 onClick={() => this.goToUserProfile(post.username)}>
+                <div className="post">
+                  <h2
+                    className="content__username"
+                    onClick={() => this.goToUserProfile(post.username)}
+                  >
                     {post.username}
                   </h2>
                   <div onClick={() => this.goToPost(post.post_id)}>
@@ -153,7 +168,9 @@ export default withRouter(
       getAllPosts,
       removePost,
       getPosts,
-      getPostsByProfile
+      getPostsByProfile,
+      checkUserLoggedIn,
+      resetFields
     }
   )(Posts)
 );

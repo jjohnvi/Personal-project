@@ -15,6 +15,7 @@ class Profile extends Component {
     return (
       <>
         <div className="profile__post">
+          <div className="follow">Follow</div>
           <Posts />
         </div>
       </>
