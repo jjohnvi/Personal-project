@@ -20,10 +20,10 @@ export const getPosts = () => {
   };
 };
 
-export const getPostsByProfile = id => {
+export const getPostsByProfile = username => {
   return {
     type: GET_POSTS_BY_PROFILE,
-    payload: axios.get(`/api/${id}/posts`)
+    payload: axios.get(`/api/${username}/posts`)
   };
 };
 
@@ -51,10 +51,7 @@ export const getPost = id => {
 export const getAllPosts = () => {
   return {
     type: GET_ALL_POSTS,
-    payload: axios.get("/api/allposts").then(res => {
-      console.log(res);
-      return res.data;
-    })
+    payload: axios.get("/api/allposts")
   };
 };
 
@@ -69,8 +66,7 @@ export function postsReducer(state = initialState, action) {
     case `${GET_ALL_POSTS}_PENDING`:
       return { ...state, loading: true };
     case `${GET_ALL_POSTS}_FULFILLED`:
-      console.log(payload);
-      return { ...state, loading: false, posts: payload };
+      return { ...state, loading: false, posts: payload.data };
 
     case `${ADD_POST}_PENDING`:
       return { ...state, loading: true };

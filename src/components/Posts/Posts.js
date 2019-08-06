@@ -7,7 +7,8 @@ import {
   getAllPosts,
   getPost,
   getPosts,
-  removePost
+  removePost,
+  getPostsByProfile
 } from "../../redux/PostsReducer/PostsReducer";
 import { updateState } from "../../redux/UserReducer/UserReducer";
 import "./Posts.scss";
@@ -25,7 +26,6 @@ class Posts extends Component {
   componentDidMount() {
     if (this.props.location.pathname === "/home") {
       this.props.getAllPosts();
-      console.log("hit");
     }
   }
 
@@ -42,12 +42,14 @@ class Posts extends Component {
   };
 
   goToPost = id => {
-    this.props.history.push(`/posts/${id}`);
+    this.props.history.push(`/post/${id}`);
   };
 
-  // goToUserProfile = id => {
-  //   this.props.history.push(`/${id}/posts`);
-  // };
+  goToUserProfile = username => {
+    this.props
+      .getPostsByProfile(username)
+      .then(() => this.props.history.push(`/posts/${username}`));
+  };
 
   addPost = () => {
     this.props
@@ -63,7 +65,9 @@ class Posts extends Component {
     this.props.removePost(id).then(() => {
       if (this.props.location.pathname === "/home") {
         this.props.getAllPosts();
-      } else if (this.props.location.pathname === "/profile") {
+      } else if (
+        this.props.location.pathname === `/posts/${this.props.username}`
+      ) {
         this.props.getPosts();
       }
     });
@@ -107,10 +111,11 @@ class Posts extends Component {
           posts.map(post => {
             return (
               <div className="content__cont" key={post.post_id}>
+                {console.log(post)}
                 <div className="post" key={post.post_id}>
-                  <Link to={`/${post.user_id}/posts`}>
-                    <h2>{post.username}</h2>
-                  </Link>
+                  <h2 onClick={() => this.goToUserProfile(post.username)}>
+                    {post.username}
+                  </h2>
                   <div onClick={() => this.goToPost(post.post_id)}>
                     <img src={post.image_url} alt={post.title} />
                     <h2>{post.title}</h2>
@@ -141,6 +146,14 @@ const mapStateToProps = state => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { updateState, addPost, getPost, getAllPosts, removePost, getPosts }
+    {
+      updateState,
+      addPost,
+      getPost,
+      getAllPosts,
+      removePost,
+      getPosts,
+      getPostsByProfile
+    }
   )(Posts)
 );

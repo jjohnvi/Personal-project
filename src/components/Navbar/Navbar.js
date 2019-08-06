@@ -1,18 +1,24 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getPosts } from "../../redux/PostsReducer/PostsReducer";
+import {
+  getPosts,
+  getPostsByProfile,
+  getAllPosts
+} from "../../redux/PostsReducer/PostsReducer";
 import "../Navbar/Navbar.scss";
 
 class Navbar extends Component {
   goToHome = () => {
     if (this.props.username) {
-      this.props.history.push("/home");
+      this.props.getAllPosts().then(() => this.props.history.push("/home"));
     }
   };
 
-  goToProfile = () => {
-    this.props.getPosts().then(() => this.props.history.push("/profile"));
+  goToProfile = username => {
+    this.props
+      .getPostsByProfile(username)
+      .then(() => this.props.history.push(`/posts/${this.props.username}`));
   };
   render() {
     const { username } = this.props;
@@ -24,7 +30,10 @@ class Navbar extends Component {
             Mello
           </div>
           <ul className="navbar__list">
-            <li className="navbar__item" onClick={this.goToProfile}>
+            <li
+              className="navbar__item"
+              onClick={() => this.goToProfile(this.props.username)}
+            >
               {username}
             </li>
             <li className="navbar__item">post</li>
@@ -45,6 +54,6 @@ const mapStateToProps = state => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { getPosts }
+    { getPosts, getPostsByProfile, getAllPosts }
   )(Navbar)
 );

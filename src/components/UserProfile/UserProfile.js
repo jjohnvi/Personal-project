@@ -6,7 +6,7 @@ import Posts from "../Posts/Posts";
 
 class UserProfile extends Component {
   componentDidMount() {
-    this.getPostsByProfile(this.props.match.params.id);
+    this.getPostsByProfile(this.props.match.params.username);
     this.props.checkUserLoggedIn().catch(() => this.props.history.push("/"));
   }
 

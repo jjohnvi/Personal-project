@@ -10,8 +10,8 @@ const getPostsByUserId = async (req, res, next) => {
 
 const getPostsByProfile = async (req, res, next) => {
   const db = req.app.get("db");
-  const { id } = req.params;
-  db.get_posts([id])
+  const { username } = req.params;
+  db.get_profile_posts([username])
     .then(posts => {
       res.json(posts);
     })
