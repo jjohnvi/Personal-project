@@ -1,7 +1,7 @@
 const follow = async (req, res, next) => {
   const db = req.app.get("db");
   const { id } = req.session.user;
-  const { user_id, following_id } = req.params;
+  const { following_id } = req.params;
 
   db.follow_user([id, following_id])
     .then(() => {
@@ -13,7 +13,7 @@ const follow = async (req, res, next) => {
 const unfollow = async (req, res, next) => {
   const db = req.app.get("db");
   const { id } = req.session.user;
-  const { user_id, following_id } = req.params;
+  const { following_id } = req.params;
 
   db.unfollow([id, following_id])
     .then(() => {

@@ -29,7 +29,6 @@ class Posts extends Component {
 
   componentDidMount() {
     if (this.props.location.pathname === "/home") {
-      console.log("mounted");
       this.props.getAllPosts();
     }
   }

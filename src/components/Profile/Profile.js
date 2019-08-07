@@ -12,8 +12,11 @@ class Profile extends Component {
   }
 
   render() {
+    const { posts, loading } = this.props;
+
     return (
       <>
+        {posts[0].user_id === posts[0]}
         <div className="profile__post">
           <div className="follow">Follow</div>
           <Posts />
@@ -23,7 +26,13 @@ class Profile extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    posts: state.postsReducer.posts
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { checkUserLoggedIn, getPosts }
 )(Profile);
