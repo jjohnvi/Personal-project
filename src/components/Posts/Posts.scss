@@ -5,8 +5,8 @@
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
-  width: 100vw;
-  height: 18rem;
+  width: 50vw;
+  height: 100%rem;
 }
 
 .profile__button {
@@ -29,7 +29,7 @@
   flex-direction: column;
   height: 10rem;
   input {
-    width: 15rem;
+    width: 36rem;
     height: 2rem;
   }
   input::placeholder {
@@ -41,9 +41,11 @@
 }
 
 .add__button {
-  width: 2rem;
-  height: 2rem;
+  width: 4rem;
+  height: 4rem;
   border-radius: 25rem;
+  font-size: 2rem;
+  box-shadow: $box-shadow;
 }
 
 .content__cont {
@@ -82,4 +84,32 @@
 
 .content__username {
   cursor: pointer;
+}
+
+// .searchpics__form {
+//   display: flex;
+//   flex-direction: row;
+// }
+
+.pics__outer__div {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  width: 60%;
+}
+.pics__cont {
+  display: flex;
+}
+
+.pics__array {
+  object-fit: cover;
+  overflow-x: scroll;
+  width: 200px;
+  height: 200px;
+  border: 2px solid $white;
+}
+
+.pics__array:hover {
+  transform: scale(1.1);
+  transition: 600ms;
 }

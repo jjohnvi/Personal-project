@@ -8,7 +8,9 @@ import {
   getPostsByProfile
 } from "../../redux/PostsReducer/PostsReducer";
 import { updateState } from "../../redux/UserReducer/UserReducer";
+import Modal from "react-modal";
 import "../Navbar/Navbar.scss";
+import ModalPost from "../modalPost/ModalPost";
 
 class Navbar extends Component {
   state = {
@@ -107,7 +109,12 @@ class Navbar extends Component {
             >
               {username}
             </li>
-            <li className="navbar__item">post</li>
+            {this.props.username && (
+              <li className="navbar__item">
+                <ModalPost />
+              </li>
+            )}
+
             <li className="navbar__item">Menu</li>
           </ul>
         </nav>

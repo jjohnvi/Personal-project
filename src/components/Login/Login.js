@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateState, loginUser } from "../../redux/UserReducer/UserReducer";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import "./../Login/Login.scss";
 

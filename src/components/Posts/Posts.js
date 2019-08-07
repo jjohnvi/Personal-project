@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import {
   addPost,
   getAllPosts,
@@ -17,6 +17,7 @@ import {
   resetFields
 } from "../../redux/UserReducer/UserReducer";
 import "./Posts.scss";
+import * as privateStuff from "../../key.json";
 
 class Posts extends Component {
   constructor() {
@@ -24,7 +25,9 @@ class Posts extends Component {
     this.state = {
       image_url: "",
       content: "",
-      title: ""
+      title: "",
+      searchPics: "",
+      pictures: []
     };
   }
 
@@ -60,17 +63,6 @@ class Posts extends Component {
       .then(() => this.props.history.push(`/posts/${username}`));
   };
 
-  addPost = () => {
-    this.props
-      .addPost(this.state.image_url, this.state.content, this.state.title)
-      .then(() => {
-        this.props.getAllPosts().then(() => {
-          this.props.history.push("/home");
-        });
-        this.resetFields();
-      });
-  };
-
   editPost = id => {
     this.props
       .editPost(id, this.state.image_url, this.state.content, this.state.title)
@@ -100,11 +92,17 @@ class Posts extends Component {
 
   render() {
     const { loading, posts } = this.props;
-    console.log(posts);
+    const { pictures } = this.state;
+    const picDisplay = pictures.map(val => {
+      return (
+        <div className="pics__cont">
+          <img className="pics__array" src={val} key={val} alt="Error" />
+        </div>
+      );
+    });
     return (
       <>
-        <div className="newPost__cont">
-          {/* <div className="newPost__user">Welcome {this.props.username}</div> */}
+        {/* <div className="newPost__cont">
           <div className="posts__inputs">
             <input
               type="text"
@@ -121,17 +119,31 @@ class Posts extends Component {
               value={this.state.content}
             />
             <input
-              type="text"
+              type="url"
               onChange={this.updateState}
               name="image_url"
               placeholder="Image URL"
               value={this.state.image_url}
             />
+            <form
+              type="submit"
+              onSubmit={this.searchPics}
+              className="searchpics__form"
+            >
+              <input
+                type="text"
+                onChange={this.updateState}
+                name="searchPics"
+                placeholder="Search for photos then press Enter"
+                value={this.state.searchPics}
+              />
+            </form>
             <button className="add__button" onClick={this.addPost}>
               +
             </button>
           </div>
-        </div>
+          <div className="pics__outer__div">{picDisplay}</div>
+        </div> */}
         {loading ? (
           <h3>Loading...</h3>
         ) : (

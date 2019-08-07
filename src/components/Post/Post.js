@@ -46,7 +46,7 @@ class Post extends Component {
                 <h2 onClick={() => this.goToUserProfile(posts[0].username)}>
                   {posts[0].username}
                 </h2>
-                <img src={posts[0].image_url} />
+                <img src={posts[0].image_url} alt="Error" />
                 <h2>{posts[0].title}</h2>
                 <p>{posts[0].content}</p>
               </div>
