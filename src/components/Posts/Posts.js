@@ -8,7 +8,8 @@ import {
   getPost,
   getPosts,
   removePost,
-  getPostsByProfile
+  getPostsByProfile,
+  editPost
 } from "../../redux/PostsReducer/PostsReducer";
 import {
   updateState,
@@ -70,6 +71,21 @@ class Posts extends Component {
       });
   };
 
+  editPost = id => {
+    this.props
+      .editPost(id, this.state.image_url, this.state.content, this.state.title)
+      .then(() => {
+        if (this.props.location.pathname === "/home") {
+          this.props.getAllPosts();
+        } else if (
+          this.props.location.pathname === `/posts/${this.props.username}`
+        ) {
+          this.props.getPosts();
+        }
+        this.resetFields();
+      });
+  };
+
   removePost = id => {
     this.props.removePost(id).then(() => {
       if (this.props.location.pathname === "/home") {
@@ -87,9 +103,8 @@ class Posts extends Component {
     console.log(posts);
     return (
       <>
-        {/* {this.props.username !== posts.} */}
         <div className="newPost__cont">
-          <div className="newPost__user">Welcome {this.props.username}</div>
+          {/* <div className="newPost__user">Welcome {this.props.username}</div> */}
           <div className="posts__inputs">
             <input
               type="text"
@@ -137,9 +152,14 @@ class Posts extends Component {
                   </div>
                 </div>
                 {this.props.username === post.username ? (
-                  <button onClick={() => this.removePost(post.post_id)}>
-                    Delete
-                  </button>
+                  <>
+                    <button onClick={() => this.removePost(post.post_id)}>
+                      Delete
+                    </button>
+                    <button onClick={() => this.editPost(post.post_id)}>
+                      Edit
+                    </button>
+                  </>
                 ) : null}
               </div>
             );
@@ -169,7 +189,8 @@ export default withRouter(
       getPosts,
       getPostsByProfile,
       checkUserLoggedIn,
-      resetFields
+      resetFields,
+      editPost
     }
   )(Posts)
 );

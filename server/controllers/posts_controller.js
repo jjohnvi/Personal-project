@@ -56,11 +56,29 @@ const deletePost = async (req, res, next) => {
     });
 };
 
+const editPost = (req, res, next) => {
+  const db = req.app.get("db");
+  const { params, body } = req;
+
+  console.log(body);
+
+  db.change_post([params.id, body.image_url, body.content, body.title])
+    .then(post => {
+      console.log(post);
+      res.status(200).json(post);
+    })
+    .catch(err => {
+      res.status(500).send({ errorMessage: "Can't update, bro." });
+      console.error(err);
+    });
+};
+
 module.exports = {
   getPostsByUserId,
   createPost,
   getPost,
   deletePost,
   getAllPosts,
-  getPostsByProfile
+  getPostsByProfile,
+  editPost
 };

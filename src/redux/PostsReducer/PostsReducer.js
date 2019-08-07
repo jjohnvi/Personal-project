@@ -11,6 +11,7 @@ const REMOVE_POST = "REMOVE_POST";
 const GET_POST = "GET_POST";
 const GET_ALL_POSTS = "GET_ALL_POSTS";
 const GET_POSTS_BY_PROFILE = "GET_POSTS_BY_PROFILE";
+const EDIT_POST = "EDIT_POST";
 
 export const getPosts = () => {
   // getPostsByUserId
@@ -31,6 +32,13 @@ export const addPost = (image_url, content, title) => {
   return {
     type: ADD_POST,
     payload: axios.post("/api/posts", { image_url, content, title })
+  };
+};
+
+export const editPost = (id, image_url, content, title) => {
+  return {
+    type: EDIT_POST,
+    payload: axios.put(`/api/posts/${id}`, { image_url, content, title })
   };
 };
 
@@ -57,6 +65,7 @@ export const getAllPosts = () => {
 
 export function postsReducer(state = initialState, action) {
   const { type, payload } = action;
+  console.log(action);
   switch (type) {
     case `${GET_POSTS}_PENDING`:
       return { ...state, loading: true };
@@ -71,6 +80,11 @@ export function postsReducer(state = initialState, action) {
     case `${ADD_POST}_PENDING`:
       return { ...state, loading: true };
     case `${ADD_POST}_FULFILLED`:
+      return { ...state, loading: false, posts: payload.data };
+
+    case `${EDIT_POST}_PENDING`:
+      return { ...state, loading: true };
+    case `${EDIT_POST}_FULFILLED`:
       return { ...state, loading: false, posts: payload.data };
 
     case `${REMOVE_POST}_PENDING`:

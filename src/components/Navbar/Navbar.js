@@ -42,6 +42,13 @@ class Navbar extends Component {
       .getPostsByProfile(username)
       .then(() => this.props.history.push(`/posts/${this.props.username}`));
   };
+
+  goToUserProfile = username => {
+    this.props
+      .getPostsByProfile(username)
+      .then(() => this.props.history.push(`/posts/${username}`));
+  };
+
   render() {
     const { username, users } = this.props;
 
@@ -79,7 +86,12 @@ class Navbar extends Component {
                     {users.map(user => {
                       return (
                         <div key={user.user_id}>
-                          <li className="dropdown__item">{user.username}</li>
+                          <li
+                            className="dropdown__item"
+                            onClick={() => this.goToUserProfile(user.username)}
+                          >
+                            {user.username}
+                          </li>
                         </div>
                       );
                     })}

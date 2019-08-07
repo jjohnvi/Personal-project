@@ -43,6 +43,7 @@ app.delete("/api/posts/:id", PC.deletePost);
 app.get("/api/posts/:id", PC.getPost);
 app.get("/api/allposts", PC.getAllPosts);
 app.get("/api/:username/posts", PC.getPostsByProfile);
+app.put("/api/posts/:id", PC.editPost);
 
 //follows
 app.post("/api/follow/:following_id", FC.follow);

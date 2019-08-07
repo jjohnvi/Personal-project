@@ -13,10 +13,11 @@ class Profile extends Component {
 
   render() {
     const { posts, loading } = this.props;
+    console.log(posts);
 
     return (
       <>
-        {posts[0].user_id === posts[0]}
+        {/* {posts[0].user_id === posts[0]} */}
         <div className="profile__post">
           <div className="follow">Follow</div>
           <Posts />
