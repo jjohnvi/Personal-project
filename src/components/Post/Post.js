@@ -8,6 +8,10 @@ import {
 } from "../../redux/PostsReducer/PostsReducer";
 import { likePost, getLikes } from "../../redux/LikesReducer/LikesReducer";
 import { checkUserLoggedIn } from "../../redux/UserReducer/UserReducer";
+import {
+  addComment,
+  getComments
+} from "../../redux/CommentsReducer/CommentsReducer";
 import "./Post.scss";
 
 class Post extends Component {
@@ -33,6 +37,10 @@ class Post extends Component {
       .then(() => this.props.history.push(`/posts/${username}`));
   };
 
+  addComment = id => {
+    this.props.addComment(id).then(() => this.props.getComments());
+  };
+
   likePost = post => {
     this.props
       .likePost(post)
@@ -51,37 +59,40 @@ class Post extends Component {
     // const postId = likesCount.filter(id => id.post_id === posts[0].post_id);
 
     return (
-      <div>
-        <button onClick={this.goToHome}>Home</button>
-        <div>
-          {loading && <h3>Loading...</h3>}
-          {posts[0] && (
-            <>
-              <div className="post__cont">
-                <h2 onClick={() => this.goToUserProfile(posts[0].username)}>
-                  {posts[0].username}
-                </h2>
-                <img src={posts[0].image_url} alt="Error" />
-                <h2>{posts[0].title}</h2>
-                <p>{posts[0].content}</p>
-                {this.props.username === posts[0].username ? (
-                  <>
-                    <button onClick={() => this.removePost(posts[0].post_id)}>
-                      Delete
-                    </button>
-                    <button onClick={() => this.editPost(posts[0].post_id)}>
-                      Edit
-                    </button>
-                  </>
-                ) : null}
-                <button onClick={() => this.likePost(posts[0].post_id)}>
+      <div className="post__page__cont">
+        {loading && <h3>Loading...</h3>}
+        {posts[0] && (
+          <>
+            <div className="post__cont">
+              <h2 onClick={() => this.goToUserProfile(posts[0].username)}>
+                {posts[0].username}
+              </h2>
+              <img src={posts[0].image_url} alt="Error" />
+              <h2>{posts[0].title}</h2>
+              <p>{posts[0].content}</p>
+              {this.props.username === posts[0].username ? (
+                <>
+                  <button onClick={() => this.removePost(posts[0].post_id)}>
+                    Delete
+                  </button>
+                  <button onClick={() => this.editPost(posts[0].post_id)}>
+                    Edit
+                  </button>
+                </>
+              ) : null}
+              <div className="comment__like">
+                <button
+                  className="like__button"
+                  onClick={() => this.likePost(posts[0].post_id)}
+                >
                   Like!
                 </button>
                 <p>{likesForUser}</p>
+                <button>Add Comment</button>
               </div>
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        )}
       </div>
     );
   }
@@ -93,7 +104,8 @@ const mapStateToProps = state => {
     liked: state.likesReducer.liked,
     posts: state.postsReducer.posts,
     loading: state.postsReducer.loading,
-    likesForUser: state.likesReducer.likesForUser
+    likesForUser: state.likesReducer.likesForUser,
+    comments: state.commentsReducer.comments
   };
 };
 
@@ -106,6 +118,8 @@ export default connect(
     getPostsByProfile,
     likePost,
     getLikes,
-    getAllPosts
+    getAllPosts,
+    addComment,
+    getComments
   }
 )(Post);

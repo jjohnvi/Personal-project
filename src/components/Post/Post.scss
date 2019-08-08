@@ -1,14 +1,29 @@
 @import "../../App.scss";
 
+.post__page__cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.post__page__cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .post__cont {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   margin-top: 5rem;
-  height: 100vh;
+  height: 100%;
+  width: 30%;
   img {
-    width: 250px;
+    width: 100%;
     border: 2px $blue-3 solid;
     border-radius: 5px;
   }
@@ -16,9 +31,18 @@
   h2 {
     font-size: 2rem;
     font-family: $title-font;
+    text-align: center;
   }
 
   p {
     font-size: 0.8rem;
+    text-align: center;
   }
+}
+
+.comment__like {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
