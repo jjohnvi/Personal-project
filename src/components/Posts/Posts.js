@@ -17,6 +17,12 @@ import {
   resetFields,
   getUserId
 } from "../../redux/UserReducer/UserReducer";
+
+import {
+  getAllLikes,
+  likePost,
+  getLikes
+} from "../../redux/LikesReducer/LikesReducer";
 import "./Posts.scss";
 
 class Posts extends Component {
@@ -25,15 +31,14 @@ class Posts extends Component {
     this.state = {
       image_url: "",
       content: "",
-      title: "",
-      searchPics: "",
-      pictures: []
+      title: ""
     };
   }
 
   componentDidMount() {
     if (this.props.location.pathname === "/home") {
       this.props.getAllPosts();
+      this.props.getAllLikes();
     }
   }
 
@@ -55,6 +60,7 @@ class Posts extends Component {
 
   goToPost = id => {
     this.props.history.push(`/post/${id}`);
+    this.props.getLikes(id);
   };
 
   goToUserProfile = username => {
@@ -62,6 +68,10 @@ class Posts extends Component {
       .getPostsByProfile(username)
       .then(() => this.props.getUserId(username))
       .then(() => this.props.history.push(`/posts/${username}`));
+  };
+
+  likePost = post => {
+    this.props.likePost(post).then(() => this.props.getAllLikes());
   };
 
   editPost = id => {
@@ -92,21 +102,25 @@ class Posts extends Component {
   };
 
   render() {
-    const { loading, posts } = this.props;
-    const { pictures } = this.state;
-    const picDisplay = pictures.map(val => {
-      return (
-        <div className="pics__cont">
-          <img className="pics__array" src={val} key={val} alt="Error" />
-        </div>
-      );
-    });
+    const { loading, posts, liked, likesCount } = this.props;
     return (
       <>
         {loading ? (
           <h3>Loading...</h3>
         ) : (
           posts.map(post => {
+            const { post_id } = post;
+            const postLike = this.props.likesCount.filter(
+              post => post.post_id === post_id
+            );
+
+            let likeCount;
+
+            if (postLike[0] === undefined) {
+              likeCount = 0;
+            } else {
+              likeCount = +postLike[0].count;
+            }
             return (
               <div className="content__cont" key={post.post_id}>
                 <div className="post">
@@ -135,6 +149,10 @@ class Posts extends Component {
                     </button>
                   </>
                 ) : null}
+                <button onClick={() => this.likePost(post.post_id)}>
+                  Like!
+                </button>
+                <p>{likeCount}</p>
               </div>
             );
           })
@@ -147,7 +165,9 @@ class Posts extends Component {
 const mapStateToProps = state => {
   return {
     username: state.userReducer.user.username,
-    posts: state.postsReducer.posts
+    posts: state.postsReducer.posts,
+    liked: state.likesReducer.liked,
+    likesCount: state.likesReducer.likesCount
   };
 };
 
@@ -165,7 +185,10 @@ export default withRouter(
       checkUserLoggedIn,
       resetFields,
       editPost,
-      getUserId
+      getUserId,
+      getAllLikes,
+      likePost,
+      getLikes
     }
   )(Posts)
 );

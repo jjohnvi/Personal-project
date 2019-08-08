@@ -6,8 +6,11 @@ const app = express();
 const AC = require("./controllers/auth_controller");
 const PC = require("./controllers/posts_controller");
 const AM = require("./middlewares/auth_middleware");
+const GM = require("./middlewares/get_middleware");
 const FC = require("./controllers/follows_controller");
 const UC = require("./controllers/users_controller");
+const LC = require("./controllers/likes_controller");
+const CC = require("./controllers/comments_controller");
 const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 
 app.use(express.json());
@@ -38,20 +41,29 @@ app.get("/auth/logout", AM.checkForUser, AC.logoutUser);
 
 //posts
 app.post("/api/posts", PC.createPost);
-app.get("/api/posts", PC.getPostsByUserId);
+app.get("/api/posts", GM.time, PC.getPostsByUserId);
 app.delete("/api/posts/:id", PC.deletePost);
-app.get("/api/posts/:id", PC.getPost);
-app.get("/api/allposts", PC.getAllPosts);
-app.get("/api/:username/posts", PC.getPostsByProfile);
+app.get("/api/posts/:id", GM.time, PC.getPost);
+app.get("/api/allposts", GM.time, PC.getAllPosts);
+app.get("/api/:username/posts", GM.time, PC.getPostsByProfile);
 app.put("/api/posts/:id", PC.editPost);
 
 //follows
-app.post("/api/follow/:following_id", FC.follow);
-app.get("/api/follow/", FC.getFollowPosts);
+app.post("/api/follow/:following_id", GM.time, FC.follow);
+app.get("/api/follow/", GM.time, FC.getFollowPosts);
 
 //users
-app.get("/api/users/", UC.getUsers);
+app.get("/api/users/", GM.time, UC.getUsers);
 app.get("/api/users/:username", UC.getUserId);
+
+//likes
+app.post("/api/likes/:post_id", LC.addLike);
+app.get("/api/likes/:post_id", LC.getLikesForUser);
+app.get("/api/likes/", GM.time, LC.getLikes);
+
+//comments
+app.post("/api/comments/:post_id", GM.time, CC.addComment);
+app.get("/api/comments/:post_id", GM.time, CC.getComments);
 
 app.listen(SERVER_PORT, () => {
   console.log(`Listening on Port ${SERVER_PORT}`);

@@ -8,7 +8,6 @@ import {
   getPostsByProfile
 } from "../../redux/PostsReducer/PostsReducer";
 import { updateState, getUserId } from "../../redux/UserReducer/UserReducer";
-import Modal from "react-modal";
 import "../Navbar/Navbar.scss";
 import ModalPost from "../modalPost/ModalPost";
 

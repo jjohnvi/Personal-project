@@ -47,8 +47,9 @@ const getPost = async (req, res, next) => {
 const deletePost = async (req, res, next) => {
   const db = req.app.get("db");
   const { id } = req.params;
-
-  db.delete_post(id)
+  console.log(req.params);
+  await db
+    .delete_post(id)
     .then(posts => res.status(200).json(posts))
     .catch(err => {
       res.status(500).send({ errorMessage: "Can't delete post." });
