@@ -18,14 +18,18 @@ class Profile extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <>
         <div className="profile__post">
-          <button className="follow" onClick={this.followUser}>
-            {this.props.following && this.props.following.followed === false
-              ? "Follow"
-              : "Unfollow"}
-          </button>
+          {this.props.username !== this.props.match.params.username ? (
+            <button className="follow" onClick={this.followUser}>
+              {this.props.following && this.props.following.followed === false
+                ? "Follow"
+                : "Unfollow"}
+            </button>
+          ) : null}
+
           <Posts />
         </div>
       </>
@@ -36,7 +40,8 @@ class Profile extends Component {
 const mapStateToProps = state => {
   return {
     followingUserId: state.userReducer.followingUserId,
-    following: state.followsReducer.following
+    following: state.followsReducer.following,
+    username: state.userReducer.user.username
   };
 };
 

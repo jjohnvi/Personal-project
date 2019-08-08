@@ -65,7 +65,7 @@ export const getAllPosts = () => {
 
 export function postsReducer(state = initialState, action) {
   const { type, payload } = action;
-  console.log(action);
+
   switch (type) {
     case `${GET_POSTS}_PENDING`:
       return { ...state, loading: true };
