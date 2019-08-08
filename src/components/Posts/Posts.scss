@@ -1,14 +1,5 @@
 @import "../../App.scss";
 
-.newPost__cont {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
-  width: 50vw;
-  height: 100%rem;
-}
-
 .profile__button {
   width: 7rem;
   height: 2rem;
@@ -27,25 +18,32 @@
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
-  height: 10rem;
+  width: 100%;
+
   input {
-    width: 36rem;
-    height: 2rem;
+    width: 100%;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  form {
+    width: 100%;
+    appearance: none;
   }
   input::placeholder {
     font-family: $title-font;
     color: $blue-3;
-    width: 100%;
-    height: 100%;
   }
 }
 
 .add__button {
-  width: 4rem;
+  width: 10rem;
   height: 4rem;
   border-radius: 25rem;
   font-size: 2rem;
   box-shadow: $box-shadow;
+  margin-top: 1rem;
 }
 
 .content__cont {
@@ -59,7 +57,13 @@
   box-shadow: $box-shadow;
   margin: 1rem;
   padding: 1rem;
-  background-color: $white;
+  background-color: white;
+  .img__cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
   img {
     width: 250px;
     border: 2px $blue-3 solid;
@@ -71,7 +75,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     font-size: 1.5rem;
+
+    letter-spacing: 1px;
   }
 
   p {
@@ -79,6 +86,7 @@
     justify-content: center;
     align-items: center;
     font-size: 0.8rem;
+    text-align: center;
   }
 }
 
@@ -94,8 +102,8 @@
 .pics__outer__div {
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
-  width: 60%;
+  overflow-x: auto;
+  width: 100%;
 }
 .pics__cont {
   display: flex;
@@ -104,9 +112,10 @@
 .pics__array {
   object-fit: cover;
   overflow-x: scroll;
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   border: 2px solid $white;
+  box-shadow: $box-shadow;
 }
 
 .pics__array:hover {

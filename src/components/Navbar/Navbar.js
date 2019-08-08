@@ -7,7 +7,7 @@ import {
   getPosts,
   getPostsByProfile
 } from "../../redux/PostsReducer/PostsReducer";
-import { updateState } from "../../redux/UserReducer/UserReducer";
+import { updateState, getUserId } from "../../redux/UserReducer/UserReducer";
 import Modal from "react-modal";
 import "../Navbar/Navbar.scss";
 import ModalPost from "../modalPost/ModalPost";
@@ -48,6 +48,7 @@ class Navbar extends Component {
   goToUserProfile = username => {
     this.props
       .getPostsByProfile(username)
+      .then(() => this.props.getUserId(username))
       .then(() => this.props.history.push(`/posts/${username}`));
   };
 
@@ -133,6 +134,13 @@ const mapStateToProps = state => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { getPosts, getPostsByProfile, getAllPosts, searchUser, updateState }
+    {
+      getPosts,
+      getPostsByProfile,
+      getAllPosts,
+      searchUser,
+      updateState,
+      getUserId
+    }
   )(Navbar)
 );

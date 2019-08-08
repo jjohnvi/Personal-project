@@ -34,7 +34,7 @@
 }
 
 .searchbar::placeholder {
-  background-color: $white;
+  background-color: white;
 }
 
 .title {
@@ -65,7 +65,7 @@
 }
 
 .dropdown {
-  background-color: $white;
+  background-color: white;
   position: fixed;
   // right: 50rem;
   // left: 26.54rem;
@@ -88,6 +88,7 @@
 .dropdown__list {
   font-size: 3rem;
   margin: 0;
+  margin-top: 1rem;
   list-style: none;
   // padding: 0;
   // padding: 10px;

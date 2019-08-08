@@ -6,7 +6,8 @@ const initialState = {
   lastname: "",
   password: "",
   loading: false,
-  user: {}
+  user: {},
+  followingUserId: null
 };
 
 const UPDATE_STATE = "UPDATE_STATE";
@@ -14,6 +15,7 @@ const RESET_FIELDS = "RESET_FIELDS";
 const LOGIN_USER = "LOGIN_USER";
 const CHECK_USER_LOGGED_IN = "CHECK_USER_LOGGED_IN";
 const LOGOUT_USER = "LOGOUT_USER";
+const GET_USER_ID = "GET_USER_ID";
 
 export const updateState = e => {
   return {
@@ -36,6 +38,13 @@ export const loginUser = (username, password) => {
       username: username,
       password: password
     })
+  };
+};
+
+export const getUserId = username => {
+  return {
+    type: GET_USER_ID,
+    payload: axios.get(`/api/users/${username}`)
   };
 };
 
@@ -67,6 +76,10 @@ export function userReducer(state = initialState, action) {
       return { ...state, loading: true };
     case `${CHECK_USER_LOGGED_IN}_FULFILLED`:
       return { ...state, loading: false, user: payload.data };
+    case `${GET_USER_ID}_PENDING`:
+      return { ...state, loading: true };
+    case `${GET_USER_ID}_FULFILLED`:
+      return { ...state, loading: false, followingUserId: payload.data };
     case `${LOGOUT_USER}_PENDING`:
       return { ...state, loading: true };
     case `${LOGOUT_USER}_FULFILLED`:

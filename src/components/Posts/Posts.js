@@ -14,10 +14,10 @@ import {
 import {
   updateState,
   checkUserLoggedIn,
-  resetFields
+  resetFields,
+  getUserId
 } from "../../redux/UserReducer/UserReducer";
 import "./Posts.scss";
-import * as privateStuff from "../../key.json";
 
 class Posts extends Component {
   constructor() {
@@ -60,6 +60,7 @@ class Posts extends Component {
   goToUserProfile = username => {
     this.props
       .getPostsByProfile(username)
+      .then(() => this.props.getUserId(username))
       .then(() => this.props.history.push(`/posts/${username}`));
   };
 
@@ -102,48 +103,6 @@ class Posts extends Component {
     });
     return (
       <>
-        {/* <div className="newPost__cont">
-          <div className="posts__inputs">
-            <input
-              type="text"
-              onChange={this.updateState}
-              name="title"
-              placeholder="Title"
-              value={this.state.title}
-            />
-            <input
-              type="text"
-              onChange={this.updateState}
-              name="content"
-              placeholder="Content"
-              value={this.state.content}
-            />
-            <input
-              type="url"
-              onChange={this.updateState}
-              name="image_url"
-              placeholder="Image URL"
-              value={this.state.image_url}
-            />
-            <form
-              type="submit"
-              onSubmit={this.searchPics}
-              className="searchpics__form"
-            >
-              <input
-                type="text"
-                onChange={this.updateState}
-                name="searchPics"
-                placeholder="Search for photos then press Enter"
-                value={this.state.searchPics}
-              />
-            </form>
-            <button className="add__button" onClick={this.addPost}>
-              +
-            </button>
-          </div>
-          <div className="pics__outer__div">{picDisplay}</div>
-        </div> */}
         {loading ? (
           <h3>Loading...</h3>
         ) : (
@@ -157,7 +116,10 @@ class Posts extends Component {
                   >
                     {post.username}
                   </h2>
-                  <div onClick={() => this.goToPost(post.post_id)}>
+                  <div
+                    className="img__cont"
+                    onClick={() => this.goToPost(post.post_id)}
+                  >
                     <img src={post.image_url} alt={post.title} />
                     <h2>{post.title}</h2>
                     <p>{post.content}</p>
@@ -202,7 +164,8 @@ export default withRouter(
       getPostsByProfile,
       checkUserLoggedIn,
       resetFields,
-      editPost
+      editPost,
+      getUserId
     }
   )(Posts)
 );

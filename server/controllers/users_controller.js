@@ -1,4 +1,4 @@
-const getUsers = async (req, res, next) => {
+const getUsers = (req, res, next) => {
   const db = req.app.get("db");
   const { username } = req.query;
 
@@ -9,4 +9,15 @@ const getUsers = async (req, res, next) => {
     .catch(err => console.log(err));
 };
 
-module.exports = { getUsers };
+const getUserId = (req, res, next) => {
+  const db = req.app.get("db");
+  const { username } = req.params;
+
+  db.get_user_id(username)
+    .then(id => {
+      res.json(id);
+    })
+    .catch(err => console.log(err));
+};
+
+module.exports = { getUsers, getUserId };

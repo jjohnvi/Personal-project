@@ -2,24 +2,30 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { checkUserLoggedIn } from "../../redux/UserReducer/UserReducer";
 import { getPosts } from "../../redux/PostsReducer/PostsReducer";
+import { followUser } from "../../redux/FollowsReducer/FollowsReducer";
 import Posts from "../Posts/Posts";
 import "./Profile.scss";
 
 class Profile extends Component {
   componentDidMount() {
-    // this.props.getPosts();
     this.props.checkUserLoggedIn().catch(() => this.props.history.push("/"));
   }
 
-  render() {
-    const { posts, loading } = this.props;
-    console.log(posts);
+  followUser = () => {
+    this.props.followUser(
+      this.props.followingUserId && this.props.followingUserId[0].user_id
+    );
+  };
 
+  render() {
     return (
       <>
-        {/* {posts[0].user_id === posts[0]} */}
         <div className="profile__post">
-          <div className="follow">Follow</div>
+          <button className="follow" onClick={this.followUser}>
+            {this.props.following && this.props.following.followed === false
+              ? "Follow"
+              : "Unfollow"}
+          </button>
           <Posts />
         </div>
       </>
@@ -29,11 +35,12 @@ class Profile extends Component {
 
 const mapStateToProps = state => {
   return {
-    posts: state.postsReducer.posts
+    followingUserId: state.userReducer.followingUserId,
+    following: state.followsReducer.following
   };
 };
 
 export default connect(
   mapStateToProps,
-  { checkUserLoggedIn, getPosts }
+  { checkUserLoggedIn, getPosts, followUser }
 )(Profile);

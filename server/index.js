@@ -48,10 +48,10 @@ app.put("/api/posts/:id", PC.editPost);
 //follows
 app.post("/api/follow/:following_id", FC.follow);
 app.get("/api/follow/", FC.getFollowPosts);
-app.delete("/api/follow/:following_id", FC.unfollow);
 
 //users
 app.get("/api/users/", UC.getUsers);
+app.get("/api/users/:username", UC.getUserId);
 
 app.listen(SERVER_PORT, () => {
   console.log(`Listening on Port ${SERVER_PORT}`);

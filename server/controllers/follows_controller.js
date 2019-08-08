@@ -3,26 +3,22 @@ const follow = async (req, res, next) => {
   const { id } = req.session.user;
   const { following_id } = req.params;
 
-  db.follow_user([id, following_id])
-    .then(() => {
-      res.sendStatus(200);
+  db.check_follow([id, following_id]) // checking relationship between users using user_id and following_id from sql
+    .then(relationship => {
+      // relationship is an array, so youre checking if it has anything
+      if (relationship.length > 0) {
+        // if it has something, then you take unfollow.
+        db.unfollow([id, following_id]).then(() => {
+          // using another sql method to take action if the user has not already followed
+          res.json({ followed: false }); // sending back an object with boolean called followed representing if user is following or not. this means unfollowing was successsful.
+        });
+      } else {
+        db.follow_user([id, following_id]).then(() => {
+          res.json({ followed: true }); // this means following the user was successful.
+        });
+      }
     })
     .catch(err => console.log(err));
-};
-
-const unfollow = async (req, res, next) => {
-  const db = req.app.get("db");
-  const { id } = req.session.user;
-  const { following_id } = req.params;
-
-  db.unfollow([id, following_id])
-    .then(() => {
-      res.sendStatus(200);
-    })
-    .catch(err => {
-      console.log(err);
-      res.sendStatus(500);
-    });
 };
 
 const getFollowPosts = async (req, res, next) => {
@@ -46,4 +42,4 @@ const followCount = async (req, res, next) => {
   const db = req.app.get("db");
 };
 
-module.exports = { follow, getFollowPosts, unfollow };
+module.exports = { follow, getFollowPosts };
