@@ -51,11 +51,16 @@ class Post extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  resetFields = () => {
+    this.setState({ comment: "" });
+  };
+
   addComment = e => {
     e.preventDefault();
     this.props
       .addComment(this.props.match.params.id, this.state.comment)
-      .then(() => this.props.getComments(this.props.match.params.id));
+      .then(() => this.props.getComments(this.props.match.params.id))
+      .then(() => this.resetFields());
   };
 
   likePost = post => {
@@ -73,6 +78,7 @@ class Post extends Component {
     console.log(this.props);
 
     const commentsDisplay = comments.map(comment => {
+      console.log(comment);
       return (
         <div className="comment__username__cont" key={comment.comment_id}>
           <div className="username__div">{comment.username}:</div>
@@ -117,7 +123,13 @@ class Post extends Component {
                     {this.props.liked ? "Unlike" : "Like!"} {likesForUser}
                   </div>
                 </button>
-                <button className="comment__button">Add Comment</button>
+                <button
+                  className="comment__button"
+                  name="comment"
+                  onClick={this.addComment}
+                >
+                  Add Comment
+                </button>
               </div>
               <div className="comment__cont">
                 <form
