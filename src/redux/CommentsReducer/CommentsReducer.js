@@ -2,7 +2,6 @@ import axios from "axios";
 
 const initialState = {
   comments: [],
-  comment: "",
   loading: false
 };
 
@@ -10,10 +9,10 @@ const ADD_COMMENT = "ADD_COMMENT";
 const GET_COMMENTS = "GET_COMMENTS";
 const DELETE_COMMENT = "DELETE_COMMENT";
 
-export const addComment = id => {
+export const addComment = (post_id, comment) => {
   return {
     type: ADD_COMMENT,
-    payload: axios.post(`/api/comments/${id}`)
+    payload: axios.post(`/api/comments/${post_id}`, { comment })
   };
 };
 
@@ -30,10 +29,10 @@ export function commentsReducer(state = initialState, action) {
     case `${ADD_COMMENT}_PENDING`:
       return { ...state, loading: true };
     case `${ADD_COMMENT}_FULFILLED`:
-      return { ...state, loading: false, comments: payload.data };
+      return { ...state, loading: false };
 
     case `${GET_COMMENTS}_PENDING`:
-      return { ...state, loading: true };
+      return { ...state, loading: true, comments: [] };
     case `${GET_COMMENTS}_FULFILLED`:
       return { ...state, loading: false, comments: payload.data };
     default:

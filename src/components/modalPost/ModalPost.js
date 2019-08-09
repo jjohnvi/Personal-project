@@ -121,6 +121,7 @@ class ModalPost extends Component {
           Post
         </button>
         <Modal
+          overlayClassName="ReactModal__Overlay"
           className="modal"
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

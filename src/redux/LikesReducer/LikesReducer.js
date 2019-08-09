@@ -47,7 +47,12 @@ export function likesReducer(state = initialState, action) {
       return { ...state, loading: false, likesCount: payload.data };
 
     case `${GET_LIKES}_FULFILLED`:
-      return { ...state, loading: false, likesForUser: payload.data[0].count };
+      return {
+        ...state,
+        loading: false,
+        likesForUser: payload.data.likes[0].count,
+        liked: payload.data
+      };
 
     default:
       return state;

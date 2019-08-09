@@ -7,7 +7,10 @@ import {
   getAllPosts
 } from "../../redux/PostsReducer/PostsReducer";
 import { likePost, getLikes } from "../../redux/LikesReducer/LikesReducer";
-import { checkUserLoggedIn } from "../../redux/UserReducer/UserReducer";
+import {
+  checkUserLoggedIn,
+  updateState
+} from "../../redux/UserReducer/UserReducer";
 import {
   addComment,
   getComments
@@ -15,20 +18,27 @@ import {
 import "./Post.scss";
 
 class Post extends Component {
+  state = {
+    comment: ""
+  };
+
   componentDidMount() {
-    this.getPost(this.props.match.params.id);
     this.props.checkUserLoggedIn().catch(() => this.props.history.push("/"));
+    this.getPost(this.props.match.params.id).then(async () => {
+      await this.props.getComments(this.props.match.params.id);
+      await this.props.getLikes(this.props.match.params.id);
+    });
   }
 
   removePost = id => {
     this.props
       .removePost(id)
       .then(() => this.props.getAllPosts())
-      .then(this.props.history.push("/home"));
+      .then(() => this.props.history.push("/home"));
   };
 
   getPost = id => {
-    this.props.getPost(id);
+    return this.props.getPost(id);
   };
 
   goToUserProfile = username => {
@@ -37,8 +47,15 @@ class Post extends Component {
       .then(() => this.props.history.push(`/posts/${username}`));
   };
 
-  addComment = id => {
-    this.props.addComment(id).then(() => this.props.getComments());
+  updateState = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  addComment = e => {
+    e.preventDefault();
+    this.props
+      .addComment(this.props.match.params.id, this.state.comment)
+      .then(() => this.props.getComments(this.props.match.params.id));
   };
 
   likePost = post => {
@@ -52,12 +69,17 @@ class Post extends Component {
   };
 
   render() {
-    const { posts, loading, likesForUser } = this.props;
+    const { posts, loading, likesForUser, comments } = this.props;
     console.log(this.props);
-    console.log(posts[0]);
 
-    // const postId = likesCount.filter(id => id.post_id === posts[0].post_id);
-
+    const commentsDisplay = comments.map(comment => {
+      return (
+        <div className="comment__username__cont" key={comment.comment_id}>
+          <div className="username__div">{comment.username}:</div>
+          <div className="comment__div">{comment.comment}</div>
+        </div>
+      );
+    });
     return (
       <div className="post__page__cont">
         {loading && <h3>Loading...</h3>}
@@ -71,24 +93,48 @@ class Post extends Component {
               <h2>{posts[0].title}</h2>
               <p>{posts[0].content}</p>
               {this.props.username === posts[0].username ? (
-                <>
-                  <button onClick={() => this.removePost(posts[0].post_id)}>
+                <div className="remove__edit">
+                  <button
+                    className="remove__button"
+                    onClick={() => this.removePost(posts[0].post_id)}
+                  >
                     Delete
                   </button>
-                  <button onClick={() => this.editPost(posts[0].post_id)}>
+                  <button
+                    className="edit__button"
+                    onClick={() => this.editPost(posts[0].post_id)}
+                  >
                     Edit
                   </button>
-                </>
+                </div>
               ) : null}
               <div className="comment__like">
                 <button
-                  className="like__button"
+                  className="like__number"
                   onClick={() => this.likePost(posts[0].post_id)}
                 >
-                  Like!
+                  <div className="like__button">
+                    {this.props.liked ? "Unlike" : "Like!"} {likesForUser}
+                  </div>
                 </button>
-                <p>{likesForUser}</p>
-                <button>Add Comment</button>
+                <button className="comment__button">Add Comment</button>
+              </div>
+              <div className="comment__cont">
+                <form
+                  className="comment__form"
+                  type="submit"
+                  onSubmit={this.addComment}
+                >
+                  <input
+                    autoComplete="off"
+                    placeholder="Write a comment..."
+                    className="comment__input"
+                    name="comment"
+                    onChange={this.updateState}
+                    value={this.state.comment}
+                  />
+                </form>
+                {commentsDisplay}
               </div>
             </div>
           </>
@@ -101,7 +147,7 @@ class Post extends Component {
 const mapStateToProps = state => {
   return {
     username: state.userReducer.user.username,
-    liked: state.likesReducer.liked,
+    liked: state.likesReducer.liked.liked,
     posts: state.postsReducer.posts,
     loading: state.postsReducer.loading,
     likesForUser: state.likesReducer.likesForUser,
@@ -120,6 +166,7 @@ export default connect(
     getLikes,
     getAllPosts,
     addComment,
-    getComments
+    getComments,
+    updateState
   }
 )(Post);

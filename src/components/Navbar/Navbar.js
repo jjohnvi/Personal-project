@@ -30,12 +30,12 @@ class Navbar extends Component {
 
   updateState = e => {
     this.setState({ [e.target.name]: e.target.value });
-  };
-
-  searchUser = e => {
-    e.preventDefault();
-    this.props.searchUser(this.state.searchbar);
-    this.toggleMenu();
+    this.props.searchUser(e.target.value);
+    if (e.target.value === "") {
+      this.setState({ open: false });
+    } else {
+      this.setState({ open: true });
+    }
   };
 
   goToProfile = username => {
@@ -68,21 +68,15 @@ class Navbar extends Component {
             </div>
             {this.props.username && (
               <div className="search__list">
-                <form
-                  className="search__form"
-                  type="submit"
-                  onSubmit={this.searchUser}
-                >
-                  <input
-                    autoComplete="off"
-                    className="searchbar"
-                    onChange={this.updateState}
-                    name="searchbar"
-                    type="text"
-                    placeholder="Search for User..."
-                    value={this.state.searchbar}
-                  />
-                </form>
+                <input
+                  autoComplete="off"
+                  className="searchbar"
+                  onChange={this.updateState}
+                  name="searchbar"
+                  type="text"
+                  placeholder="Search for User..."
+                  value={this.state.searchbar}
+                />
                 <div className={dropdownClassnames}>
                   <ul className="dropdown__list">
                     {users.map(user => {

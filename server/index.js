@@ -58,7 +58,7 @@ app.get("/api/users/:username", UC.getUserId);
 
 //likes
 app.post("/api/likes/:post_id", LC.addLike);
-app.get("/api/likes/:post_id", LC.getLikesForUser);
+app.get("/api/likes/:post_id", LC.getLikesForPost);
 app.get("/api/likes/", GM.time, LC.getLikes);
 
 //comments

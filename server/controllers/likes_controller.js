@@ -16,11 +16,21 @@ const addLike = async (req, res) => {
   });
 };
 
-const getLikesForUser = (req, res) => {
+const getLikesForPost = (req, res) => {
   const db = req.app.get("db");
+  const { id } = req.session.user;
   const { post_id } = req.params;
 
-  db.get_likes_user([post_id]).then(likes => res.json(likes));
+  db.get_likes_post([post_id]).then(likes => {
+    console.log(likes);
+    db.check_likes([id, post_id]).then(like => {
+      if (like.length > 0) {
+        res.json({ liked: true, likes: likes });
+      } else {
+        res.json({ liked: false, likes: likes });
+      }
+    });
+  });
 };
 
 const getLikes = (req, res) => {
@@ -31,6 +41,6 @@ const getLikes = (req, res) => {
 
 module.exports = {
   addLike,
-  getLikesForUser,
+  getLikesForPost,
   getLikes
 };

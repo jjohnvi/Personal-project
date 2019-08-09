@@ -140,19 +140,27 @@ class Posts extends Component {
                   </div>
                 </div>
                 {this.props.username === post.username ? (
-                  <>
-                    <button onClick={() => this.removePost(post.post_id)}>
+                  <div className="remove__edit">
+                    <button
+                      className="remove__button"
+                      onClick={() => this.removePost(post.post_id)}
+                    >
                       Delete
                     </button>
-                    <button onClick={() => this.editPost(post.post_id)}>
+                    <button
+                      className="edit__button"
+                      onClick={() => this.editPost(post.post_id)}
+                    >
                       Edit
                     </button>
-                  </>
+                  </div>
                 ) : null}
-                <button onClick={() => this.likePost(post.post_id)}>
-                  Like!
+                <button
+                  className="like__posts__div"
+                  onClick={() => this.likePost(post.post_id)}
+                >
+                  Like! {likeCount}
                 </button>
-                <p>{likeCount}</p>
               </div>
             );
           })
