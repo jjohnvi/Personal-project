@@ -37,8 +37,9 @@ class Posts extends Component {
 
   componentDidMount() {
     if (this.props.location.pathname === "/home") {
-      this.props.getAllPosts();
-      this.props.getAllLikes();
+      this.props.getAllPosts().then(async () => {
+        await this.props.getAllLikes();
+      });
     }
   }
 
@@ -159,6 +160,7 @@ class Posts extends Component {
                   className="like__posts__div"
                   onClick={() => this.likePost(post.post_id)}
                 >
+                  {/* {this.props.liked ? "Like!" : "Unlike"} */}
                   Like! {likeCount}
                 </button>
               </div>

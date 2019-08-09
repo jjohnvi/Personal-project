@@ -13,7 +13,9 @@ import {
 } from "../../redux/UserReducer/UserReducer";
 import {
   addComment,
-  getComments
+  getComments,
+  deleteComment,
+  updateComment
 } from "../../redux/CommentsReducer/CommentsReducer";
 import "./Post.scss";
 
@@ -63,6 +65,18 @@ class Post extends Component {
       .then(() => this.resetFields());
   };
 
+  deleteComment = id => {
+    this.props.deleteComment(id).then(() => {
+      this.props.getComments(this.props.match.params.id);
+    });
+  };
+
+  updateComment = id => {
+    this.props
+      .updateComment(id, this.state.comment)
+      .then(() => this.props.getComments(this.props.match.params.id));
+  };
+
   likePost = post => {
     this.props
       .likePost(post)
@@ -83,6 +97,22 @@ class Post extends Component {
         <div className="comment__username__cont" key={comment.comment_id}>
           <div className="username__div">{comment.username}:</div>
           <div className="comment__div">{comment.comment}</div>
+          {comment.username === this.props.username ? (
+            <>
+              <button
+                className="comment__delete"
+                onClick={() => this.deleteComment(comment.comment_id)}
+              >
+                Delete
+              </button>
+              <button
+                className="comment__edit"
+                onClick={() => this.updateComment(comment.comment_id)}
+              >
+                Edit
+              </button>
+            </>
+          ) : null}
         </div>
       );
     });
@@ -179,6 +209,8 @@ export default connect(
     getAllPosts,
     addComment,
     getComments,
-    updateState
+    updateState,
+    deleteComment,
+    updateComment
   }
 )(Post);

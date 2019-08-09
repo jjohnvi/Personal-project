@@ -65,7 +65,6 @@ const editPost = (req, res, next) => {
 
   db.change_post([params.id, body.image_url, body.content, body.title])
     .then(post => {
-      console.log(post);
       res.status(200).json(post);
     })
     .catch(err => {

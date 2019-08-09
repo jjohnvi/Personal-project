@@ -20,7 +20,35 @@ const getComments = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
+deleteComment = (req, res, next) => {
+  const db = req.app.get("db");
+  const { id } = req.params;
+  console.log(id);
+  db.delete_comment(id)
+    .then(() => res.sendStatus(200))
+    .catch(err => {
+      res.status(500).send({ error: "Can't delete comment." });
+      console.log(err);
+    });
+};
+
+updateComment = (req, res, next) => {
+  const db = req.app.get("db");
+  const { params, body } = req;
+
+  db.update_comment([params.id, body.comment])
+    .then(comment => {
+      res.status(200).json(comment);
+    })
+    .catch(err => {
+      res.status(500).send({ errorMessage: "Can't update, bro." });
+      console.error(err);
+    });
+};
+
 module.exports = {
   addComment,
-  getComments
+  getComments,
+  deleteComment,
+  updateComment
 };

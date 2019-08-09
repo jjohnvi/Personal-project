@@ -82,6 +82,7 @@
 .like__number {
   display: flex;
   justify-content: space-around;
+  flex-direction: row;
   width: 25%;
   padding: 1rem;
   font-size: 1rem;
@@ -140,4 +141,16 @@
   width: 80%;
   display: flex;
   justify-content: flex-start;
+}
+
+.comment__delete {
+  background: none;
+  box-shadow: $box-shadow;
+  border: solid lightgray 1px;
+}
+
+.comment__edit {
+  background: none;
+  box-shadow: $box-shadow;
+  border: solid lightgray 1px;
 }

@@ -64,6 +64,8 @@ app.get("/api/likes/", GM.time, LC.getLikes);
 //comments
 app.post("/api/comments/:post_id", GM.time, CC.addComment);
 app.get("/api/comments/:post_id", GM.time, CC.getComments);
+app.delete("/api/comments/:id", GM.time, CC.deleteComment);
+app.put("/api/comments/:id", GM.time, CC.updateComment);
 
 app.listen(SERVER_PORT, () => {
   console.log(`Listening on Port ${SERVER_PORT}`);
