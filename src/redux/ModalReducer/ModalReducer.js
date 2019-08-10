@@ -30,7 +30,7 @@ export const closeModal = () => {
   };
 };
 
-export const populateModal = (id, image_url, content, title) => {
+export const populateModal = (id, image_url, content, title, searchQuery) => {
   return {
     type: POPULATE_MODAL,
     payload: { id, image_url, title, content }
@@ -87,7 +87,8 @@ export function modalReducer(state = initialState, action) {
         id: payload.id,
         image_url: payload.image_url,
         title: payload.title,
-        content: payload.content
+        content: payload.content,
+        searchQuery: ""
       };
 
     case HANDLE_CHANGE:

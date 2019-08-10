@@ -102,8 +102,6 @@ class ModalPost extends Component {
   };
 
   render() {
-    console.log(this.props.title);
-    console.log(this.props.modalIsOpen);
     const { pictures } = this.props;
     const picDisplay = pictures.map(val => {
       return (

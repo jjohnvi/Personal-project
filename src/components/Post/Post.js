@@ -113,7 +113,12 @@ class Post extends Component {
       console.log(comment);
       return (
         <div className="comment__username__cont" key={comment.comment_id}>
-          <div className="username__div">{comment.username}:</div>
+          <div
+            className="username__div"
+            onClick={() => this.goToUserProfile(posts[0].username)}
+          >
+            {comment.username}:
+          </div>
           <div className="comment__div">{comment.comment}</div>
           {comment.username === this.props.username ? (
             <>
@@ -135,71 +140,84 @@ class Post extends Component {
       );
     });
     return (
-      <div className="post__page__cont">
-        <Loader loading={loading} />
-        {posts[0] && (
-          <>
-            <div className="post__cont">
-              <h2 onClick={() => this.goToUserProfile(posts[0].username)}>
-                {posts[0].username}
-              </h2>
-              <img src={posts[0].image_url} alt="Error" />
-              <h2>{posts[0].title}</h2>
-              <p>{posts[0].content}</p>
-              {this.props.username === posts[0].username ? (
-                <div className="remove__edit">
+      <>
+        <div className="post__page__cont">
+          <Loader loading={loading} />
+          {posts[0] && (
+            <>
+              {posts[0].profile_pic ? (
+                <img className="profile__pic" src={posts[0].profile_pic} />
+              ) : (
+                <img
+                  className="profile__pic"
+                  src="https://res.cloudinary.com/john-personal-proj/image/upload/v1565478265/mello/kw5qxmbgea2ppbncuibt.png"
+                />
+              )}
+              <div className="post__cont">
+                <h2
+                  className="post__username"
+                  onClick={() => this.goToUserProfile(posts[0].username)}
+                >
+                  {posts[0].username}
+                </h2>
+                <img src={posts[0].image_url} alt="Error" />
+                <h2>{posts[0].title}</h2>
+                <p>{posts[0].content}</p>
+                {this.props.username === posts[0].username ? (
+                  <div className="remove__edit">
+                    <button
+                      className="remove__button"
+                      onClick={() => this.removePost(posts[0].post_id)}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      className="edit__button"
+                      onClick={() => this.editPost(posts[0].post_id)}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                ) : null}
+                <div className="comment__like">
                   <button
-                    className="remove__button"
-                    onClick={() => this.removePost(posts[0].post_id)}
+                    className="like__number"
+                    onClick={() => this.likePost(posts[0].post_id)}
                   >
-                    Delete
+                    <div className="like__button">
+                      {this.props.liked ? "Unlike" : "Like!"} {likesForUser}
+                    </div>
                   </button>
                   <button
-                    className="edit__button"
-                    onClick={() => this.editPost(posts[0].post_id)}
+                    className="comment__button"
+                    name="comment"
+                    onClick={this.addComment}
                   >
-                    Edit
+                    Add Comment
                   </button>
                 </div>
-              ) : null}
-              <div className="comment__like">
-                <button
-                  className="like__number"
-                  onClick={() => this.likePost(posts[0].post_id)}
-                >
-                  <div className="like__button">
-                    {this.props.liked ? "Unlike" : "Like!"} {likesForUser}
-                  </div>
-                </button>
-                <button
-                  className="comment__button"
-                  name="comment"
-                  onClick={this.addComment}
-                >
-                  Add Comment
-                </button>
+                <div className="comment__cont">
+                  <form
+                    className="comment__form"
+                    type="submit"
+                    onSubmit={this.addComment}
+                  >
+                    <input
+                      autoComplete="off"
+                      placeholder="Write a comment..."
+                      className="comment__input"
+                      name="comment"
+                      onChange={this.updateState}
+                      value={this.state.comment}
+                    />
+                  </form>
+                  {commentsDisplay}
+                </div>
               </div>
-              <div className="comment__cont">
-                <form
-                  className="comment__form"
-                  type="submit"
-                  onSubmit={this.addComment}
-                >
-                  <input
-                    autoComplete="off"
-                    placeholder="Write a comment..."
-                    className="comment__input"
-                    name="comment"
-                    onChange={this.updateState}
-                    value={this.state.comment}
-                  />
-                </form>
-                {commentsDisplay}
-              </div>
-            </div>
-          </>
-        )}
-      </div>
+            </>
+          )}
+        </div>
+      </>
     );
   }
 }

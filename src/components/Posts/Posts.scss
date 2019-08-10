@@ -13,6 +13,14 @@
   color: $blue-3;
 }
 
+.profile__pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: solid 3px black;
+  box-shadow: $box-shadow;
+}
+
 .posts__inputs {
   display: flex;
   justify-content: space-around;

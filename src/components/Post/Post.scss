@@ -34,6 +34,10 @@
   }
 }
 
+.post__username {
+  cursor: pointer;
+}
+
 .remove__edit {
   display: flex;
   flex-direction: row;
@@ -135,6 +139,7 @@
 .username__div {
   width: 20%;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .comment__div {

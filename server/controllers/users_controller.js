@@ -20,4 +20,25 @@ const getUserId = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
-module.exports = { getUsers, getUserId };
+const updatePic = (req, res, next) => {
+  const db = req.app.get("db");
+  const { id } = req.session.user;
+  const { body } = req;
+
+  db.update_pic([id, body.profile_pic])
+    .then(picture => {
+      res.status(200).json(picture);
+    })
+    .catch(err => {
+      res.status(500).send({ error: "Can't update picture." });
+      console.log(err);
+    });
+};
+
+// const getPics = (req, res, next) => {
+//   const db = req.app.get('db');
+
+//   db.get_picture().then
+// }
+
+module.exports = { getUsers, getUserId, updatePic };

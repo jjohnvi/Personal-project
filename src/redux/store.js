@@ -6,6 +6,7 @@ import { followsReducer } from "./FollowsReducer/FollowsReducer";
 import { likesReducer } from "./LikesReducer/LikesReducer";
 import { commentsReducer } from "./CommentsReducer/CommentsReducer";
 import { modalReducer } from "./ModalReducer/ModalReducer";
+import { pictureReducer } from "./PictureReducer/PictureReducer";
 
 const root = combineReducers({
   userReducer,
@@ -13,7 +14,8 @@ const root = combineReducers({
   followsReducer,
   likesReducer,
   commentsReducer,
-  modalReducer
+  modalReducer,
+  pictureReducer
 });
 
 export default createStore(root, applyMiddleware(promise));
