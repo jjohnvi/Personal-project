@@ -53,6 +53,7 @@ class Navbar extends Component {
 
   render() {
     const { username, users } = this.props;
+    console.log(this.props);
 
     let dropdownClassnames = "dropdown";
     if (this.state.open) {
@@ -104,7 +105,7 @@ class Navbar extends Component {
               {username}
             </li>
             {this.props.username && (
-              <li className="navbar__item">
+              <li className="navbar__post">
                 <ModalPost />
               </li>
             )}

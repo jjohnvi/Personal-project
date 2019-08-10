@@ -21,19 +21,6 @@ import {
 } from "../../redux/UserReducer/UserReducer";
 import * as privateStuff from "../../key.json";
 
-// const customStyles = {
-//   content: {
-//     top: "50%",
-//     left: "50%",
-//     right: "auto",
-//     bottom: "auto",
-//     marginRight: "-50%",
-//     transform: "translate(-50%, -50%)",
-//     width: "50vw",
-//     height: "60vh"
-//   }
-// };
-
 Modal.setAppElement("#root");
 
 class ModalPost extends Component {
@@ -75,6 +62,7 @@ class ModalPost extends Component {
           this.props.history.push("/home");
         });
         this.resetFields();
+        this.closeModal();
       });
   };
 
