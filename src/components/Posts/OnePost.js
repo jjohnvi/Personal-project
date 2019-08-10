@@ -70,7 +70,7 @@ class OnePost extends Component {
   };
 
   render() {
-    const { loading, posts, liked, likesCount, post, likeCount } = this.props;
+    const { post, likeCount } = this.props;
     return (
       <div className="content__cont" key={post.post_id}>
         <div className="post">
