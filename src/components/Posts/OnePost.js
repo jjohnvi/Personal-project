@@ -22,17 +22,14 @@ import {
   likePost,
   getLikes
 } from "../../redux/LikesReducer/LikesReducer";
+import {
+  populateModal,
+  openModal,
+  setEdit
+} from "../../redux/ModalReducer/ModalReducer";
 import "./Posts.scss";
 
 class OnePost extends Component {
-  updateState = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  resetFields = () => {
-    this.setState({ image_url: "", content: "", title: "" });
-  };
-
   goToPost = id => {
     this.props.history.push(`/post/${id}`);
     this.props.getLikes(id);
@@ -50,18 +47,14 @@ class OnePost extends Component {
   };
 
   editPost = id => {
-    this.props
-      .editPost(id, this.state.image_url, this.state.content, this.state.title)
-      .then(() => {
-        if (this.props.location.pathname === "/home") {
-          this.props.getAllPosts();
-        } else if (
-          this.props.location.pathname === `/posts/${this.props.username}`
-        ) {
-          this.props.getPosts();
-        }
-        this.resetFields();
-      });
+    this.props.setEdit(true);
+    this.props.populateModal(
+      id,
+      this.props.post.image_url,
+      this.props.post.content,
+      this.props.post.title
+    );
+    this.props.openModal();
   };
 
   removePost = id => {
@@ -150,7 +143,10 @@ export default withRouter(
       getUserId,
       getAllLikes,
       likePost,
-      getLikes
+      getLikes,
+      populateModal,
+      openModal,
+      setEdit
     }
   )(OnePost)
 );

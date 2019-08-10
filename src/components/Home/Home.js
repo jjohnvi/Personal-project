@@ -12,6 +12,7 @@ import {
 } from "../../redux/UserReducer/UserReducer";
 import Posts from "../Posts/Posts";
 import "./Home.scss";
+import Loader from "../Loader/Loader";
 
 class Home extends Component {
   constructor() {
@@ -38,6 +39,7 @@ class Home extends Component {
   render() {
     return (
       <>
+        <Loader loading={this.props.loading} />
         <div className="home">
           <button onClick={this.handleLogout}>Logout</button>
           <Posts />
@@ -49,7 +51,8 @@ class Home extends Component {
 
 const mapStateToProps = state => {
   return {
-    posts: state.postsReducer.posts
+    posts: state.postsReducer.posts,
+    loading: state.postsReducer.loading
   };
 };
 

@@ -7,6 +7,12 @@ import {
   getPosts,
   getPostsByProfile
 } from "../../redux/PostsReducer/PostsReducer";
+import {
+  openModal,
+  closeModal,
+  resetInput,
+  setEdit
+} from "../../redux/ModalReducer/ModalReducer";
 import { updateState, getUserId } from "../../redux/UserReducer/UserReducer";
 import "../Navbar/Navbar.scss";
 import ModalPost from "../modalPost/ModalPost";
@@ -51,9 +57,14 @@ class Navbar extends Component {
       .then(() => this.props.history.push(`/posts/${username}`));
   };
 
+  openModal = () => {
+    this.props.setEdit(false);
+    this.props.resetInput();
+    this.props.openModal();
+  };
+
   render() {
     const { username, users } = this.props;
-    console.log(this.props);
 
     let dropdownClassnames = "dropdown";
     if (this.state.open) {
@@ -61,59 +72,64 @@ class Navbar extends Component {
     }
 
     return (
-      <div>
-        <nav className="navbar">
-          <div className="title__search">
-            <div className="title" onClick={this.goToHome}>
-              Mello
-            </div>
-            {this.props.username && (
-              <div className="search__list">
-                <input
-                  autoComplete="off"
-                  className="searchbar"
-                  onChange={this.updateState}
-                  name="searchbar"
-                  type="text"
-                  placeholder="Search for User..."
-                  value={this.state.searchbar}
-                />
-                <div className={dropdownClassnames}>
-                  <ul className="dropdown__list">
-                    {users.map(user => {
-                      return (
-                        <div key={user.user_id}>
-                          <li
-                            className="dropdown__item"
-                            onClick={() => this.goToUserProfile(user.username)}
-                          >
-                            {user.username}
-                          </li>
-                        </div>
-                      );
-                    })}
-                  </ul>
-                </div>
+      <>
+        <div>
+          <nav className="navbar">
+            <div className="title__search">
+              <div className="title" onClick={this.goToHome}>
+                Mello
               </div>
-            )}
-          </div>
-          <ul className="navbar__list">
-            <li
-              className="navbar__item"
-              onClick={() => this.goToProfile(this.props.username)}
-            >
-              {username}
-            </li>
-            {this.props.username && (
-              <li className="navbar__post">
-                <ModalPost />
+              {this.props.username && (
+                <div className="search__list">
+                  <input
+                    autoComplete="off"
+                    className="searchbar"
+                    onChange={this.updateState}
+                    name="searchbar"
+                    type="text"
+                    placeholder="Search for User..."
+                    value={this.state.searchbar}
+                  />
+                  <div className={dropdownClassnames}>
+                    <ul className="dropdown__list">
+                      {users.map(user => {
+                        return (
+                          <div key={user.user_id}>
+                            <li
+                              className="dropdown__item"
+                              onClick={() =>
+                                this.goToUserProfile(user.username)
+                              }
+                            >
+                              {user.username}
+                            </li>
+                          </div>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </div>
+            <ul className="navbar__list">
+              <li
+                className="navbar__item"
+                onClick={() => this.goToProfile(this.props.username)}
+              >
+                {username}
               </li>
-            )}
+              {this.props.username && (
+                <li className="navbar__post" onClick={this.openModal}>
+                  Post
+                </li>
+              )}
 
-            <li className="navbar__item">Menu</li>
-          </ul>
-        </nav>
-      </div>
+              <li className="navbar__item">Menu</li>
+            </ul>
+          </nav>
+        </div>
+        <ModalPost />
+      </>
     );
   }
 }
@@ -134,7 +150,11 @@ export default withRouter(
       getAllPosts,
       searchUser,
       updateState,
-      getUserId
+      getUserId,
+      openModal,
+      closeModal,
+      resetInput,
+      setEdit
     }
   )(Navbar)
 );

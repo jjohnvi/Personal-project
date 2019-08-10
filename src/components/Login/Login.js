@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { updateState, loginUser } from "../../redux/UserReducer/UserReducer";
 import { Link } from "react-router-dom";
 import "./../Login/Login.scss";
+import Loader from "../Loader/Loader";
 
 class Login extends Component {
   state = {
@@ -29,6 +30,7 @@ class Login extends Component {
   render() {
     return (
       <div className="login__cont">
+        <Loader loading={this.props.loading} />
         <form className="login__form" type="submit" onSubmit={this.clickLogin}>
           <input
             type="text"
@@ -58,7 +60,8 @@ class Login extends Component {
 const mapStateToProps = state => {
   return {
     username: state.userReducer.username,
-    password: state.userReducer.password
+    password: state.userReducer.password,
+    loading: state.userReducer.loading
   };
 };
 

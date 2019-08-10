@@ -19,7 +19,14 @@ import {
   checkUserLoggedIn,
   resetFields
 } from "../../redux/UserReducer/UserReducer";
+import {
+  populateModal,
+  handleChange,
+  updateImgUrl,
+  searchPics
+} from "../../redux/ModalReducer/ModalReducer";
 import * as privateStuff from "../../key.json";
+import { closeModal } from "../../redux/ModalReducer/ModalReducer";
 
 Modal.setAppElement("#root");
 
@@ -38,32 +45,49 @@ class ModalPost extends Component {
     modalIsOpen: false
   };
 
-  openModal = () => {
-    this.setState({ modalIsOpen: true });
-  };
-
   closeModal = () => {
-    this.setState({ modalIsOpen: false });
+    this.props.closeModal();
   };
 
   updateState = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.props.handleChange({ [e.target.name]: e.target.value });
   };
 
   clickPicture = val => {
-    this.setState({ image_url: val });
+    this.props.updateImgUrl(val);
   };
 
-  addPost = () => {
-    this.props
-      .addPost(this.state.image_url, this.state.content, this.state.title)
-      .then(() => {
-        this.props.getAllPosts().then(() => {
-          this.props.history.push("/home");
+  onClick = () => {
+    if (this.props.isEditing) {
+      this.props
+        .editPost(
+          this.props.id,
+          this.props.image_url,
+          this.props.content,
+          this.props.title
+        )
+        .then(() => {
+          if (this.props.location.pathname === "/home") {
+            this.props.getAllPosts();
+          } else if (
+            this.props.location.pathname === `/posts/${this.props.username}`
+          ) {
+            this.props.getPosts();
+          }
+          this.resetFields();
+          this.closeModal();
         });
-        this.resetFields();
-        this.closeModal();
-      });
+    } else {
+      this.props
+        .addPost(this.props.image_url, this.props.content, this.props.title)
+        .then(() => {
+          this.props.getAllPosts().then(() => {
+            this.props.history.push("/home");
+          });
+          this.resetFields();
+          this.closeModal();
+        });
+    }
   };
 
   searchPics = e => {
@@ -71,25 +95,26 @@ class ModalPost extends Component {
     axios
       .get(
         `https://api.unsplash.com/search/photos?query=${
-          this.state.searchPics
+          this.props.searchPics
         }&client_id=${privateStuff.accessKey}`
       )
       .then(res => {
-        this.setState({
-          pictures: res.data.results.map((val, index) => {
+        this.props.searchPics(
+          res.data.results.map((val, index) => {
             return val.urls.small;
           })
-        });
+        );
       });
   };
 
   resetFields = () => {
-    this.setState({ image_url: "", content: "", title: "" });
+    this.setState({ image_url: "", content: "", title: "", searchPics: "" });
   };
 
   render() {
-    const { loading, posts } = this.props;
-    const { pictures } = this.state;
+    console.log(this.props.title);
+    console.log(this.props.modalIsOpen);
+    const { pictures } = this.props;
     const picDisplay = pictures.map(val => {
       return (
         <div className="pics__cont">
@@ -104,68 +129,63 @@ class ModalPost extends Component {
       );
     });
     return (
-      <div>
-        <button className="post__button" onClick={this.openModal}>
-          Post
-        </button>
-        <Modal
-          overlayClassName="ReactModal__Overlay"
-          className="modal"
-          isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
-          contentLabel="Example Modal"
-        >
-          <div className="modal__cont">
-            <div className="newPost__cont">
-              <div className="posts__inputs">
+      <Modal
+        overlayClassName="ReactModal__Overlay"
+        className="modal"
+        isOpen={this.props.modalIsOpen}
+        onAfterOpen={this.afterOpenModal}
+        onRequestClose={this.closeModal}
+        contentLabel="Example Modal"
+      >
+        <div className="modal__cont">
+          <div className="newPost__cont">
+            <div className="posts__inputs">
+              <input
+                autoComplete="off"
+                type="text"
+                onChange={this.updateState}
+                name="title"
+                placeholder="Title..."
+                value={this.props.title}
+              />
+              <input
+                autoComplete="off"
+                type="text"
+                onChange={this.updateState}
+                name="content"
+                placeholder="What's on your mind..?"
+                value={this.props.content}
+              />
+              <input
+                autoComplete="off"
+                type="url"
+                onChange={this.updateState}
+                name="image_url"
+                placeholder="Image URL..."
+                value={this.props.image_url}
+              />
+              <form
+                type="submit"
+                onSubmit={this.searchPics}
+                className="searchpics__form"
+              >
                 <input
                   autoComplete="off"
                   type="text"
                   onChange={this.updateState}
-                  name="title"
-                  placeholder="Title..."
-                  value={this.state.title}
+                  name="searchPics"
+                  placeholder="Search for photos then press 'Enter...'"
+                  value={this.props.searchPics}
                 />
-                <input
-                  autoComplete="off"
-                  type="text"
-                  onChange={this.updateState}
-                  name="content"
-                  placeholder="What's on your mind..?"
-                  value={this.state.content}
-                />
-                <input
-                  autoComplete="off"
-                  type="url"
-                  onChange={this.updateState}
-                  name="image_url"
-                  placeholder="Image URL..."
-                  value={this.state.image_url}
-                />
-                <form
-                  type="submit"
-                  onSubmit={this.searchPics}
-                  className="searchpics__form"
-                >
-                  <input
-                    autoComplete="off"
-                    type="text"
-                    onChange={this.updateState}
-                    name="searchPics"
-                    placeholder="Search for photos then press 'Enter...'"
-                    value={this.state.searchPics}
-                  />
-                </form>
-              </div>
-              <div className="pics__outer__div">{picDisplay}</div>
-              <button className="add__button" onClick={this.addPost}>
-                +
-              </button>
+              </form>
             </div>
+            <div className="pics__outer__div">{picDisplay}</div>
+            <button className="add__button" onClick={this.onClick}>
+              {this.props.isEditing ? "Edit" : "+"}
+            </button>
           </div>
-        </Modal>
-      </div>
+        </div>
+      </Modal>
     );
   }
 }
@@ -173,7 +193,15 @@ class ModalPost extends Component {
 const mapStateToProps = state => {
   return {
     username: state.userReducer.user.username,
-    posts: state.postsReducer.posts
+    posts: state.postsReducer.posts,
+    modalIsOpen: state.modalReducer.modalIsOpen,
+    image_url: state.modalReducer.image_url,
+    title: state.modalReducer.title,
+    content: state.modalReducer.content,
+    isEditing: state.modalReducer.isEditing,
+    id: state.modalReducer.id,
+    searchPics: state.modalReducer.searchPics,
+    pictures: state.modalReducer.pictures
   };
 };
 
@@ -190,7 +218,12 @@ export default withRouter(
       getPostsByProfile,
       checkUserLoggedIn,
       resetFields,
-      editPost
+      editPost,
+      closeModal,
+      populateModal,
+      handleChange,
+      updateImgUrl,
+      searchPics
     }
   )(ModalPost)
 );

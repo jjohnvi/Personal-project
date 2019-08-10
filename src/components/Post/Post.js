@@ -18,6 +18,12 @@ import {
   updateComment
 } from "../../redux/CommentsReducer/CommentsReducer";
 import "./Post.scss";
+import {
+  populateModal,
+  openModal,
+  setEdit
+} from "../../redux/ModalReducer/ModalReducer";
+import Loader from "../Loader/Loader";
 
 class Post extends Component {
   state = {
@@ -87,6 +93,18 @@ class Post extends Component {
     this.props.history.push("/home");
   };
 
+  editPost = () => {
+    const { posts } = this.props;
+    this.props.openModal();
+    this.props.populateModal(
+      posts[0].post_id,
+      posts[0].image_url,
+      posts[0].content,
+      posts[0].title
+    );
+    this.props.setEdit(true);
+  };
+
   render() {
     const { posts, loading, likesForUser, comments } = this.props;
     console.log(this.props);
@@ -118,7 +136,7 @@ class Post extends Component {
     });
     return (
       <div className="post__page__cont">
-        {loading && <h3>Loading...</h3>}
+        <Loader loading={loading} />
         {posts[0] && (
           <>
             <div className="post__cont">
@@ -211,6 +229,9 @@ export default connect(
     getComments,
     updateState,
     deleteComment,
-    updateComment
+    updateComment,
+    openModal,
+    populateModal,
+    setEdit
   }
 )(Post);
