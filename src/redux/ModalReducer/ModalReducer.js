@@ -4,7 +4,7 @@ const initialState = {
   image_url: "",
   title: "",
   content: "",
-  searchPics: "",
+  searchQuery: "",
   isEditing: false,
   pictures: []
 };
@@ -99,7 +99,7 @@ export function modalReducer(state = initialState, action) {
         image_url: "",
         title: "",
         content: "",
-        searchPics: "",
+        searchQuery: "",
         pictures: []
       };
 

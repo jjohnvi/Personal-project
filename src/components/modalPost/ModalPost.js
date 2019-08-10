@@ -31,16 +31,6 @@ import { closeModal } from "../../redux/ModalReducer/ModalReducer";
 Modal.setAppElement("#root");
 
 class ModalPost extends Component {
-  constructor() {
-    super();
-    this.state = {
-      image_url: "",
-      content: "",
-      title: "",
-      searchPics: "",
-      pictures: []
-    };
-  }
   state = {
     modalIsOpen: false
   };
@@ -95,7 +85,7 @@ class ModalPost extends Component {
     axios
       .get(
         `https://api.unsplash.com/search/photos?query=${
-          this.props.searchPics
+          this.props.searchQuery
         }&client_id=${privateStuff.accessKey}`
       )
       .then(res => {
@@ -173,9 +163,9 @@ class ModalPost extends Component {
                   autoComplete="off"
                   type="text"
                   onChange={this.updateState}
-                  name="searchPics"
+                  name="searchQuery"
                   placeholder="Search for photos then press 'Enter...'"
-                  value={this.props.searchPics}
+                  value={this.props.searchQuery}
                 />
               </form>
             </div>
@@ -200,7 +190,7 @@ const mapStateToProps = state => {
     content: state.modalReducer.content,
     isEditing: state.modalReducer.isEditing,
     id: state.modalReducer.id,
-    searchPics: state.modalReducer.searchPics,
+    searchQuery: state.modalReducer.searchQuery,
     pictures: state.modalReducer.pictures
   };
 };
