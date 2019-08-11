@@ -1,5 +1,9 @@
 @import "../../App.scss";
 
+.user__post__content {
+  display: flex;
+}
+
 .profile__button {
   width: 7rem;
   height: 2rem;
@@ -14,11 +18,12 @@
 }
 
 .profile__pic {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   border: solid 3px black;
   box-shadow: $box-shadow;
+  margin: 1rem;
 }
 
 .posts__inputs {
