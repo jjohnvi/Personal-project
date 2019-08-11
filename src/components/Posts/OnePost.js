@@ -89,7 +89,7 @@ class OnePost extends Component {
                 className="content__username"
                 onClick={() => this.goToUserProfile(post.username)}
               >
-                {post.username}
+                {post.title}
               </h2>
               <div className="profile__img__cont">
                 <div
@@ -97,33 +97,37 @@ class OnePost extends Component {
                   onClick={() => this.goToPost(post.post_id)}
                 >
                   <img src={post.image_url} alt={post.title} />
-                  <h2>{post.title}</h2>
-                  <p>{post.content}</p>
+                  <div className="content__buttons">
+                    <div className="title__content__div">
+                      <h2 className="post__title">{post.username}</h2>
+                      <p className="post__content">{post.content}</p>
+                    </div>
+                    {this.props.username === post.username ? (
+                      <div className="remove__edit">
+                        <button
+                          className="remove__button"
+                          onClick={() => this.removePost(post.post_id)}
+                        >
+                          Delete
+                        </button>
+                        <button
+                          className="edit__button"
+                          onClick={() => this.editPost(post.post_id)}
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    ) : null}
+                    <button
+                      className="like__posts__div"
+                      onClick={() => this.likePost(post.post_id)}
+                    >
+                      {/* {this.props.liked ? "Like!" : "Unlike"} */}
+                      Like! {likeCount}
+                    </button>
+                  </div>
                 </div>
               </div>
-              {this.props.username === post.username ? (
-                <div className="remove__edit">
-                  <button
-                    className="remove__button"
-                    onClick={() => this.removePost(post.post_id)}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    className="edit__button"
-                    onClick={() => this.editPost(post.post_id)}
-                  >
-                    Edit
-                  </button>
-                </div>
-              ) : null}
-              <button
-                className="like__posts__div"
-                onClick={() => this.likePost(post.post_id)}
-              >
-                {/* {this.props.liked ? "Like!" : "Unlike"} */}
-                Like! {likeCount}
-              </button>
             </div>
           </div>
         </div>

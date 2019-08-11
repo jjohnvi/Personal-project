@@ -3,8 +3,26 @@
 .post__page__cont {
   display: flex;
   justify-content: center;
-  align-items: center;
+  // align-items: center;
   width: 100%;
+  // height: 100vh;
+}
+
+.one__post__cont {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+}
+
+.profile__pic__2 {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: solid 3px black;
+  box-shadow: $box-shadow;
+  margin: 1rem;
+  margin-top: 11rem;
 }
 
 .post__cont {

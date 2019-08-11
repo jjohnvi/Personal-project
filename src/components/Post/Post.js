@@ -144,9 +144,9 @@ class Post extends Component {
         <div className="post__page__cont">
           <Loader loading={loading} />
           {posts[0] && (
-            <>
+            <div className="one__post__cont">
               {posts[0].profile_pic ? (
-                <img className="profile__pic" src={posts[0].profile_pic} />
+                <img className="profile__pic__2" src={posts[0].profile_pic} />
               ) : (
                 <img
                   className="profile__pic"
@@ -214,7 +214,7 @@ class Post extends Component {
                   {commentsDisplay}
                 </div>
               </div>
-            </>
+            </div>
           )}
         </div>
       </>
