@@ -2,13 +2,19 @@ import axios from "axios";
 
 const initialState = {
   comments: [],
-  loading: false
+  loading: false,
+  comment: "",
+  editStatus: false,
+  comment_edit: ""
 };
 
 const ADD_COMMENT = "ADD_COMMENT";
 const GET_COMMENTS = "GET_COMMENTS";
 const DELETE_COMMENT = "DELETE_COMMENT";
 const UPDATE_COMMENT = "UPDATE_COMMENT";
+const POPULATE_COMMENT = "POPULATE_COMMENT";
+const SET_EDIT_STATUS = "SET_EDIT_STATUS";
+const HANDLE_EDIT_ON_CHANGE = "HANDLE_EDIT_ON_CHANGE";
 
 export const addComment = (post_id, comment) => {
   return {
@@ -38,6 +44,27 @@ export const updateComment = (id, comment) => {
   };
 };
 
+export const populateComment = comment => {
+  return {
+    type: POPULATE_COMMENT,
+    payload: comment
+  };
+};
+
+export const setEditStatus = editStatus => {
+  return {
+    type: SET_EDIT_STATUS,
+    payload: editStatus
+  };
+};
+
+export const handleEditOnChange = comment => {
+  return {
+    type: HANDLE_EDIT_ON_CHANGE,
+    payload: comment
+  };
+};
+
 export function commentsReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
@@ -60,6 +87,18 @@ export function commentsReducer(state = initialState, action) {
       return { ...state, loading: true };
     case `${UPDATE_COMMENT}_FULFILLED`:
       return { ...state, loading: false };
+
+    case HANDLE_EDIT_ON_CHANGE:
+      return { ...state, comment_edit: payload };
+
+    // case `${SET_EDIT_STATUS}_PENDING`:
+    //   return { ...state, loading: true };
+    case SET_EDIT_STATUS:
+      console.log(payload);
+      return { ...state, editStatus: payload };
+
+    case POPULATE_COMMENT:
+      return { ...state, comment_edit: payload };
     default:
       return state;
   }

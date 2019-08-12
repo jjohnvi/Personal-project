@@ -79,30 +79,23 @@
 
   img {
     width: 50%;
-    // border: 2px $blue-3 solid;
     box-shadow: $box-shadow;
     border-radius: 5px;
   }
 
   h2 {
-    // display: flex;
     padding-bottom: 0.5rem;
     justify-content: center;
     align-items: center;
-    // text-align: center;
-    // font-size: 1.5rem;
-    // border-bottom: 1px solid lightgray;
-    // width: 100%;
     letter-spacing: 1px;
   }
 
   p {
     display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 1rem;
-    letter-spacing: 0.5px;
+    line-height: 1.3rem;
     text-align: left;
+    margin: 0;
   }
 }
 
@@ -110,14 +103,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   width: 100%;
 }
 
 .title__content__div {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+
   flex-direction: column;
   width: 100%;
   height: 100%;
@@ -135,7 +128,9 @@
   font-size: 1.5rem;
   border-bottom: solid lightgray 1px;
   width: 100%;
-  text-align: center;
+  margin: 0;
+  margin-bottom: 1rem;
+  font-weight: normal;
 }
 
 .remove__edit {
@@ -146,13 +141,13 @@
 
 .like__posts__div {
   display: flex;
-  justify-content: space-around;
-  width: 100%;
-  padding: 1rem;
+  justify-content: flex-end;
+  width: 50%;
+  outline: none;
   font-size: 1rem;
   font-family: $title-font;
   background: none;
-  box-shadow: $box-shadow;
+  border: none;
 }
 
 .pics__outer__div {
@@ -177,4 +172,14 @@
 .pics__array:hover {
   transform: scale(1.1);
   transition: 600ms;
+}
+
+.profile__pic__username {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  span {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
 }

@@ -120,11 +120,13 @@ class Navbar extends Component {
               </li>
               {this.props.username && (
                 <li className="navbar__post" onClick={this.openModal}>
-                  Post
+                  <i class="material-icons">border_color</i>
                 </li>
               )}
 
-              <li className="navbar__item">Menu</li>
+              <li className="navbar__item">
+                <i class="material-icons">view_list</i>
+              </li>
             </ul>
           </nav>
         </div>

@@ -30,7 +30,7 @@ export const closeModal = () => {
   };
 };
 
-export const populateModal = (id, image_url, content, title, searchQuery) => {
+export const populateModal = (id, image_url, content, title) => {
   return {
     type: POPULATE_MODAL,
     payload: { id, image_url, title, content }

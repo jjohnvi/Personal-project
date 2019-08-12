@@ -30,7 +30,6 @@ class Login extends Component {
   render() {
     return (
       <div className="login__cont">
-        <Loader loading={this.props.loading} />
         <form className="login__form" type="submit" onSubmit={this.clickLogin}>
           <input
             type="text"

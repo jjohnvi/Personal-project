@@ -15,7 +15,10 @@ import {
   addComment,
   getComments,
   deleteComment,
-  updateComment
+  updateComment,
+  populateComment,
+  setEditStatus,
+  handleEditOnChange
 } from "../../redux/CommentsReducer/CommentsReducer";
 import "./Post.scss";
 import {
@@ -28,6 +31,7 @@ import Loader from "../Loader/Loader";
 class Post extends Component {
   state = {
     comment: ""
+    // editStatus: false
   };
 
   componentDidMount() {
@@ -59,28 +63,37 @@ class Post extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  handleEditOnChange = e => {
+    this.props.handleEditOnChange(e.target.value);
+  };
+
   resetFields = () => {
     this.setState({ comment: "" });
   };
 
-  addComment = e => {
+  addComment = async e => {
     e.preventDefault();
-    this.props
-      .addComment(this.props.match.params.id, this.state.comment)
-      .then(() => this.props.getComments(this.props.match.params.id))
-      .then(() => this.resetFields());
+    this.props.addComment(this.props.match.params.id, this.props.comment);
+    await this.props.getComments(this.props.match.params.id);
+    await this.resetFields();
   };
 
-  deleteComment = id => {
-    this.props.deleteComment(id).then(() => {
-      this.props.getComments(this.props.match.params.id);
-    });
+  deleteComment = async id => {
+    this.props.deleteComment(id);
+    await this.props.getComments(this.props.match.params.id);
+  };
+
+  handleClickUpdateComment = comment => {
+    console.log(comment);
+    this.props.setEditStatus(true);
+    this.props.populateComment(comment);
   };
 
   updateComment = id => {
     this.props
-      .updateComment(id, this.state.comment)
-      .then(() => this.props.getComments(this.props.match.params.id));
+      .updateComment(id, this.props.comment_edit)
+      .then(() => this.props.getComments(this.props.match.params.id))
+      .then(() => this.props.setEditStatus(false));
   };
 
   likePost = post => {
@@ -107,7 +120,7 @@ class Post extends Component {
 
   render() {
     const { posts, loading, likesForUser, comments } = this.props;
-    console.log(this.props);
+    console.log(this.props.editStatus);
 
     const commentsDisplay = comments.map(comment => {
       console.log(comment);
@@ -119,23 +132,48 @@ class Post extends Component {
           >
             {comment.username}:
           </div>
-          <div className="comment__div">{comment.comment}</div>
+
           {comment.username === this.props.username ? (
             <>
-              <button
-                className="comment__delete"
-                onClick={() => this.deleteComment(comment.comment_id)}
-              >
-                Delete
-              </button>
-              <button
-                className="comment__edit"
-                onClick={() => this.updateComment(comment.comment_id)}
-              >
-                Edit
-              </button>
+              {this.props.editStatus === false ? (
+                <>
+                  <div className="comment__div">{comment.comment}</div>
+                  <button
+                    className="comment__delete"
+                    onClick={() => this.deleteComment(comment.comment_id)}
+                  >
+                    <i class="material-icons">delete</i>
+                  </button>
+                  <button
+                    className="comment__edit"
+                    onClick={() =>
+                      this.handleClickUpdateComment(comment.comment)
+                    }
+                  >
+                    Edit
+                  </button>
+                </>
+              ) : (
+                <div className="edit__comment__input__cont">
+                  <input
+                    className="edit__comment__input"
+                    type="text"
+                    value={this.props.comment_edit}
+                    onChange={this.handleEditOnChange}
+                    name="comment_edit"
+                  />
+                  <button
+                    className="edit__comment__input__button"
+                    onClick={() => this.updateComment(comment.comment_id)}
+                  >
+                    <i class="material-icons">send</i>
+                  </button>
+                </div>
+              )}
             </>
-          ) : null}
+          ) : (
+            <div className="comment__div">{comment.comment}</div>
+          )}
         </div>
       );
     });
@@ -146,10 +184,10 @@ class Post extends Component {
           {posts[0] && (
             <div className="one__post__cont">
               {posts[0].profile_pic ? (
-                <img className="profile__pic__2" src={posts[0].profile_pic} />
+                <img className="profile__pics__2" src={posts[0].profile_pic} />
               ) : (
                 <img
-                  className="profile__pic"
+                  className="profile__pics__2"
                   src="https://res.cloudinary.com/john-personal-proj/image/upload/v1565478265/mello/kw5qxmbgea2ppbncuibt.png"
                 />
               )}
@@ -164,18 +202,18 @@ class Post extends Component {
                 <h2>{posts[0].title}</h2>
                 <p>{posts[0].content}</p>
                 {this.props.username === posts[0].username ? (
-                  <div className="remove__edit">
+                  <div className="remove__edit__post">
                     <button
-                      className="remove__button"
+                      className="remove__button__post"
                       onClick={() => this.removePost(posts[0].post_id)}
                     >
-                      Delete
+                      <i class="material-icons">delete</i>
                     </button>
                     <button
-                      className="edit__button"
+                      className="edit__button__post"
                       onClick={() => this.editPost(posts[0].post_id)}
                     >
-                      Edit
+                      <i class="material-icons">edit</i>
                     </button>
                   </div>
                 ) : null}
@@ -187,13 +225,6 @@ class Post extends Component {
                     <div className="like__button">
                       {this.props.liked ? "Unlike" : "Like!"} {likesForUser}
                     </div>
-                  </button>
-                  <button
-                    className="comment__button"
-                    name="comment"
-                    onClick={this.addComment}
-                  >
-                    Add Comment
                   </button>
                 </div>
                 <div className="comment__cont">
@@ -208,8 +239,15 @@ class Post extends Component {
                       className="comment__input"
                       name="comment"
                       onChange={this.updateState}
-                      value={this.state.comment}
+                      value={this.props.comment}
                     />
+                    <button
+                      className="comment__button"
+                      name="comment"
+                      onClick={this.addComment}
+                    >
+                      <i class="material-icons">send</i>
+                    </button>
                   </form>
                   {commentsDisplay}
                 </div>
@@ -229,7 +267,10 @@ const mapStateToProps = state => {
     posts: state.postsReducer.posts,
     loading: state.postsReducer.loading,
     likesForUser: state.likesReducer.likesForUser,
-    comments: state.commentsReducer.comments
+    comments: state.commentsReducer.comments,
+    editStatus: state.commentsReducer.editStatus,
+    comment: state.commentsReducer.comment.comment,
+    comment_edit: state.commentsReducer.comment_edit
   };
 };
 
@@ -250,6 +291,9 @@ export default connect(
     updateComment,
     openModal,
     populateModal,
-    setEdit
+    setEdit,
+    populateComment,
+    setEditStatus,
+    handleEditOnChange
   }
 )(Post);
