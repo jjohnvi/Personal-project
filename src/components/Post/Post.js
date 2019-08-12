@@ -26,6 +26,7 @@ import {
   openModal,
   setEdit
 } from "../../redux/ModalReducer/ModalReducer";
+import Comments from "../Comments/Comments";
 import Loader from "../Loader/Loader";
 
 class Post extends Component {
@@ -83,17 +84,10 @@ class Post extends Component {
     await this.props.getComments(this.props.match.params.id);
   };
 
-  handleClickUpdateComment = comment => {
-    console.log(comment);
-    this.props.setEditStatus(true);
-    this.props.populateComment(comment);
-  };
-
   updateComment = id => {
     this.props
       .updateComment(id, this.props.comment_edit)
-      .then(() => this.props.getComments(this.props.match.params.id))
-      .then(() => this.props.setEditStatus(false));
+      .then(() => this.props.getComments(this.props.match.params.id));
   };
 
   likePost = post => {
@@ -121,60 +115,23 @@ class Post extends Component {
   render() {
     const { posts, loading, likesForUser, comments } = this.props;
     console.log(this.props.editStatus);
+    console.log(this.props);
 
     const commentsDisplay = comments.map(comment => {
       console.log(comment);
       return (
-        <div className="comment__username__cont" key={comment.comment_id}>
-          <div
-            className="username__div"
-            onClick={() => this.goToUserProfile(posts[0].username)}
-          >
-            {comment.username}:
-          </div>
-
-          {comment.username === this.props.username ? (
-            <>
-              {this.props.editStatus === false ? (
-                <>
-                  <div className="comment__div">{comment.comment}</div>
-                  <button
-                    className="comment__delete"
-                    onClick={() => this.deleteComment(comment.comment_id)}
-                  >
-                    <i class="material-icons">delete</i>
-                  </button>
-                  <button
-                    className="comment__edit"
-                    onClick={() =>
-                      this.handleClickUpdateComment(comment.comment)
-                    }
-                  >
-                    Edit
-                  </button>
-                </>
-              ) : (
-                <div className="edit__comment__input__cont">
-                  <input
-                    className="edit__comment__input"
-                    type="text"
-                    value={this.props.comment_edit}
-                    onChange={this.handleEditOnChange}
-                    name="comment_edit"
-                  />
-                  <button
-                    className="edit__comment__input__button"
-                    onClick={() => this.updateComment(comment.comment_id)}
-                  >
-                    <i class="material-icons">send</i>
-                  </button>
-                </div>
-              )}
-            </>
-          ) : (
-            <div className="comment__div">{comment.comment}</div>
-          )}
-        </div>
+        <Comments
+          comment={comment}
+          posts={posts}
+          goToUserProfile={this.goToUserProfile}
+          deleteComment={this.deleteComment}
+          handleClickUpdateComment={this.handleClickUpdateComment}
+          handleEditOnChange={this.handleEditOnChange}
+          updateComment={this.updateComment}
+          populateComment={this.props.populateComment}
+          username={this.props.username}
+          comment_edit={this.props.comment_edit}
+        />
       );
     });
     return (

@@ -6,7 +6,6 @@ import { followUser } from "../../redux/FollowsReducer/FollowsReducer";
 import { uploadPic } from "../../redux/PictureReducer/PictureReducer";
 import Posts from "../Posts/Posts";
 import "./Profile.scss";
-import axios from "axios";
 
 class Profile extends Component {
   state = {
@@ -61,12 +60,20 @@ class Profile extends Component {
             </button>
           ) : null}
 
-          <button onClick={() => widget.open()}>Choose Photo</button>
-          <div>
-            <input type="url" text="image_url" value={this.state.image_url} />
-            <img src={this.state.image_url} />
-            <button onClick={this.submitPicture}>Upload</button>
-          </div>
+          {this.props.username === this.props.match.params.username ? (
+            <div>
+              <button onClick={() => widget.open()}>Choose Photo</button>
+              <div>
+                <input
+                  type="url"
+                  text="image_url"
+                  value={this.state.image_url}
+                />
+                <img src={this.state.image_url} />
+                <button onClick={this.submitPicture}>Upload</button>
+              </div>
+            </div>
+          ) : null}
 
           <Posts />
         </div>
