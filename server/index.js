@@ -56,6 +56,8 @@ app.get("/api/follow/", GM.time, FC.getFollowPosts);
 app.get("/api/users/", GM.time, UC.getUsers);
 app.get("/api/users/:username", UC.getUserId);
 app.put("/api/users/", UC.updatePic);
+app.get("/api/user/:username", UC.getUserBio);
+app.put("/api/users/:id", UC.editUserBio);
 
 //likes
 app.post("/api/likes/:post_id", LC.addLike);

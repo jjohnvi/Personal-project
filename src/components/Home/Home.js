@@ -42,6 +42,12 @@ class Home extends Component {
         <Loader loading={this.props.loading} />
         <div className="home">
           <button onClick={this.handleLogout}>Logout</button>
+          {this.props.posts.length < 1 && (
+            <div className="no__post">
+              Welcome to mello. Get started by following other users and making
+              posts.
+            </div>
+          )}
           <Posts />
         </div>
       </>

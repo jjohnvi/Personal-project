@@ -55,6 +55,7 @@ class Navbar extends Component {
       .getPostsByProfile(username)
       .then(() => this.props.getUserId(username))
       .then(() => this.props.history.push(`/posts/${username}`));
+    this.setState({ searchbar: "", open: false });
   };
 
   openModal = () => {
@@ -125,7 +126,7 @@ class Navbar extends Component {
               )}
 
               <li className="navbar__item">
-                <i class="material-icons">view_list</i>
+                <i class="material-icons">menu</i>
               </li>
             </ul>
           </nav>

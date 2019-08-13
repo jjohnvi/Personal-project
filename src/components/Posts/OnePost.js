@@ -14,7 +14,8 @@ import {
   updateState,
   checkUserLoggedIn,
   resetFields,
-  getUserId
+  getUserId,
+  getUserBio
 } from "../../redux/UserReducer/UserReducer";
 
 import {
@@ -28,6 +29,7 @@ import {
   setEdit
 } from "../../redux/ModalReducer/ModalReducer";
 import "./Posts.scss";
+import moment from "moment";
 
 class OnePost extends Component {
   goToPost = id => {
@@ -72,6 +74,7 @@ class OnePost extends Component {
   render() {
     const { post, likeCount } = this.props;
     console.log(this.props);
+
     return (
       <>
         <div className="user__post__content">
@@ -111,6 +114,9 @@ class OnePost extends Component {
                   <div className="content__buttons">
                     <div className="title__content__div">
                       <p className="post__content">{post.content}</p>
+                      <div className="date__post">
+                        {moment(post.date).fromNow()}
+                      </div>
                     </div>
                     <div className="remove__edit__like">
                       {this.props.username === post.username ? (
@@ -180,7 +186,8 @@ export default withRouter(
       getLikes,
       populateModal,
       openModal,
-      setEdit
+      setEdit,
+      getUserBio
     }
   )(OnePost)
 );

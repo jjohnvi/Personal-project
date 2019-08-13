@@ -12,9 +12,33 @@
     align-items: center;
     padding: 1rem;
     font-size: 2rem;
-    background-color: $white;
-    border: solid 2px $blue-2;
-    border-radius: 4px;
+    background-color: white;
+    border-radius: 2px;
     box-shadow: $box-shadow;
+    border: 1px solid lightgray;
   }
+}
+
+.profile__about__cont {
+  display: flex;
+  justify-content: space-between;
+  width: 28%;
+  border-bottom: 1px solid lightgray;
+}
+
+.upload__cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.name__bio {
+  font-size: 1.3rem;
+  padding-bottom: 1rem;
+}
+
+.userBio {
+  font-size: 1rem;
+  width: 100%;
+  line-height: 1.3rem;
 }

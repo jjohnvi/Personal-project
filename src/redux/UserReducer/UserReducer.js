@@ -6,6 +6,7 @@ const initialState = {
   lastname: "",
   password: "",
   loading: false,
+  userBio: "",
   user: {},
   followingUserId: null
 };
@@ -16,6 +17,7 @@ const LOGIN_USER = "LOGIN_USER";
 const CHECK_USER_LOGGED_IN = "CHECK_USER_LOGGED_IN";
 const LOGOUT_USER = "LOGOUT_USER";
 const GET_USER_ID = "GET_USER_ID";
+const GET_USER_BIO = "GET_USER_BIO";
 
 export const updateState = e => {
   return {
@@ -61,6 +63,13 @@ export const resetFields = () => {
   };
 };
 
+export const getUserBio = username => {
+  return {
+    type: GET_USER_BIO,
+    payload: axios.get(`/api/user/${username}`)
+  };
+};
+
 export function userReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
@@ -84,6 +93,12 @@ export function userReducer(state = initialState, action) {
       return { ...state, loading: true };
     case `${LOGOUT_USER}_FULFILLED`:
       return { ...state, loading: false, user: {} };
+    case `${GET_USER_BIO}_PENDING`:
+      return { ...state, loading: true, userBio: "" };
+    case `${GET_USER_BIO}_FULFILLED`:
+      console.log(payload.data);
+      if (!payload.data[0]) return { ...state };
+      return { ...state, loading: false, userBio: payload.data[0].bio };
     default:
       return state;
   }

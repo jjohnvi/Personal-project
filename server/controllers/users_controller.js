@@ -35,10 +35,29 @@ const updatePic = (req, res, next) => {
     });
 };
 
-// const getPics = (req, res, next) => {
-//   const db = req.app.get('db');
+const getUserBio = (req, res, next) => {
+  const db = req.app.get("db");
+  const { username } = req.params;
 
-//   db.get_picture().then
-// }
+  db.get_user_bio(username)
+    .then(bio => {
+      res.json(bio);
+    })
+    .catch(err => console.log(err));
+};
 
-module.exports = { getUsers, getUserId, updatePic };
+const editUserBio = (req, res, next) => {
+  const db = req.app.get("db");
+  const { params, body } = req;
+
+  db.update_user_bio([params.id, body.bio])
+    .then(bio => {
+      res.status(200).json(bio);
+    })
+    .catch(err => {
+      res.status(500).send({ errorMessage: "Can't update the bio. " });
+      console.log(err);
+    });
+};
+
+module.exports = { getUsers, getUserId, updatePic, getUserBio, editUserBio };
