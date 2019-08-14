@@ -70,7 +70,18 @@ class Profile extends Component {
                   : "Followed"}
               </button>
             ) : null}
-
+            {this.props.userPic !== null ? (
+              <img
+                src={this.props.userPic}
+                alt="oops"
+                className="profile__bio__pic"
+              />
+            ) : (
+              <img
+                className="profile__pic"
+                src="https://res.cloudinary.com/john-personal-proj/image/upload/v1565478265/mello/kw5qxmbgea2ppbncuibt.png"
+              />
+            )}
             {this.props.username === this.props.match.params.username ? (
               <div className="upload__cont">
                 <button className="choose__photo" onClick={() => widget.open()}>
@@ -113,7 +124,8 @@ const mapStateToProps = state => {
     username: state.userReducer.user.username,
     image_url: state.pictureReducer.image_url,
     userBio: state.userReducer.userBio,
-    posts: state.postsReducer.posts
+    posts: state.postsReducer.posts,
+    userPic: state.userReducer.userPic
   };
 };
 

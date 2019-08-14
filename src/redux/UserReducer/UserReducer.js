@@ -7,6 +7,7 @@ const initialState = {
   password: "",
   loading: false,
   userBio: "",
+  userPic: "",
   user: {},
   followingUserId: null
 };
@@ -98,7 +99,12 @@ export function userReducer(state = initialState, action) {
     case `${GET_USER_BIO}_FULFILLED`:
       console.log(payload.data);
       if (!payload.data[0]) return { ...state };
-      return { ...state, loading: false, userBio: payload.data[0].bio };
+      return {
+        ...state,
+        loading: false,
+        userBio: payload.data[0].bio,
+        userPic: payload.data[0].profile_pic
+      };
     default:
       return state;
   }
