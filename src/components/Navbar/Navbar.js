@@ -42,6 +42,7 @@ class Navbar extends Component {
     if (this.props.username) {
       this.props.getAllPosts().then(() => this.props.history.push("/home"));
     }
+    this.setState({ menuOpen: false });
   };
 
   updateState = e => {
@@ -68,6 +69,7 @@ class Navbar extends Component {
       .then(() => this.props.getUserId(username))
       .then(() => this.props.history.push(`/posts/${username}`));
     this.setState({ searchbar: "", open: false });
+    this.setState({ menuOpen: false });
   };
 
   openModal = () => {
