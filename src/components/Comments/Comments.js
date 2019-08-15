@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 
 class Comments extends Component {
   constructor() {
@@ -51,21 +50,31 @@ class Comments extends Component {
               </>
             ) : (
               <div className="edit__comment__input__cont">
-                <input
-                  className="edit__comment__input"
-                  type="text"
-                  value={this.props.comment_edit}
-                  onChange={this.props.handleEditOnChange}
-                  name="comment_edit"
-                />
-                <button
-                  className="edit__comment__input__button"
-                  onClick={() =>
-                    this.props.updateComment(this.props.comment.comment_id)
-                  }
+                <form
+                  className="edit__form"
+                  type="submit"
+                  onSubmit={e => {
+                    e.preventDefault();
+                    this.props.updateComment(this.props.comment.comment_id);
+                  }}
                 >
-                  <i class="material-icons">send</i>
-                </button>
+                  <input
+                    className="edit__comment__input"
+                    type="text"
+                    value={this.props.comment_edit}
+                    onChange={this.props.handleEditOnChange}
+                    name="comment_edit"
+                  />
+                  <button
+                    className="edit__comment__input__button"
+                    onClick={e => {
+                      e.preventDefault();
+                      this.props.updateComment(this.props.comment.comment_id);
+                    }}
+                  >
+                    <i class="material-icons">send</i>
+                  </button>
+                </form>
               </div>
             )}
           </>

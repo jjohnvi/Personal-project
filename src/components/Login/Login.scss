@@ -15,7 +15,7 @@
   align-items: center;
   height: 30rem;
   width: 25rem;
-  background-color: $white;
+  background-color: white;
   border: $white solid 2px;
   box-shadow: $box-shadow;
   -webkit-appearance: none;
@@ -29,8 +29,9 @@
     display: flex;
     text-align: center;
     margin: 0.5rem;
-    background-color: $blue-3;
+    background-color: black;
     font-family: $title-font;
+    box-shadow: $box-shadow;
     color: $white;
     font-size: 0.8rem;
     font-weight: bold;
@@ -39,7 +40,7 @@
     font-family: $title-font;
     font-weight: bold;
     font-size: 0.8rem;
-    letter-spacing: 1px;
+    // letter-spacing: 1px;
     font-style: italic;
     color: $white;
   }
@@ -50,10 +51,11 @@
     text-align: center;
     margin: 0.1em;
     font-family: $title-font;
-    letter-spacing: 2px;
-    color: $blue-3;
-    background-color: $white;
+    letter-spacing: 1px;
+    color: black;
+    background-color: white;
     font-size: 0.6rem;
+    box-shadow: $box-shadow;
     font-weight: bold;
     justify-content: center;
   }

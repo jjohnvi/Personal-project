@@ -136,7 +136,8 @@ class ModalPost extends Component {
                 placeholder="Title..."
                 value={this.props.title}
               />
-              <input
+              <textarea
+                row="1"
                 autoComplete="off"
                 type="text"
                 onChange={this.updateState}

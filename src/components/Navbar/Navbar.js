@@ -13,19 +13,29 @@ import {
   resetInput,
   setEdit
 } from "../../redux/ModalReducer/ModalReducer";
-import { updateState, getUserId } from "../../redux/UserReducer/UserReducer";
+import {
+  updateState,
+  getUserId,
+  logoutUser,
+  getUserBio
+} from "../../redux/UserReducer/UserReducer";
 import "../Navbar/Navbar.scss";
 import ModalPost from "../modalPost/ModalPost";
 
 class Navbar extends Component {
   state = {
     open: false,
+    menuOpen: false,
     searchbar: "",
     currentDisplayed: this.props.users
   };
 
   toggleMenu = () => {
-    this.setState({ open: !this.state.open });
+    this.setState({ menuOpen: !this.state.menuOpen });
+  };
+
+  closeMenu = () => {
+    this.setState({ menuOpen: false });
   };
 
   goToHome = () => {
@@ -45,9 +55,11 @@ class Navbar extends Component {
   };
 
   goToProfile = username => {
+    this.props.getUserBio(this.props.match.params.username);
     this.props
       .getPostsByProfile(username)
       .then(() => this.props.history.push(`/posts/${this.props.username}`));
+    this.setState({ menuOpen: false });
   };
 
   goToUserProfile = username => {
@@ -64,12 +76,22 @@ class Navbar extends Component {
     this.props.openModal();
   };
 
+  handleLogout = () => {
+    this.props.logoutUser().then(() => this.props.history.push("/"));
+    this.setState({ menuOpen: false });
+  };
+
   render() {
     const { username, users } = this.props;
 
     let dropdownClassnames = "dropdown";
     if (this.state.open) {
       dropdownClassnames += " dropdown--open";
+    }
+
+    let sidebarClassnames = "sidebar";
+    if (this.state.menuOpen) {
+      sidebarClassnames += " sidebar--open";
     }
 
     return (
@@ -120,16 +142,33 @@ class Navbar extends Component {
                 {username}
               </li>
               {this.props.username && (
-                <li className="navbar__post" onClick={this.openModal}>
-                  <i class="material-icons">border_color</i>
-                </li>
+                <>
+                  <li className="navbar__post" onClick={this.openModal}>
+                    <i class="material-icons">border_color</i>
+                  </li>
+                  <li className="navbar__item" onClick={this.toggleMenu}>
+                    <i class="material-icons">menu</i>
+                  </li>
+                </>
               )}
-
-              <li className="navbar__item">
-                <i class="material-icons">menu</i>
-              </li>
             </ul>
           </nav>
+          <div className={sidebarClassnames}>
+            <ul>
+              <li className="exit__menu" onClick={this.closeMenu}>
+                <i class="material-icons">arrow_forward</i>
+              </li>
+              <li
+                className="sidebar__item"
+                onClick={() => this.goToProfile(this.props.username)}
+              >
+                <i class="material-icons">person</i> {username}
+              </li>
+              <li className="sidebar__item" onClick={this.handleLogout}>
+                <i class="material-icons">exit_to_app</i> Logout
+              </li>
+            </ul>
+          </div>
         </div>
         <ModalPost />
       </>
@@ -157,7 +196,9 @@ export default withRouter(
       openModal,
       closeModal,
       resetInput,
-      setEdit
+      setEdit,
+      logoutUser,
+      getUserBio
     }
   )(Navbar)
 );

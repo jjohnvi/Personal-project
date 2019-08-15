@@ -180,7 +180,7 @@ class Post extends Component {
                     onClick={() => this.likePost(posts[0].post_id)}
                   >
                     <div className="like__button">
-                      {this.props.liked ? "Unlike" : "Like!"} {likesForUser}
+                      {this.props.liked ? "Liked" : "Like!"} {likesForUser}
                     </div>
                   </button>
                 </div>

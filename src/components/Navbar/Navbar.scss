@@ -11,7 +11,7 @@
   box-shadow: $box-shadow;
   border-bottom: solid 1px lightgray;
   align-items: center;
-  color: black;
+  color: #282525;
   font-family: $title-font;
   height: 5rem;
   position: fixed;
@@ -75,9 +75,6 @@
 .dropdown {
   background-color: white;
   position: fixed;
-  // right: 50rem;
-  // left: 26.54rem;
-  // top: 68px;
   width: 30rem;
   margin-top: 5px;
   border-radius: 2px;
@@ -116,4 +113,43 @@
 
 .dropdown__item:first-of-type {
   margin-top: 0;
+}
+
+.sidebar {
+  right: 0;
+  top: 0;
+  background-color: gray;
+  position: fixed;
+  transition: ease-in-out width 400ms;
+  width: 0;
+  height: 100%;
+  box-shadow: $box-shadow;
+  border: solid lightgray 1px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  z-index: 6;
+}
+
+.sidebar__item {
+  margin-top: 4rem;
+  color: white;
+  list-style: none;
+  font-family: $title-font;
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sidebar--open {
+  width: 500px;
+  z-index: 6;
+}
+
+.exit__menu {
+  color: white;
+  list-style: none;
+  cursor: pointer;
 }

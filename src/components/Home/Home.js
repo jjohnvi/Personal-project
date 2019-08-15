@@ -28,10 +28,6 @@ class Home extends Component {
     this.props.checkUserLoggedIn().catch(() => this.props.history.push("/"));
   }
 
-  handleLogout = () => {
-    this.props.logoutUser().then(() => this.props.history.push("/"));
-  };
-
   updateState = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -41,7 +37,6 @@ class Home extends Component {
       <>
         <Loader loading={this.props.loading} />
         <div className="home">
-          <button onClick={this.handleLogout}>Logout</button>
           {this.props.posts.length < 1 && (
             <div className="no__post">
               Welcome to mello. Get started by following other users and making

@@ -7,6 +7,7 @@ const initialState = {
   password: "",
   loading: false,
   userBio: "",
+  editUserBio: "",
   userPic: "",
   user: {},
   followingUserId: null
@@ -19,6 +20,9 @@ const CHECK_USER_LOGGED_IN = "CHECK_USER_LOGGED_IN";
 const LOGOUT_USER = "LOGOUT_USER";
 const GET_USER_ID = "GET_USER_ID";
 const GET_USER_BIO = "GET_USER_BIO";
+const EDIT_USER_BIO = "EDIT_USER_BIO";
+const POPULATE_BIO = "POPULATE_BIO";
+const HANDLE_BIO_ON_CHANGE = "HANDLE_BIO_ON_CHANGE";
 
 export const updateState = e => {
   return {
@@ -71,6 +75,27 @@ export const getUserBio = username => {
   };
 };
 
+export const editUserBio = (username, bio) => {
+  return {
+    type: EDIT_USER_BIO,
+    payload: axios.put(`/api/users/${username}`, { bio })
+  };
+};
+
+export const populateBio = bio => {
+  return {
+    type: POPULATE_BIO,
+    payload: bio
+  };
+};
+
+export const handleBioOnChange = bio => {
+  return {
+    type: HANDLE_BIO_ON_CHANGE,
+    payload: bio
+  };
+};
+
 export function userReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
@@ -97,7 +122,6 @@ export function userReducer(state = initialState, action) {
     case `${GET_USER_BIO}_PENDING`:
       return { ...state, loading: true, userBio: "" };
     case `${GET_USER_BIO}_FULFILLED`:
-      console.log(payload.data);
       if (!payload.data[0]) return { ...state };
       return {
         ...state,
@@ -105,6 +129,17 @@ export function userReducer(state = initialState, action) {
         userBio: payload.data[0].bio,
         userPic: payload.data[0].profile_pic
       };
+
+    case `${EDIT_USER_BIO}_PENDING`:
+      return { ...state, loading: true };
+    case `${EDIT_USER_BIO}_FULFILLED`:
+      return { ...state, loading: false };
+
+    case POPULATE_BIO:
+      return { ...state, editUserBio: payload };
+
+    case HANDLE_BIO_ON_CHANGE:
+      return { ...state, editUserBio: payload };
     default:
       return state;
   }

@@ -40,6 +40,18 @@
     padding: 1rem;
     margin-bottom: 1rem;
   }
+  textarea {
+    width: 100%;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: lightgray solid 1px;
+  }
+  textarea::placeholder {
+    font-family: $title-font;
+    color: $blue-3;
+  }
   form {
     width: 100%;
     appearance: none;
