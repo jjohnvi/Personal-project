@@ -39,6 +39,10 @@
   width: 300%;
   margin: 1rem;
   box-shadow: $box-shadow;
+
+  @media screen and (max-width: $response-tablet) {
+    width: 100%;
+  }
 }
 
 .profile__bio__pic {

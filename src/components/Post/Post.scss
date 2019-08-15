@@ -6,6 +6,9 @@
   // align-items: center;
   width: 40%;
   // height: 100vh;
+  @media screen and (max-width: $response-tablet) {
+    width: 100%;
+  }
 }
 
 .one__post__cont {
@@ -14,6 +17,11 @@
   // align-items: center;
 
   width: 100%;
+
+  @media screen and (max-width: $response-tablet) {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .profile__pics__2 {
@@ -24,6 +32,9 @@
   box-shadow: $box-shadow;
   margin: 1rem;
   margin-top: 15rem;
+  @media screen and (max-width: $response-tablet) {
+    margin-top: 8rem;
+  }
 }
 
 .post__cont {
@@ -45,11 +56,17 @@
     font-size: 2rem;
     font-family: $title-font;
     text-align: center;
+    @media screen and (max-width: $response-tablet) {
+      font-size: 1.5rem;
+    }
   }
 
   p {
     font-size: 0.8rem;
     text-align: center;
+    @media screen and (max-width: $response-tablet) {
+      font-size: 1.2rem;
+    }
   }
 }
 
@@ -147,6 +164,12 @@
   background: none;
   box-shadow: $box-shadow;
   margin-bottom: 1rem;
+  @media screen and (max-width: $response-tablet) {
+    border-radius: 10px;
+    flex-direction: row;
+    width: 30%;
+    padding: 0.6rem;
+  }
 }
 
 .like__button {
@@ -206,6 +229,10 @@
   // padding: 1rem;
   display: flex;
   justify-content: flex-start;
+
+  @media screen and (max-width: $response-tablet) {
+    font-size: 0.8rem;
+  }
 }
 
 .comment__delete {
@@ -242,4 +269,9 @@
   appearance: none;
   display: flex;
   flex-direction: row;
+
+  @media screen and (max-width: $response-tablet) {
+    font-size: 0.7rem;
+    padding: 0.4rem;
+  }
 }

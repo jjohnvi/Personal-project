@@ -20,6 +20,13 @@
   justify-content: space-around;
   align-items: center;
   box-shadow: $box-shadow;
+
+  @media screen and (max-width: $response-tablet) {
+    width: 100%;
+    height: 70%;
+    left: 0;
+    top: 20%;
+  }
 }
 
 .modal__cont {

@@ -2,6 +2,12 @@
 
 .user__post__content {
   display: flex;
+
+  @media screen and (max-width: $response-tablet) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .profile__button {
@@ -39,6 +45,8 @@
     letter-spacing: 2px;
     padding: 1rem;
     margin-bottom: 1rem;
+    @media screen and (max-width: $response-tablet) {
+    }
   }
   textarea {
     width: 100%;
@@ -47,6 +55,9 @@
     padding: 1rem;
     margin-bottom: 1rem;
     border: lightgray solid 1px;
+    @media screen and (max-width: $response-tablet) {
+      border: none;
+    }
   }
   textarea::placeholder {
     font-family: $title-font;
@@ -69,6 +80,11 @@
   font-size: 2rem;
   box-shadow: $box-shadow;
   margin-top: 1rem;
+
+  @media screen and (max-width: $response-tablet) {
+    width: 3rem;
+    height: 3rem;
+  }
 }
 
 .content__cont {
@@ -83,16 +99,36 @@
   margin: 1rem;
   padding: 1rem;
   background-color: white;
+
+  @media screen and (max-width: $response-tablet) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+  }
+
   .img__cont {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+    @media screen and (max-width: $response-tablet) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
   }
 
   img {
     width: 50%;
     box-shadow: $box-shadow;
     border-radius: 5px;
+    @media screen and (max-width: $response-tablet) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
   }
 
   h2 {
@@ -100,6 +136,16 @@
     justify-content: center;
     align-items: center;
     letter-spacing: 1px;
+    @media screen and (max-width: $response-tablet) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      text-align: center;
+      border-bottom: 1px solid lightgray;
+      font-size: 1rem;
+      font-weight: bold;
+    }
   }
 
   p {
@@ -184,6 +230,10 @@
   height: 150px;
   border: 2px solid $white;
   box-shadow: $box-shadow;
+  @media screen and (max-width: $response-tablet) {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .pics__array:hover {

@@ -136,7 +136,7 @@ class Navbar extends Component {
               )}
             </div>
             <ul className="navbar__list">
-              <li className="navbar__item" onClick={this.goToProfile}>
+              <li className="navbar__item__1" onClick={this.goToProfile}>
                 {username}
               </li>
               {this.props.username && (
@@ -144,7 +144,7 @@ class Navbar extends Component {
                   <li className="navbar__post" onClick={this.openModal}>
                     <i class="material-icons">border_color</i>
                   </li>
-                  <li className="navbar__item" onClick={this.toggleMenu}>
+                  <li className="navbar__item__2" onClick={this.toggleMenu}>
                     <i class="material-icons">menu</i>
                   </li>
                 </>
