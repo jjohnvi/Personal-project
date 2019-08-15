@@ -120,9 +120,9 @@ export function userReducer(state = initialState, action) {
     case `${LOGOUT_USER}_FULFILLED`:
       return { ...state, loading: false, user: {} };
     case `${GET_USER_BIO}_PENDING`:
-      return { ...state, loading: true, userBio: "" };
+      return { ...state, loading: true, userBio: "", userPic: "" };
     case `${GET_USER_BIO}_FULFILLED`:
-      if (!payload.data[0]) return { ...state };
+      if (!payload.data[0]) return state;
       return {
         ...state,
         loading: false,

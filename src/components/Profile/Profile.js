@@ -7,11 +7,15 @@ import {
   populateBio,
   handleBioOnChange
 } from "../../redux/UserReducer/UserReducer";
-import { getPosts } from "../../redux/PostsReducer/PostsReducer";
+import {
+  getPosts,
+  getPostsByProfile
+} from "../../redux/PostsReducer/PostsReducer";
 import { followUser } from "../../redux/FollowsReducer/FollowsReducer";
 import { uploadPic } from "../../redux/PictureReducer/PictureReducer";
 import Posts from "../Posts/Posts";
 import "./Profile.scss";
+import Loader from "../Loader/Loader";
 
 class Profile extends Component {
   state = {
@@ -20,9 +24,12 @@ class Profile extends Component {
     edit: false
   };
 
-  componentDidMount() {
-    this.props.checkUserLoggedIn().catch(() => this.props.history.push("/"));
-    this.props.getUserBio(this.props.match.params.username);
+  async componentDidMount() {
+    await this.props
+      .checkUserLoggedIn()
+      .catch(() => this.props.history.push("/"));
+    await this.props.getUserBio(this.props.match.params.username);
+    await this.props.getPostsByProfile(this.props.match.params.username);
     console.log(this.props.username);
     console.log(this.props.match.params.username);
     console.log(this.props.userBio);
@@ -73,7 +80,7 @@ class Profile extends Component {
 
   render() {
     console.log(this.props);
-    console.log(this.props.editUserBio);
+    console.log(this.props.edit_UserBio);
     const widget = window.cloudinary.createUploadWidget(
       {
         cloudName: "john-personal-proj",
@@ -87,6 +94,7 @@ class Profile extends Component {
 
     return (
       <>
+        <Loader loading={this.props.loading} />
         <div className="bio__with__posts">
           <div className="profile__post">
             <div className="profile__about__cont">
@@ -192,7 +200,8 @@ const mapStateToProps = state => {
     userBio: state.userReducer.userBio,
     edit_UserBio: state.userReducer.editUserBio,
     posts: state.postsReducer.posts,
-    userPic: state.userReducer.userPic
+    userPic: state.userReducer.userPic,
+    loading: state.userReducer.loading
   };
 };
 
@@ -206,6 +215,7 @@ export default connect(
     getUserBio,
     editUserBio,
     handleBioOnChange,
-    populateBio
+    populateBio,
+    getPostsByProfile
   }
 )(Profile);

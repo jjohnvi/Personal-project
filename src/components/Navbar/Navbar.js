@@ -55,19 +55,18 @@ class Navbar extends Component {
     }
   };
 
-  goToProfile = username => {
-    this.props.getUserBio(this.props.match.params.username);
-    this.props
-      .getPostsByProfile(username)
-      .then(() => this.props.history.push(`/posts/${this.props.username}`));
+  goToProfile = async () => {
+    await this.props.getUserBio(this.props.username);
+    await this.props.getPostsByProfile(this.props.username);
+    await this.props.history.push(`/posts/${this.props.username}`);
     this.setState({ menuOpen: false });
   };
 
-  goToUserProfile = username => {
-    this.props
-      .getPostsByProfile(username)
-      .then(() => this.props.getUserId(username))
-      .then(() => this.props.history.push(`/posts/${username}`));
+  goToUserProfile = async username => {
+    await this.props.getUserBio(username);
+    await this.props.getPostsByProfile(username);
+    await this.props.getUserId(username);
+    await this.props.history.push(`/posts/${username}`);
     this.setState({ searchbar: "", open: false });
     this.setState({ menuOpen: false });
   };
@@ -137,10 +136,7 @@ class Navbar extends Component {
               )}
             </div>
             <ul className="navbar__list">
-              <li
-                className="navbar__item"
-                onClick={() => this.goToProfile(this.props.username)}
-              >
+              <li className="navbar__item" onClick={this.goToProfile}>
                 {username}
               </li>
               {this.props.username && (
@@ -160,10 +156,7 @@ class Navbar extends Component {
               <li className="exit__menu" onClick={this.closeMenu}>
                 <i class="material-icons">arrow_forward</i>
               </li>
-              <li
-                className="sidebar__item"
-                onClick={() => this.goToProfile(this.props.username)}
-              >
+              <li className="sidebar__item" onClick={this.goToProfile}>
                 <i class="material-icons">person</i> {username}
               </li>
               <li className="sidebar__item" onClick={this.handleLogout}>
