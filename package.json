@@ -5,6 +5,7 @@
   "main": "/server/index.js",
   "proxy": "http://localhost:7000",
   "dependencies": {
+    "animate.css": "^3.7.2",
     "axios": "^0.19.0",
     "bcryptjs": "^2.4.3",
     "classnames": "^2.2.6",
@@ -16,13 +17,15 @@
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
+    "react-animated-css": "^1.2.1",
     "react-dom": "^16.8.6",
     "react-modal": "^3.9.1",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "redux": "^4.0.4",
-    "redux-promise-middleware": "^6.1.1"
+    "redux-promise-middleware": "^6.1.1",
+    "waait": "^1.0.5"
   },
   "scripts": {
     "start": "react-scripts start",

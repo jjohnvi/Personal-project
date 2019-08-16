@@ -75,6 +75,14 @@ class OnePost extends Component {
     const { post, likeCount } = this.props;
     console.log(this.props);
 
+    const showMoreLink = (
+      <a className="read__more" onClick={() => this.goToPost(post.post_id)}>
+        read more
+      </a>
+    );
+
+    console.log(showMoreLink);
+
     return (
       <>
         <div className="user__post__content">
@@ -113,7 +121,15 @@ class OnePost extends Component {
                   />
                   <div className="content__buttons">
                     <div className="title__content__div">
-                      <p className="post__content">{post.content}</p>
+                      <p className="post__content">
+                        {post.content.length > 255
+                          ? [
+                              post.content.substring(0, 255),
+                              "-...",
+                              showMoreLink
+                            ]
+                          : post.content}
+                      </p>
                       <div className="date__post">
                         {moment(post.date).fromNow()}
                       </div>

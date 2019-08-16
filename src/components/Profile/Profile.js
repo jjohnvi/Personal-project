@@ -11,7 +11,10 @@ import {
   getPosts,
   getPostsByProfile
 } from "../../redux/PostsReducer/PostsReducer";
-import { followUser } from "../../redux/FollowsReducer/FollowsReducer";
+import {
+  followUser,
+  checkFollow
+} from "../../redux/FollowsReducer/FollowsReducer";
 import { uploadPic } from "../../redux/PictureReducer/PictureReducer";
 import Posts from "../Posts/Posts";
 import "./Profile.scss";
@@ -30,9 +33,10 @@ class Profile extends Component {
       .catch(() => this.props.history.push("/"));
     await this.props.getUserBio(this.props.match.params.username);
     await this.props.getPostsByProfile(this.props.match.params.username);
-    console.log(this.props.username);
-    console.log(this.props.match.params.username);
-    console.log(this.props.userBio);
+    await this.props.checkFollow(this.props.followingUserId);
+    // console.log(this.props.username);
+    // console.log(this.props.match.params.username);
+    // console.log(this.props.userBio);
   }
 
   followUser = () => {
@@ -79,8 +83,7 @@ class Profile extends Component {
   };
 
   render() {
-    console.log(this.props);
-    console.log(this.props.edit_UserBio);
+    console.log(this.props.following);
     const widget = window.cloudinary.createUploadWidget(
       {
         cloudName: "john-personal-proj",
@@ -216,6 +219,7 @@ export default connect(
     editUserBio,
     handleBioOnChange,
     populateBio,
-    getPostsByProfile
+    getPostsByProfile,
+    checkFollow
   }
 )(Profile);

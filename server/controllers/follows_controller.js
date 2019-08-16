@@ -42,4 +42,12 @@ const followCount = async (req, res, next) => {
   const db = req.app.get("db");
 };
 
-module.exports = { follow, getFollowPosts };
+const getFollowStatus = async (req, res, next) => {
+  const db = req.app.get("db");
+  const { id } = req.session.user;
+
+  const results = await db.check_follow([id]);
+  res.status(200).json(results);
+};
+
+module.exports = { follow, getFollowPosts, getFollowStatus };

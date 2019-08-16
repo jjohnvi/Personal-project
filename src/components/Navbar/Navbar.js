@@ -142,10 +142,10 @@ class Navbar extends Component {
               {this.props.username && (
                 <>
                   <li className="navbar__post" onClick={this.openModal}>
-                    <i class="material-icons">border_color</i>
+                    <i className="material-icons">border_color</i>
                   </li>
                   <li className="navbar__item__2" onClick={this.toggleMenu}>
-                    <i class="material-icons">menu</i>
+                    <i className="material-icons">menu</i>
                   </li>
                 </>
               )}
@@ -154,13 +154,13 @@ class Navbar extends Component {
           <div className={sidebarClassnames}>
             <ul>
               <li className="exit__menu" onClick={this.closeMenu}>
-                <i class="material-icons">arrow_forward</i>
+                <i className="material-icons">arrow_forward</i>
               </li>
               <li className="sidebar__item" onClick={this.goToProfile}>
-                <i class="material-icons">person</i> {username}
+                <i className="material-icons">person</i> {username}
               </li>
               <li className="sidebar__item" onClick={this.handleLogout}>
-                <i class="material-icons">exit_to_app</i> Logout
+                <i className="material-icons">exit_to_app</i> Logout
               </li>
             </ul>
           </div>
