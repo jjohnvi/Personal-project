@@ -164,9 +164,12 @@
 
   p {
     font-size: 1rem;
-    line-height: 1.3rem;
+    line-height: 1.618;
     text-align: left;
-    margin-top: 0.7rem;
+    margin-top: 0;
+    @media screen and (max-width: $response-tablet) {
+      margin-top: 0.7rem;
+    }
   }
   a {
     text-decoration: underline;
@@ -286,9 +289,15 @@
 }
 
 .no__post {
-  width: 800px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+
   font-size: 5rem;
   display: flex;
+
   justify-content: center;
   align-items: center;
   flex-direction: row;
@@ -304,9 +313,13 @@
 }
 
 .no__post__2 {
-  width: 800px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
   font-size: 5rem;
-  // display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
@@ -315,6 +328,7 @@
   padding: 1rem;
   background-color: white;
   text-align: center;
+
   a {
     text-decoration: underline;
     cursor: pointer;

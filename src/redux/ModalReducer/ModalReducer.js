@@ -6,7 +6,8 @@ const initialState = {
   content: "",
   searchQuery: "",
   isEditing: false,
-  pictures: []
+  pictures: [],
+  searchOpen: false
 };
 
 const OPEN_MODAL = "OPEN_MODAL";
@@ -17,6 +18,7 @@ const RESET_INPUT = "RESET_INPUT";
 const SET_EDIT = "SET_EDIT";
 const UPDATE_IMG_URL = "UPDATE_IMG_URL";
 const SEARCH_PICS = "SEARCH_PICS";
+const OPEN_SEARCH = "OPEN_SEARCH";
 
 export const openModal = () => {
   return {
@@ -71,6 +73,13 @@ export const searchPics = arrayOfPics => {
   };
 };
 
+export const toggleSearch = isOpen => {
+  return {
+    type: OPEN_SEARCH,
+    payload: isOpen
+  };
+};
+
 export function modalReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
@@ -79,7 +88,7 @@ export function modalReducer(state = initialState, action) {
       return { ...state, modalIsOpen: true };
 
     case CLOSE_MODAL:
-      return { ...state, modalIsOpen: false };
+      return { ...state, modalIsOpen: false, isEditing: false };
 
     case POPULATE_MODAL:
       return {
@@ -112,6 +121,9 @@ export function modalReducer(state = initialState, action) {
 
     case SEARCH_PICS:
       return { ...state, pictures: payload };
+
+    case OPEN_SEARCH:
+      return { ...state, searchOpen: payload };
 
     default:
       return state;

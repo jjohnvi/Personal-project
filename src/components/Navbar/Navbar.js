@@ -11,7 +11,8 @@ import {
   openModal,
   closeModal,
   resetInput,
-  setEdit
+  setEdit,
+  toggleSearch
 } from "../../redux/ModalReducer/ModalReducer";
 import {
   updateState,
@@ -27,7 +28,8 @@ class Navbar extends Component {
     open: false,
     menuOpen: false,
     searchbar: "",
-    currentDisplayed: this.props.users
+    currentDisplayed: this.props.users,
+    searchOpen: false
   };
 
   toggleMenu = () => {
@@ -36,6 +38,10 @@ class Navbar extends Component {
 
   closeMenu = () => {
     this.setState({ menuOpen: false });
+  };
+
+  openSearch = () => {
+    this.props.toggleSearch(!this.props.searchOpen);
   };
 
   goToHome = () => {
@@ -95,6 +101,11 @@ class Navbar extends Component {
       sidebarClassnames += " sidebar--open";
     }
 
+    let searchMenuClassnames = "searchmenu";
+    if (this.props.searchOpen) {
+      searchMenuClassnames += " searchmenu--open";
+    }
+
     return (
       <>
         <div>
@@ -105,7 +116,13 @@ class Navbar extends Component {
               </div>
               {this.props.username && (
                 <div className="search__list">
-                  <input
+                  <button
+                    className="search__button__1"
+                    onClick={this.openSearch}
+                  >
+                    <i className="material-icons">search</i>
+                  </button>
+                  {/* <input
                     autoComplete="off"
                     className="searchbar"
                     onChange={this.updateState}
@@ -113,25 +130,7 @@ class Navbar extends Component {
                     type="text"
                     placeholder="Search for User..."
                     value={this.state.searchbar}
-                  />
-                  <div className={dropdownClassnames}>
-                    <ul className="dropdown__list">
-                      {users.map(user => {
-                        return (
-                          <div key={user.user_id}>
-                            <li
-                              className="dropdown__item"
-                              onClick={() =>
-                                this.goToUserProfile(user.username)
-                              }
-                            >
-                              {user.username}
-                            </li>
-                          </div>
-                        );
-                      })}
-                    </ul>
-                  </div>
+                  /> */}
                 </div>
               )}
             </div>
@@ -164,6 +163,42 @@ class Navbar extends Component {
               </li>
             </ul>
           </div>
+
+          <div className={searchMenuClassnames}>
+            <div className="search__input__dropdown">
+              <div className="search__input__button">
+                <input
+                  autoComplete="off"
+                  className="searchbar"
+                  onChange={this.updateState}
+                  name="searchbar"
+                  type="text"
+                  placeholder="Search for User..."
+                  value={this.state.searchbar}
+                />
+                <button className="search__button__1" onClick={this.openSearch}>
+                  <i className="material-icons">search</i>
+                </button>
+              </div>
+              <div className={dropdownClassnames}>
+                <ul className="dropdown__list">
+                  {users.map(user => {
+                    return (
+                      <div classname="dropdown__name" key={user.user_id}>
+                        <li
+                          className="dropdown__item"
+                          onClick={() => this.goToUserProfile(user.username)}
+                        >
+                          <i className="material-icons">person</i>
+                          {user.username}
+                        </li>
+                      </div>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
         <ModalPost />
       </>
@@ -174,7 +209,8 @@ class Navbar extends Component {
 const mapStateToProps = state => {
   return {
     username: state.userReducer.user.username,
-    users: state.followsReducer.users
+    users: state.followsReducer.users,
+    searchOpen: state.modalReducer.searchOpen
   };
 };
 
@@ -193,7 +229,8 @@ export default withRouter(
       resetInput,
       setEdit,
       logoutUser,
-      getUserBio
+      getUserBio,
+      toggleSearch
     }
   )(Navbar)
 );

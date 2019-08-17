@@ -19,7 +19,6 @@
   display: flex;
   justify-content: center;
   // align-items: center;
-
   width: 100%;
 
   @media screen and (max-width: $response-profile) {
@@ -50,6 +49,10 @@
   height: 100%;
   width: 100%;
   padding: 2rem;
+
+  @media screen and (max-width: $response-tablet) {
+    padding: 0;
+  }
   img {
     width: 100%;
     border: 2px $blue-3 solid;
@@ -67,7 +70,8 @@
 
   p {
     font-size: 1rem;
-    text-align: center;
+    // text-align: center;
+    line-height: 1.618;
     @media screen and (max-width: $response-profile) {
       font-size: 1.2rem;
     }
@@ -235,6 +239,7 @@
   width: 80%;
   display: flex;
   justify-content: flex-start;
+  line-height: 1.618;
 
   @media screen and (max-width: $response-profile) {
     font-size: 0.8rem;

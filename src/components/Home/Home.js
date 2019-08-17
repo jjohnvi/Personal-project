@@ -10,7 +10,7 @@ import {
   updateState,
   logoutUser
 } from "../../redux/UserReducer/UserReducer";
-import { openModal } from "../../redux/ModalReducer/ModalReducer";
+import { openModal, toggleSearch } from "../../redux/ModalReducer/ModalReducer";
 import Posts from "../Posts/Posts";
 import "./Home.scss";
 import Loader from "../Loader/Loader";
@@ -37,11 +37,9 @@ class Home extends Component {
     this.toggleVisible(false);
     await waait(1000);
     this.toggleVisible2(true);
-    await waait(3000);
-    this.toggleVisible2(false);
-    await waait(500);
-    this.toggleVisible(true);
-    this.toggleVisible2(true);
+
+    // this.toggleVisible(true);
+    // this.toggleVisible2(true);
   }
 
   updateState = e => {
@@ -56,6 +54,10 @@ class Home extends Component {
     this.setState({ isVisible2: isVisible });
   };
 
+  toggleSearch = () => {
+    this.props.toggleSearch(!this.props.searchOpen);
+  };
+
   render() {
     return (
       <>
@@ -67,19 +69,20 @@ class Home extends Component {
                 animationIn="fadeInLeft"
                 animationOut="fadeOutRight"
                 isVisible={this.state.isVisible}
+                className="no__post"
               >
-                <div className="no__post animated fadeInLeft">
-                  Welcome to mello.
-                </div>
+                <div className="">Welcome to mello.</div>
               </Animated>
 
               <Animated
                 animationIn="fadeInLeft"
                 animationOut="fadeOutRight"
                 isVisible={this.state.isVisible2}
+                className="no__post__2"
               >
-                <div className="no__post__2">
-                  To get started, follow other users and{" "}
+                <div>
+                  To get started,{" "}
+                  <a onClick={this.toggleSearch}>follow other users</a> or{" "}
                   <a onClick={this.props.openModal}>make a post.</a>
                 </div>
               </Animated>
@@ -95,7 +98,8 @@ class Home extends Component {
 const mapStateToProps = state => {
   return {
     posts: state.postsReducer.posts,
-    loading: state.postsReducer.loading
+    loading: state.postsReducer.loading,
+    searchOpen: state.modalReducer.searchOpen
   };
 };
 
@@ -108,6 +112,7 @@ export default connect(
     getAllPosts,
     checkUserLoggedIn,
     logoutUser,
-    openModal
+    openModal,
+    toggleSearch
   }
 )(Home);

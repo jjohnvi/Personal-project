@@ -68,15 +68,17 @@ class ModalPost extends Component {
           this.closeModal();
         });
     } else {
-      this.props
-        .addPost(this.props.image_url, this.props.content, this.props.title)
-        .then(() => {
-          this.props.getAllPosts().then(() => {
-            this.props.history.push("/home");
+      if (this.props.image_url && this.props.content && this.props.title) {
+        this.props
+          .addPost(this.props.image_url, this.props.content, this.props.title)
+          .then(() => {
+            this.props.getAllPosts().then(() => {
+              this.props.history.push("/home");
+            });
+            this.resetFields();
+            this.closeModal();
           });
-          this.resetFields();
-          this.closeModal();
-        });
+      }
     }
   };
 
