@@ -280,6 +280,10 @@
   align-items: center;
   background-color: white;
   z-index: 5000;
+
+  @media screen and (max-width: $response-tablet) {
+    flex-direction: column;
+  }
 }
 
 .no__post {
@@ -293,6 +297,11 @@
   margin: 1rem;
   padding: 1rem;
   background-color: white;
+
+  @media screen and (max-width: $response-tablet) {
+    width: 300px;
+    font-size: 1.3rem;
+  }
 }
 
 .no__post__2 {
@@ -311,5 +320,10 @@
     text-decoration: underline;
     cursor: pointer;
     color: $blue-2;
+  }
+
+  @media screen and (max-width: $response-tablet) {
+    width: 300px;
+    font-size: 1.3rem;
   }
 }

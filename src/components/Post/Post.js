@@ -74,7 +74,7 @@ class Post extends Component {
 
   addComment = async e => {
     e.preventDefault();
-    this.props.addComment(this.props.match.params.id, this.props.comment);
+    this.props.addComment(this.props.match.params.id, this.state.comment);
     await this.props.getComments(this.props.match.params.id);
     await this.resetFields();
   };
@@ -196,7 +196,7 @@ class Post extends Component {
                       className="comment__input"
                       name="comment"
                       onChange={this.updateState}
-                      value={this.props.comment}
+                      value={this.state.comment}
                     />
                     <button
                       className="comment__button"

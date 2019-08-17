@@ -71,6 +71,8 @@ export function commentsReducer(state = initialState, action) {
     case `${ADD_COMMENT}_PENDING`:
       return { ...state, loading: true };
     case `${ADD_COMMENT}_FULFILLED`:
+      console.log(state.comment);
+      console.log(state.comments);
       return { ...state, loading: false };
 
     case `${GET_COMMENTS}_PENDING`:

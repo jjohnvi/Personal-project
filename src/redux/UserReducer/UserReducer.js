@@ -114,7 +114,11 @@ export function userReducer(state = initialState, action) {
     case `${GET_USER_ID}_PENDING`:
       return { ...state, loading: true };
     case `${GET_USER_ID}_FULFILLED`:
-      return { ...state, loading: false, followingUserId: payload.data };
+      return {
+        ...state,
+        loading: false,
+        followingUserId: payload.data[0].user_id
+      };
     case `${LOGOUT_USER}_PENDING`:
       return { ...state, loading: true };
     case `${LOGOUT_USER}_FULFILLED`:

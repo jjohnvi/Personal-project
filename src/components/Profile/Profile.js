@@ -5,7 +5,8 @@ import {
   getUserBio,
   editUserBio,
   populateBio,
-  handleBioOnChange
+  handleBioOnChange,
+  getUserId
 } from "../../redux/UserReducer/UserReducer";
 import {
   getPosts,
@@ -13,12 +14,14 @@ import {
 } from "../../redux/PostsReducer/PostsReducer";
 import {
   followUser,
-  checkFollow
+  checkFollow,
+  followCount
 } from "../../redux/FollowsReducer/FollowsReducer";
 import { uploadPic } from "../../redux/PictureReducer/PictureReducer";
 import Posts from "../Posts/Posts";
 import "./Profile.scss";
 import Loader from "../Loader/Loader";
+import waait from "waait";
 
 class Profile extends Component {
   state = {
@@ -33,16 +36,33 @@ class Profile extends Component {
       .catch(() => this.props.history.push("/"));
     await this.props.getUserBio(this.props.match.params.username);
     await this.props.getPostsByProfile(this.props.match.params.username);
+
+    // get the id of the person's profile you are on before...
+    await this.props.getUserId(this.props.match.params.username);
+    // checking how many followers they have
     await this.props.checkFollow(this.props.followingUserId);
+
+    await this.props.followCount(this.props.match.params.username);
+    await console.log(this.props.followerCount);
+    console.log("mounted");
     // console.log(this.props.username);
     // console.log(this.props.match.params.username);
     // console.log(this.props.userBio);
   }
 
-  followUser = () => {
-    this.props.followUser(
-      this.props.followingUserId && this.props.followingUserId[0].user_id
+  async componentDidUpdate(prevProps) {
+    if (prevProps.match.params.username !== this.props.match.params.username) {
+      await this.props.checkFollow(this.props.followingUserId);
+      await this.props.followCount(this.props.match.params.username);
+    }
+  }
+
+  followUser = async () => {
+    await this.props.followUser(
+      this.props.followingUserId //&& this.props.followingUserId[0].user_id
     );
+    await waait(150);
+    this.props.followCount(this.props.match.params.username);
   };
 
   checkUploadResult = async (error, resultEvent) => {
@@ -83,7 +103,6 @@ class Profile extends Component {
   };
 
   render() {
-    console.log(this.props.following);
     const widget = window.cloudinary.createUploadWidget(
       {
         cloudName: "john-personal-proj",
@@ -95,6 +114,8 @@ class Profile extends Component {
       }
     );
 
+    console.log(this.props.followerCount);
+
     return (
       <>
         <Loader loading={this.props.loading} />
@@ -103,9 +124,9 @@ class Profile extends Component {
             <div className="profile__about__cont">
               {this.props.username !== this.props.match.params.username ? (
                 <button className="follow" onClick={this.followUser}>
-                  {this.props.following &&
-                  this.props.following.followed === false
-                    ? "Follow"
+                  {!this.props.following
+                    ? // this.props.following.followed === false
+                      "Follow"
                     : "Followed"}
                 </button>
               ) : null}
@@ -142,13 +163,18 @@ class Profile extends Component {
                       className="submit__pic"
                       onClick={this.submitPicture}
                     >
-                      <i class="material-icons">cloud_upload</i>
+                      <i className="material-icons">cloud_upload</i>
                     </button>
                   </div>
                 </div>
               ) : null}
               <div className="name__bio">
                 {this.props.match.params.username}
+                {this.props.followerCount.length > 0 ? (
+                  <p>{this.props.followerCount[0].count} Followers</p>
+                ) : (
+                  <p>0 Followers</p>
+                )}
                 {this.state.edit === true ? (
                   <textarea
                     rows="8"
@@ -204,7 +230,8 @@ const mapStateToProps = state => {
     edit_UserBio: state.userReducer.editUserBio,
     posts: state.postsReducer.posts,
     userPic: state.userReducer.userPic,
-    loading: state.userReducer.loading
+    loading: state.userReducer.loading,
+    followerCount: state.followsReducer.followerCount
   };
 };
 
@@ -220,6 +247,8 @@ export default connect(
     handleBioOnChange,
     populateBio,
     getPostsByProfile,
-    checkFollow
+    checkFollow,
+    followCount,
+    getUserId
   }
 )(Profile);

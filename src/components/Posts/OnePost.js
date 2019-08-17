@@ -40,7 +40,6 @@ class OnePost extends Component {
   goToUserProfile = username => {
     this.props
       .getPostsByProfile(username)
-      .then(() => this.props.getUserId(username))
       .then(() => this.props.history.push(`/posts/${username}`));
   };
 
@@ -73,15 +72,16 @@ class OnePost extends Component {
 
   render() {
     const { post, likeCount } = this.props;
-    console.log(this.props);
 
     const showMoreLink = (
-      <a className="read__more" onClick={() => this.goToPost(post.post_id)}>
+      <a
+        className="read__more"
+        onClick={() => this.goToPost(post.post_id)}
+        key={post.post_id}
+      >
         read more
       </a>
     );
-
-    console.log(showMoreLink);
 
     return (
       <>
@@ -139,7 +139,7 @@ class OnePost extends Component {
                         <div className="remove__edit">
                           <button className="remove__button">
                             <i
-                              class="material-icons"
+                              className="material-icons"
                               onClick={() => this.removePost(post.post_id)}
                             >
                               delete
@@ -149,7 +149,7 @@ class OnePost extends Component {
                             className="edit__button"
                             onClick={() => this.editPost(post.post_id)}
                           >
-                            <i class="material-icons">edit</i>
+                            <i className="material-icons">edit</i>
                           </button>
                         </div>
                       ) : null}
@@ -159,7 +159,7 @@ class OnePost extends Component {
                         onClick={() => this.likePost(post.post_id)}
                       >
                         {/* {this.props.liked ? "Like!" : "Unlike"} */}
-                        <i class="material-icons">whatshot</i> {likeCount}
+                        <i className="material-icons">whatshot</i> {likeCount}
                       </button>
                     </div>
                   </div>

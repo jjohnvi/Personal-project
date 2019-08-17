@@ -40,14 +40,24 @@ const getFollowPosts = async (req, res, next) => {
 
 const followCount = async (req, res, next) => {
   const db = req.app.get("db");
+  const { id } = req.params;
+
+  const results = await db.get_number_followers([id]);
+  res.status(200).json(results);
 };
 
 const getFollowStatus = async (req, res, next) => {
   const db = req.app.get("db");
   const { id } = req.session.user;
+  const { following_id } = req.params;
+  console.log(following_id);
 
-  const results = await db.check_follow([id]);
-  res.status(200).json(results);
+  const results = await db.check_follow([id, following_id]);
+  if (results[0]) {
+    res.status(200).json(true);
+  } else {
+    res.status(201).json(false);
+  }
 };
 
-module.exports = { follow, getFollowPosts, getFollowStatus };
+module.exports = { follow, getFollowPosts, getFollowStatus, followCount };

@@ -6,12 +6,10 @@ class Comments extends Component {
     this.state = { editStatus: false };
   }
   handleClickUpdateComment = comment => {
-    console.log(comment);
     this.setState({ editStatus: true });
     this.props.populateComment(comment);
   };
   render() {
-    console.log(this.props.comment);
     return (
       <div
         className="comment__username__cont"
@@ -72,7 +70,7 @@ class Comments extends Component {
                       this.props.updateComment(this.props.comment.comment_id);
                     }}
                   >
-                    <i class="material-icons">send</i>
+                    <i className="material-icons">send</i>
                   </button>
                 </form>
               </div>

@@ -31,14 +31,15 @@ class Home extends Component {
 
   async componentDidMount() {
     this.props.checkUserLoggedIn().catch(() => this.props.history.push("/"));
+    await waait(1000);
     this.toggleVisible(true);
-    await waait(4000);
+    await waait(3000);
     this.toggleVisible(false);
-    await waait(2000);
+    await waait(1000);
     this.toggleVisible2(true);
-    await waait(4000);
+    await waait(3000);
     this.toggleVisible2(false);
-    await waait(2000);
+    await waait(500);
     this.toggleVisible(true);
     this.toggleVisible2(true);
   }

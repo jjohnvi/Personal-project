@@ -51,7 +51,8 @@ app.put("/api/posts/:id", PC.editPost);
 //follows
 app.post("/api/follow/:following_id", GM.time, FC.follow);
 app.get("/api/follow/", GM.time, FC.getFollowPosts);
-app.get("/api/follow/:id", FC.getFollowStatus);
+app.get("/api/follow/:following_id", FC.getFollowStatus);
+app.get("/api/follows/:id", FC.followCount);
 
 //users
 app.get("/api/users/", GM.time, UC.getUsers);
