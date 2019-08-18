@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 const express = require("express");
 const massive = require("massive");
 const session = require("express-session");
@@ -12,6 +13,8 @@ const UC = require("./controllers/users_controller");
 const LC = require("./controllers/likes_controller");
 const CC = require("./controllers/comments_controller");
 const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
+
+const path = require("path"); // Usually moved to the start of file
 
 app.use(express.json());
 
@@ -71,6 +74,10 @@ app.post("/api/comments/:post_id", GM.time, CC.addComment);
 app.get("/api/comments/:post_id", GM.time, CC.getComments);
 app.delete("/api/comments/:id", GM.time, CC.deleteComment);
 app.put("/api/comments/:id", GM.time, CC.updateComment);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
 
 app.listen(SERVER_PORT, () => {
   console.log(`Listening on Port ${SERVER_PORT}`);

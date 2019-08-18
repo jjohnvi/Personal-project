@@ -105,9 +105,9 @@ class ModalPost extends Component {
 
   render() {
     const { pictures } = this.props;
-    const picDisplay = pictures.map(val => {
+    const picDisplay = pictures.map((val, index) => {
       return (
-        <div className="pics__cont">
+        <div className="pics__cont" key={index}>
           <img
             className="pics__array"
             onClick={() => this.clickPicture(val)}

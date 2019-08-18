@@ -74,6 +74,7 @@ class Navbar extends Component {
     await this.props.getUserId(username);
     await this.props.history.push(`/posts/${username}`);
     this.setState({ searchbar: "", open: false });
+    this.props.toggleSearch(!this.props.searchOpen);
     this.setState({ menuOpen: false });
   };
 
@@ -122,15 +123,6 @@ class Navbar extends Component {
                   >
                     <i className="material-icons">search</i>
                   </button>
-                  {/* <input
-                    autoComplete="off"
-                    className="searchbar"
-                    onChange={this.updateState}
-                    name="searchbar"
-                    type="text"
-                    placeholder="Search for User..."
-                    value={this.state.searchbar}
-                  /> */}
                 </div>
               )}
             </div>
@@ -190,12 +182,11 @@ class Navbar extends Component {
                 <ul className="dropdown__list">
                   {users.map(user => {
                     return (
-                      <div classname="dropdown__name" key={user.user_id}>
+                      <div className="dropdown__name" key={user.user_id}>
                         <li
                           className="dropdown__item"
                           onClick={() => this.goToUserProfile(user.username)}
                         >
-                          {/* <i className="material-icons">person</i> */}
                           {user.profile_pic !== null ? (
                             <img
                               src={user.profile_pic}
