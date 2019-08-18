@@ -16,6 +16,7 @@ const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 
 const path = require("path"); // Usually moved to the start of file
 
+app.use(express.static(`${__dirname}/../build`));
 app.use(express.json());
 
 massive(CONNECTION_STRING)
