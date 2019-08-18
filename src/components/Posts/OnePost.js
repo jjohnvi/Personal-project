@@ -71,8 +71,7 @@ class OnePost extends Component {
   };
 
   render() {
-    const { post, likeCount } = this.props;
-
+    const { post, likeCount, didILikeIt } = this.props;
     const showMoreLink = (
       <a
         className="read__more"
@@ -82,6 +81,11 @@ class OnePost extends Component {
         read more
       </a>
     );
+
+    let colorIcon = "material-icons";
+    if (didILikeIt) {
+      colorIcon += " material-icons-red";
+    }
 
     return (
       <>
@@ -159,7 +163,7 @@ class OnePost extends Component {
                         onClick={() => this.likePost(post.post_id)}
                       >
                         {/* {this.props.liked ? "Like!" : "Unlike"} */}
-                        <i className="material-icons">whatshot</i> {likeCount}
+                        <i className={colorIcon}>whatshot</i> {likeCount}
                       </button>
                     </div>
                   </div>
@@ -177,8 +181,7 @@ const mapStateToProps = state => {
   return {
     username: state.userReducer.user.username,
     posts: state.postsReducer.posts,
-    liked: state.likesReducer.liked,
-    likesCount: state.likesReducer.likesCount
+    liked: state.likesReducer.liked
   };
 };
 

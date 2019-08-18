@@ -173,11 +173,17 @@ class Navbar extends Component {
                   onChange={this.updateState}
                   name="searchbar"
                   type="text"
-                  placeholder="Search for User..."
+                  placeholder="Search for User"
                   value={this.state.searchbar}
                 />
-                <button className="search__button__1" onClick={this.openSearch}>
+                <button className="button-default search__button__2">
                   <i className="material-icons">search</i>
+                </button>
+                <button
+                  className="button-default exit__button"
+                  onClick={this.openSearch}
+                >
+                  <i className="material-icons">close</i>
                 </button>
               </div>
               <div className={dropdownClassnames}>
@@ -189,7 +195,16 @@ class Navbar extends Component {
                           className="dropdown__item"
                           onClick={() => this.goToUserProfile(user.username)}
                         >
-                          <i className="material-icons">person</i>
+                          {/* <i className="material-icons">person</i> */}
+                          {user.profile_pic !== null ? (
+                            <img
+                              src={user.profile_pic}
+                              alt="oops"
+                              className="dropdown__item-profile-pic"
+                            />
+                          ) : (
+                            <i className="material-icons">person</i>
+                          )}
                           {user.username}
                         </li>
                       </div>

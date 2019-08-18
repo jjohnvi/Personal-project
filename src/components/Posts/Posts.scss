@@ -163,14 +163,16 @@
   }
 
   p {
-    font-size: 1rem;
-    line-height: 1.618;
+    @include font($fs: 1rem);
+
     text-align: left;
     margin-top: 0;
+
     @media screen and (max-width: $response-tablet) {
       margin-top: 0.7rem;
     }
   }
+
   a {
     text-decoration: underline;
     cursor: pointer;
@@ -231,6 +233,9 @@
   background: none;
   border: none;
   cursor: pointer;
+}
+.material-icons-red {
+  color: red;
 }
 
 .pics__outer__div {

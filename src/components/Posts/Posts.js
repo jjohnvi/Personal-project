@@ -22,6 +22,7 @@ class Posts extends Component {
 
   render() {
     const { posts, likesCount } = this.props;
+    console.log(likesCount);
 
     return posts.map(post => {
       const { post_id } = post;
@@ -35,7 +36,14 @@ class Posts extends Component {
       }
       return (
         // <NewComponent post = {post} />
-        <OnePost post={post} likeCount={likeCount} key={post_id} />
+        <OnePost
+          post={post}
+          likeCount={likeCount}
+          key={post_id}
+          didILikeIt={
+            numLikesForMappedPost[0] && numLikesForMappedPost[0].liked
+          }
+        />
       );
     });
   }

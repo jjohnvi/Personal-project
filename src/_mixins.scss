@@ -1,0 +1,9 @@
+$title-font: "Open Sans", sans-serif;
+
+@mixin font($f: $title-font, $fs: 2rem, $fw: normal, $lh: 1.618, $ls: 0) {
+  font-family: $f;
+  font-size: $fs;
+  font-weight: $fw;
+  line-height: $lh;
+  letter-spacing: $ls;
+}
