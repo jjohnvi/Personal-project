@@ -84,7 +84,6 @@ export function modalReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case OPEN_MODAL:
-      console.log(type);
       return { ...state, modalIsOpen: true };
 
     case CLOSE_MODAL:

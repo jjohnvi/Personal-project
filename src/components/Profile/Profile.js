@@ -43,11 +43,6 @@ class Profile extends Component {
     await this.props.checkFollow(this.props.followingUserId);
 
     await this.props.followCount(this.props.match.params.username);
-    await console.log(this.props.followerCount);
-    console.log("mounted");
-    // console.log(this.props.username);
-    // console.log(this.props.match.params.username);
-    // console.log(this.props.userBio);
   }
 
   async componentDidUpdate(prevProps) {
@@ -73,7 +68,6 @@ class Profile extends Component {
   };
 
   onClickEdit = bio => {
-    console.log(bio);
     this.setState({ edit: true });
     this.props.populateBio(bio);
   };
@@ -113,8 +107,6 @@ class Profile extends Component {
         this.checkUploadResult(error, result);
       }
     );
-
-    console.log(this.props.followerCount);
 
     return (
       <>

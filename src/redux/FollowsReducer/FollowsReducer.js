@@ -27,7 +27,6 @@ export const followUser = id => {
 };
 
 export const checkFollow = id => {
-  console.log(id);
   return {
     type: CHECK_FOLLOW,
     payload: axios.get(`/api/follow/${id}`)
@@ -52,7 +51,6 @@ export function followsReducer(state = initialState, action) {
     case `${SEARCH_USER}_PENDING`:
       return { ...state, loading: true };
     case `${SEARCH_USER}_FULFILLED`:
-      console.log(payload.data);
       return { ...state, loading: false, users: payload.data };
 
     case `${CHECK_FOLLOW}_PENDING`:
@@ -63,7 +61,6 @@ export function followsReducer(state = initialState, action) {
     case `${FOLLOW_COUNT}_PENDING`:
       return { ...state, loading: true };
     case `${FOLLOW_COUNT}_FULFILLED`:
-      // console.log(payload.data[0].count);
       return { ...state, loading: false, followerCount: payload.data };
 
     default:
