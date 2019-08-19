@@ -240,26 +240,25 @@
 }
 
 .pics__outer__div {
-  display: flex;
-  flex-direction: row;
-  overflow-x: auto;
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-auto-rows: 100px;
+  grid-gap: 5px;
+  max-width: 100%;
+
+  @media screen and (max-width: $response-tablet) {
+    flex-wrap: wrap;
+  }
 }
 .pics__cont {
-  display: flex;
+  height: 100%;
 }
 
 .pics__array {
   object-fit: cover;
   overflow-x: scroll;
-  width: 150px;
-  height: 150px;
-  border: 2px solid $white;
-  box-shadow: $box-shadow;
-  @media screen and (max-width: $response-tablet) {
-    width: 100px;
-    height: 100px;
-  }
+  width: 100%;
+  height: 100%;
 }
 
 .pics__array:hover {
