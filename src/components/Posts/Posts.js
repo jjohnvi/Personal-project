@@ -22,7 +22,6 @@ class Posts extends Component {
 
   render() {
     const { posts, likesCount } = this.props;
-    console.log(likesCount);
 
     return posts.map(post => {
       const { post_id } = post;

@@ -74,6 +74,7 @@ class OnePost extends Component {
     const { post, likeCount, didILikeIt } = this.props;
     const showMoreLink = (
       <a
+        href
         className="read__more"
         onClick={() => this.goToPost(post.post_id)}
         key={post.post_id}
@@ -92,7 +93,11 @@ class OnePost extends Component {
         <div className="user__post__content">
           {post.profile_pic ? (
             <div className="profile__pic__username">
-              <img className="profile__pic" src={post.profile_pic} />
+              <img
+                className="profile__pic"
+                src={post.profile_pic}
+                alt="profile pic"
+              />
               <span onClick={() => this.goToUserProfile(post.username)}>
                 @{post.username}
               </span>
@@ -102,6 +107,7 @@ class OnePost extends Component {
               <img
                 className="profile__pic"
                 src="https://res.cloudinary.com/john-personal-proj/image/upload/v1565478265/mello/kw5qxmbgea2ppbncuibt.png"
+                alt="profile pic"
               />
               <span onClick={() => this.goToUserProfile(post.username)}>
                 @{post.username}

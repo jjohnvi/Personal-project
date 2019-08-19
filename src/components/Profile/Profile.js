@@ -140,6 +140,7 @@ class Profile extends Component {
                 <img
                   className="profile__pic"
                   src="https://res.cloudinary.com/john-personal-proj/image/upload/v1565478265/mello/kw5qxmbgea2ppbncuibt.png"
+                  alt="Avatar"
                 />
               )}
 
@@ -158,7 +159,7 @@ class Profile extends Component {
                       text="image_url"
                       value={this.state.image_url}
                     />
-                    <img src={this.state.image_url} />
+                    <img src={this.state.image_url} alt="Profile Pic" />
                     <button
                       className="submit__pic"
                       onClick={this.submitPicture}

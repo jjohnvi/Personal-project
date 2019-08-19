@@ -6,7 +6,6 @@ const initialState = {
 };
 
 const UPLOAD_PIC = "UPLOAD_PIC";
-const GET_PICS = "GET_PICS";
 
 export const uploadPic = profile_pic => {
   return {

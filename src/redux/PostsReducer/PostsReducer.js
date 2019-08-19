@@ -43,7 +43,6 @@ export const editPost = (id, image_url, content, title) => {
 };
 
 export const removePost = id => {
-  console.log(id);
   return {
     type: REMOVE_POST,
     payload: axios.delete(`/api/posts/${id}`)

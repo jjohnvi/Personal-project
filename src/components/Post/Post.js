@@ -114,11 +114,8 @@ class Post extends Component {
 
   render() {
     const { posts, loading, likesForUser, comments } = this.props;
-    console.log(this.props.editStatus);
-    console.log(this.props);
 
     const commentsDisplay = comments.map(comment => {
-      console.log(comment);
       return (
         <Comments
           comment={comment}
@@ -141,11 +138,16 @@ class Post extends Component {
           {posts[0] && (
             <div className="one__post__cont">
               {posts[0].profile_pic ? (
-                <img className="profile__pics__2" src={posts[0].profile_pic} />
+                <img
+                  className="profile__pics__2"
+                  src={posts[0].profile_pic}
+                  alt="Profile Pic"
+                />
               ) : (
                 <img
                   className="profile__pics__2"
                   src="https://res.cloudinary.com/john-personal-proj/image/upload/v1565478265/mello/kw5qxmbgea2ppbncuibt.png"
+                  alt="Avatar"
                 />
               )}
               <div className="post__cont">

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { updateState, loginUser } from "../../redux/UserReducer/UserReducer";
 import { Link } from "react-router-dom";
 import "./../Login/Login.scss";
-import Loader from "../Loader/Loader";
 
 class Login extends Component {
   state = {
@@ -22,7 +21,6 @@ class Login extends Component {
         this.props.history.push("/home");
       })
       .catch(() => {
-        console.log("Error");
         this.setState({ error: true });
       });
   };
