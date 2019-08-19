@@ -1,4 +1,5 @@
 @import "../../App.scss";
+@import "../Login/Login.scss";
 
 .register__page {
   display: flex;
@@ -8,49 +9,28 @@
 }
 
 .register__cont {
-  display: flex;
-  height: 30rem;
-  width: 25rem;
-  background-color: $white;
-  justify-content: center;
-  border: $white solid 2px;
-  box-shadow: $box-shadow;
-  border-radius: 4px;
-  align-items: center;
-  flex-direction: column;
+  @extend .login__form;
 
   input {
-    height: 2rem;
-    width: 12rem;
-    border-radius: 5px;
-    border: none;
-    display: flex;
-    text-align: center;
-    margin: 0.5rem;
-    background-color: $blue-3;
-    font-family: $title-font;
-    color: $white;
-    font-size: 0.8rem;
-    font-weight: bold;
+    @extend .login__form;
   }
   input::placeholder {
     font-family: $title-font;
-    font-weight: bold;
     font-size: 0.8rem;
-    letter-spacing: 1px;
-    font-style: italic;
-    color: $white;
+    // font-style: italic;
+    color: lightgray;
+    text-decoration: underline;
   }
   button {
     height: 1.5rem;
-    width: 4.5rem;
+    width: 8rem;
     border-radius: 3px;
     text-align: center;
     margin: 0.1em;
     font-family: $title-font;
-    letter-spacing: 2px;
-    color: $blue-3;
-    background-color: $white;
+    letter-spacing: 0.8px;
+    color: gray;
+    background-color: white;
     font-size: 0.6rem;
     font-weight: bold;
     justify-content: center;

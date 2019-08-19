@@ -74,6 +74,7 @@ class Profile extends Component {
 
   onClickSave = () => {
     this.setState({ edit: false });
+    this.setState({ image_url: "" });
     this.editUserBio(this.props.match.params.username);
   };
 
@@ -145,13 +146,13 @@ class Profile extends Component {
                     Choose Photo
                   </button>
                   <div className="photo__input">
-                    <input
+                    {/* <input
                       type="url"
                       onChange={this.handleChange}
                       text="image_url"
                       value={this.state.image_url}
-                    />
-                    <img src={this.state.image_url} alt="Profile Pic" />
+                    /> */}
+                    <img src={this.state.image_url} />
                     <button
                       className="submit__pic"
                       onClick={this.submitPicture}
@@ -164,9 +165,11 @@ class Profile extends Component {
               <div className="name__bio">
                 {this.props.match.params.username}
                 {this.props.followerCount.length > 0 ? (
-                  <p>{this.props.followerCount[0].count} Followers</p>
+                  <p className="followers">
+                    Followers : {this.props.followerCount[0].count}
+                  </p>
                 ) : (
-                  <p>0 Followers</p>
+                  <p className="followers">Followers : 0</p>
                 )}
                 {this.state.edit === true ? (
                   <textarea

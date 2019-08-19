@@ -23,36 +23,34 @@
 
   input {
     height: 2rem;
-    width: 12rem;
-    border-radius: 5px;
-    border: none;
+    width: 90%;
+    border: lightgray 1px solid;
+    border-radius: 3px;
     display: flex;
     text-align: center;
     margin: 0.5rem;
-    background-color: black;
+    background-color: white;
     font-family: $title-font;
     box-shadow: $box-shadow;
-    color: $white;
+    color: gray;
     font-size: 0.8rem;
     font-weight: bold;
   }
   input::placeholder {
     font-family: $title-font;
-    font-weight: bold;
+    text-decoration: underline;
     font-size: 0.8rem;
-    // letter-spacing: 1px;
-    font-style: italic;
-    color: $white;
+    color: lightgray;
   }
   button {
     height: 1.5rem;
-    width: 4.5rem;
+    width: 8rem;
     border-radius: 3px;
     text-align: center;
     margin: 0.1em;
     font-family: $title-font;
     letter-spacing: 1px;
-    color: black;
+    color: gray;
     background-color: white;
     font-size: 0.6rem;
     box-shadow: $box-shadow;
