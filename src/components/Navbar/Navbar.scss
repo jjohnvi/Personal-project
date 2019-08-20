@@ -155,8 +155,8 @@
 
 .navbar__item__1 {
   letter-spacing: 2px;
-
   cursor: pointer;
+
   @media screen and (max-width: $response-tablet) {
     display: none;
   }
@@ -164,13 +164,17 @@
 
 .navbar__item__2 {
   letter-spacing: 2px;
-
   cursor: pointer;
+
+  i {
+    font-size: 2rem;
+  }
 }
 
 .navbar__post {
   outline: none;
   cursor: pointer;
+
   @media screen and (max-width: $response-tablet) {
   }
 }
@@ -231,6 +235,11 @@
   }
 }
 
+.dropdown__item:hover {
+  transform: scale(1.01);
+  transition: 600ms;
+}
+
 .dropdown__item:first-of-type {
   margin-top: 0;
 }
@@ -269,6 +278,11 @@
   align-items: center;
   cursor: pointer;
   border-bottom: solid 1px white;
+  &:hover {
+    color: white;
+    transform: scale(1.05);
+    transition: 400ms;
+  }
 }
 
 .sidebar--open {

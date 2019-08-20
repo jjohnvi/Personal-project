@@ -94,6 +94,13 @@
   font-size: 2rem;
   box-shadow: $box-shadow;
   margin-top: 1rem;
+  &:hover {
+    color: white;
+    background: black;
+    border-radius: 100px;
+    transform: scale(1.1);
+    transition: 400ms;
+  }
 
   @media screen and (max-width: $response-tablet) {
     width: 3rem;
@@ -226,6 +233,7 @@
 .like__posts__div {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   width: 50%;
   outline: none;
   font-size: 1rem;
@@ -233,6 +241,11 @@
   background: none;
   border: none;
   cursor: pointer;
+  i:hover {
+    transform: scale(1.1);
+    color: red;
+    transition: 400ms;
+  }
 }
 
 .material-icons-red {

@@ -98,7 +98,10 @@ class OnePost extends Component {
                 src={post.profile_pic}
                 alt="profile pic"
               />
-              <span onClick={() => this.goToUserProfile(post.username)}>
+              <span
+                onClick={() => this.goToUserProfile(post.username)}
+                className="at__user"
+              >
                 @{post.username}
               </span>
             </div>

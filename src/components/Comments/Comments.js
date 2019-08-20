@@ -43,7 +43,7 @@ class Comments extends Component {
                     this.handleClickUpdateComment(this.props.comment.comment)
                   }
                 >
-                  edit
+                  <i class="material-icons">edit</i>
                 </button>
               </>
             ) : (

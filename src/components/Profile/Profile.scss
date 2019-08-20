@@ -116,4 +116,12 @@
   border-radius: 5px;
   width: 5rem;
   font-size: 1rem;
+
+  &:hover {
+    color: white;
+    background: black;
+    border-radius: 100px;
+    transform: scale(1.1);
+    transition: 400ms;
+  }
 }

@@ -101,6 +101,13 @@
   outline: none;
   cursor: pointer;
   text-align: left;
+  i:hover {
+    color: white;
+    background: black;
+    border-radius: 100px;
+    transform: scale(1.1);
+    transition: 400ms;
+  }
 }
 
 .remove__edit__like {
@@ -120,6 +127,14 @@
   outline: none;
   cursor: pointer;
   text-align: left;
+  transition: all 300ms;
+  i:hover {
+    color: white;
+    background: black;
+    border-radius: 100px;
+    transform: scale(1.1);
+    transition: 400ms;
+  }
 }
 
 .remove__edit__post {
@@ -134,12 +149,27 @@
   display: flex;
   background: none;
   border: none;
+
+  i:hover {
+    color: white;
+    background: black;
+    border-radius: 100px;
+    transform: scale(1.1);
+    transition: 400ms;
+  }
 }
 
 .edit__button__post {
   display: flex;
   background: none;
   border: none;
+  i:hover {
+    color: white;
+    background: black;
+    border-radius: 100px;
+    transform: scale(1.1);
+    transition: 400ms;
+  }
 }
 
 .comment__like {
@@ -159,6 +189,14 @@
   font-family: $title-font;
   font-size: 1rem;
   border: none;
+
+  &:hover {
+    color: white;
+    background: black;
+    border-radius: 100px;
+    transform: scale(1.1);
+    transition: 400ms;
+  }
 }
 
 .like__number {
@@ -173,6 +211,14 @@
   box-shadow: $box-shadow;
   margin-bottom: 1rem;
   border-radius: 3px;
+  outline: none;
+  &:hover {
+    color: white;
+    background: black;
+    border-radius: 100px;
+    transform: scale(1.1);
+    transition: 400ms;
+  }
   @media screen and (max-width: $response-profile) {
     border-radius: 10px;
     flex-direction: row;
@@ -248,15 +294,29 @@
 
 .comment__delete {
   background: none;
-  box-shadow: $box-shadow;
-  border: solid lightgray 1px;
+
+  border: none;
   position: inherit;
+  i:hover {
+    color: white;
+    background: black;
+    border-radius: 100px;
+    transform: scale(1.1);
+    transition: 400ms;
+  }
 }
 
 .comment__edit {
   background: none;
-  box-shadow: $box-shadow;
-  border: solid lightgray 1px;
+
+  border: none;
+  i:hover {
+    color: white;
+    background: black;
+    border-radius: 100px;
+    transform: scale(1.1);
+    transition: 400ms;
+  }
 }
 
 .edit__comment__input__cont {
@@ -268,6 +328,11 @@
   width: 15%;
   background: none;
   border: none;
+
+  &:hover {
+    transform: scale(1.2);
+    transition: 400ms;
+  }
 }
 
 .edit__comment__input {
