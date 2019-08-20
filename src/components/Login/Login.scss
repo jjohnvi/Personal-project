@@ -41,7 +41,7 @@
     font-family: $title-font;
     text-decoration: underline;
     font-size: 0.8rem;
-    color: lightgray;
+    color: grey;
   }
   button {
     height: 1.5rem;
@@ -57,5 +57,11 @@
     box-shadow: $box-shadow;
     font-weight: bold;
     justify-content: center;
+
+    &:hover {
+      transition: 800ms;
+      color: white;
+      background-color: black;
+    }
   }
 }
