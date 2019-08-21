@@ -72,10 +72,11 @@ class Profile extends Component {
     this.props.populateBio(bio);
   };
 
-  onClickSave = () => {
-    this.setState({ edit: false });
-    this.setState({ image_url: "" });
-    this.editUserBio(this.props.match.params.username);
+  onClickSave = async () => {
+    await this.setState({ edit: false });
+    await this.setState({ image_url: "" });
+    await this.props.getPostsByProfile(this.props.match.params.username);
+    await this.editUserBio(this.props.match.params.username);
   };
 
   submitPicture = () => {
