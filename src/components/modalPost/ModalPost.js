@@ -125,6 +125,7 @@ class ModalPost extends Component {
         isOpen={this.props.modalIsOpen}
         onAfterOpen={this.afterOpenModal}
         onRequestClose={this.closeModal}
+        closeTimeoutMS={400}
         contentLabel="Example Modal"
       >
         <div className="modal__cont">
