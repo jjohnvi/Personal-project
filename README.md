@@ -1,9 +1,19 @@
-mello
+# mello
 
-A blogging social media website that allows users to follow other users and have their posts and the user's posts on their feed.
+## FEATURES
 
-Register feature with uploading profile pictures.
+- A blogging social media website that allows users to follow other users and have their posts and the user's posts on their feed.
 
-Users can search for other users through username and follow or unfollow them.
+- Register feature with uploading profile pictures.
 
-Users can like other users' posts and comment on those posts.
+- Users can search for other users through username and follow or unfollow them.
+
+- Users can like other users' posts and comment on those posts.
+
+- Users can go to their own profile page, view their history of posts and edit their bio.
+
+## TECH STACK
+
+- (ReactJS)[https://reactjs.org/]
+
+- (Redux)[https://react-redux.js.org/]
