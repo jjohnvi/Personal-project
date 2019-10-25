@@ -14,6 +14,32 @@
 
 ## TECH STACK
 
+### Front End
+
 - (ReactJS)[https://reactjs.org/]
 
 - (Redux)[https://react-redux.js.org/]
+
+### Back End
+
+- (NodeJS)[https://nodejs.org/en/]
+
+- (ExpressJS)[https://expressjs.com/]
+
+- (MassiveJS)[https://massive-js.readthedocs.io/en/v2/]
+
+- (PostgreSQL)[https://www.postgresql.org/]
+
+### Hosting
+
+- (Digital Ocean) [https://www.digitalocean.com/]
+
+### Other
+
+- ECMASCRIPT6 (ES6) [http://es6-features.org/#Constants]
+
+- (SASS/SCSS) [https://sass-lang.com/]
+
+- (Unsplash API) [https://unsplash.com/developers]
+
+- (Cloudinary) [https://cloudinary.com/]
