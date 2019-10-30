@@ -37,7 +37,7 @@ const getLikes = async (req, res) => {
   const db = req.app.get("db");
   const { id } = req.session.user;
   const posts = await db.get_likes();
-
+  // Remember this part
   //map through each post
   let newResponse = posts.map(async post => {
     const like = await db.check_likes([id, post.post_id]);
